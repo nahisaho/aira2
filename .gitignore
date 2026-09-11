@@ -1,3 +1,8 @@
 
 # musubix3 generated caches
 /.musubix/cache/
+
+# Node.js
+node_modules/
+dist/
+reports/

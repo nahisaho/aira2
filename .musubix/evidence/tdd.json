@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "cycles": [
+    {
+      "cycleId": "a4869436-b493-421f-8661-8edc96ae0d98",
+      "requirementId": "REQ-MULTIUSER-002",
+      "testId": "TEST-AIRA2-AUTH-001",
+      "testPath": "src/auth/account.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "672dd269fd8d799de340c7790fcf481df1808babc24730498fce70c15b8afa18",
+        "commandSha256": "ad9ba62be29fa1d3c6b3b8750ed6b6f116b6238b785015c70fa12cbe881537ed",
+        "outputSha256": "2ef7c1296de76308c61a9e5eef62b738971618e0a1f4eec8d79d6a2d02513e55",
+        "exitCode": 1,
+        "durationMs": 975,
+        "testFingerprint": "06f035bbc400305d86209c8bf04a07b11226af16f63140d8521fdb2bfe5d49ef",
+        "sourceFingerprint": "980ecb2c9c5803809557436db96e56f76e03c2f9acfa6bc7cd00650440877af3",
+        "executionId": "5fbde5c9-9650-460b-bc47-6ee3a3d8adfc",
+        "recordedAt": "2026-09-11T11:27:27.533Z",
+        "diagnostics": [],
+        "order": 4
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "6c4ddadca4678c5635079bd96b29e11026d862d09afebfd577152ad352f7e17e",
+        "commandSha256": "ad9ba62be29fa1d3c6b3b8750ed6b6f116b6238b785015c70fa12cbe881537ed",
+        "outputSha256": "2ef7c1296de76308c61a9e5eef62b738971618e0a1f4eec8d79d6a2d02513e55",
+        "exitCode": 0,
+        "durationMs": 862,
+        "testFingerprint": "06f035bbc400305d86209c8bf04a07b11226af16f63140d8521fdb2bfe5d49ef",
+        "sourceFingerprint": "53c7a98a16badbb53092aab2b33be00dff6f2c8a70177542fa1857a1ec5b5e59",
+        "executionId": "a1f6d44c-4398-4c5a-91bb-4682a9c48266",
+        "recordedAt": "2026-09-11T11:27:42.536Z",
+        "diagnostics": [],
+        "order": 5
+      }
+    },
+    {
+      "cycleId": "9feaea8c-15e1-4a2f-a7d3-9ac67017c002",
+      "requirementId": "REQ-MULTIUSER-010",
+      "testId": "TEST-AIRA2-AUTH-002",
+      "testPath": "src/auth/account.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "90d027fd98033d667639c226fb800298200bd065cd4257c0f06bbd6c8eced179",
+        "commandSha256": "4dc772d8b8e8de04611316ad78ef60dd022c3f094e5c25bb523602555b36c266",
+        "outputSha256": "ee17b939b7b47d05107a9a500497657e59124a739fa2e2595f6f071d719281b3",
+        "exitCode": 1,
+        "durationMs": 975,
+        "testFingerprint": "739a32963e4315f6a308429bf4b4e124973b17f76baa651c0fb4cd46ff6ee297",
+        "sourceFingerprint": "4555e049ac1b2c8d310fe317496ae0482fde294244d79196d10e0f9050ff0bcc",
+        "executionId": "247b041b-f106-4db9-b023-51f0df4d5d6f",
+        "recordedAt": "2026-09-11T11:28:38.950Z",
+        "diagnostics": [],
+        "order": 6
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "5000fc9b8cee5201b530f5a7e32434ec7645815da852f7a5b976e0d93bbbee7b",
+        "commandSha256": "4dc772d8b8e8de04611316ad78ef60dd022c3f094e5c25bb523602555b36c266",
+        "outputSha256": "ee17b939b7b47d05107a9a500497657e59124a739fa2e2595f6f071d719281b3",
+        "exitCode": 0,
+        "durationMs": 809,
+        "testFingerprint": "739a32963e4315f6a308429bf4b4e124973b17f76baa651c0fb4cd46ff6ee297",
+        "sourceFingerprint": "eafc8aa60037af9a207249223c1aff36928c448c7da3a8c06a0da25a9c6715d2",
+        "executionId": "40d68a53-e621-4035-a6ac-0aa834c72896",
+        "recordedAt": "2026-09-11T11:28:49.316Z",
+        "diagnostics": [],
+        "order": 7
+      }
+    }
+  ],
+  "chain": [
+    {
+      "sequence": 1,
+      "cycleId": "a4869436-b493-421f-8661-8edc96ae0d98",
+      "requirementId": "REQ-MULTIUSER-002",
+      "testId": "TEST-AIRA2-AUTH-001",
+      "testPath": "src/auth/account.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "1ed550bc9db7375cefa5591030bf30352918c495385edada157f0b0d5c45910a",
+      "previousSha256": null,
+      "recordSha256": "b1da9aa3004b21bf1511197fa0f291714e878a65ef78480ca53afbe55be53897"
+    },
+    {
+      "sequence": 2,
+      "cycleId": "a4869436-b493-421f-8661-8edc96ae0d98",
+      "requirementId": "REQ-MULTIUSER-002",
+      "testId": "TEST-AIRA2-AUTH-001",
+      "testPath": "src/auth/account.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "f8f2afc331603bd70291338759eeb88dce6027d9907b01165b535160361f3959",
+      "previousSha256": "b1da9aa3004b21bf1511197fa0f291714e878a65ef78480ca53afbe55be53897",
+      "recordSha256": "6d1795d0c19c35af51f11fd448eea000c9a1f3c4e8417eb0ca113027b173ae5c"
+    },
+    {
+      "sequence": 3,
+      "cycleId": "9feaea8c-15e1-4a2f-a7d3-9ac67017c002",
+      "requirementId": "REQ-MULTIUSER-010",
+      "testId": "TEST-AIRA2-AUTH-002",
+      "testPath": "src/auth/account.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "69b961ce0da94d43e382a11dc82c951e9c1c249044f70fb8a3c666191be22c56",
+      "previousSha256": "6d1795d0c19c35af51f11fd448eea000c9a1f3c4e8417eb0ca113027b173ae5c",
+      "recordSha256": "78468d8f6a55741daf9f13306fdf2b04df4af50479ecb7871299db0e8f57208b"
+    },
+    {
+      "sequence": 4,
+      "cycleId": "9feaea8c-15e1-4a2f-a7d3-9ac67017c002",
+      "requirementId": "REQ-MULTIUSER-010",
+      "testId": "TEST-AIRA2-AUTH-002",
+      "testPath": "src/auth/account.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "4fc4dcbcd5cda0e34a1a2fc6c955afa6ecc392a9d4f2da1deddeba489918732b",
+      "previousSha256": "78468d8f6a55741daf9f13306fdf2b04df4af50479ecb7871299db0e8f57208b",
+      "recordSha256": "394e362ce83ad936b5d256b0ce9563173dfbf94da59bea95d3edb895e51b54ad"
+    }
+  ]
+}

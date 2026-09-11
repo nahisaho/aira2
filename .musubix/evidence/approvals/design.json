@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "stage": "design",
+  "artifacts": {
+    ".musubix/constitution.md": "f8b47fdc486f395bab05223a94821b145cf8df70ffde2c838a28f8d71fe0fa92",
+    ".musubix/decisions/ADR-0001.md": "6e21f1b375cfa1aabdf058b1dc987f94974dc23571fe60e94ba340dc48295b0f",
+    ".musubix/decisions/ADR-0002.md": "993f3fcc2c71828030be05b09ee94c70e3889edffdb08eedbebec983806cf262",
+    ".musubix/decisions/ADR-0003.md": "154414958951624db5c034ec8cc87b1f58cad13e2c7a95230bf2ef3cd474d020",
+    ".musubix/decisions/ADR-0004.md": "8cac98bc3f51a7d38447f6f7f1c537f53d33b32ba573f12ddf7fd1b148db7fa1",
+    ".musubix/decisions/ADR-0005.md": "b4295c4972f9e223c479c15e59d63429b472367470c2cff5dcc488568c1d956c",
+    ".musubix/features/aira2-platform/design.md": "1ecbd9b407802fe3e924f2ba237ca81d5047ef312456f23e7611024d1f3def46",
+    ".musubix/features/aira2-platform/requirements.md": "cbddf90a839164e0ceb7d7c44b565d0fe623fe75a5211ea562c58e8c4bb0e565",
+    ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
+    ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
+  },
+  "artifactSha256": "af25b99e7cd8957decc56c403b8acf959ebc321f9393aadf66c92c82fcb4fc8b",
+  "approver": "nahisaho",
+  "approvedAt": "2026-09-11T08:41:29.892Z"
+}
