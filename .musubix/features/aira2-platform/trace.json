@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:38:20.273Z",
+  "generatedAt": "2026-09-11T11:40:55.997Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -617,6 +617,48 @@
       "kind": "code",
       "path": "src/authz/project-authz.ts",
       "line": 18
+    },
+    {
+      "id": "CODE-AIRA2-AUTHZ-004",
+      "kind": "code",
+      "path": "src/authz/self-scope.ts",
+      "line": 31
+    },
+    {
+      "id": "TEST-AIRA2-VAULT-001",
+      "kind": "test",
+      "path": "src/vault/credential-vault.test.ts",
+      "line": 14
+    },
+    {
+      "id": "TEST-AIRA2-VAULT-002",
+      "kind": "test",
+      "path": "src/vault/credential-vault.test.ts",
+      "line": 31
+    },
+    {
+      "id": "TEST-AIRA2-VAULT-003",
+      "kind": "test",
+      "path": "src/vault/credential-vault.test.ts",
+      "line": 52
+    },
+    {
+      "id": "TEST-AIRA2-VAULT-004",
+      "kind": "test",
+      "path": "src/vault/credential-vault.test.ts",
+      "line": 71
+    },
+    {
+      "id": "CODE-AIRA2-VAULT-002",
+      "kind": "code",
+      "path": "src/vault/credential-vault.ts",
+      "line": 42
+    },
+    {
+      "id": "CODE-AIRA2-VAULT-001",
+      "kind": "code",
+      "path": "src/vault/crypto.ts",
+      "line": 12
     }
   ],
   "edges": [
@@ -1239,6 +1281,71 @@
       "from": "CODE-AIRA2-AUTHZ-002",
       "to": "DES-AIRA2-002",
       "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-004",
+      "to": "REQ-LLMBACKEND-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-004",
+      "to": "DES-AIRA2-002",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-VAULT-001",
+      "to": "REQ-LLMBACKEND-003",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-VAULT-002",
+      "to": "REQ-LLMBACKEND-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-VAULT-003",
+      "to": "REQ-LLMBACKEND-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-VAULT-004",
+      "to": "REQ-LLMBACKEND-007",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-VAULT-002",
+      "to": "REQ-LLMBACKEND-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-VAULT-002",
+      "to": "REQ-LLMBACKEND-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-VAULT-002",
+      "to": "REQ-LLMBACKEND-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-VAULT-002",
+      "to": "REQ-LLMBACKEND-007",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-VAULT-002",
+      "to": "DES-AIRA2-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-VAULT-001",
+      "to": "REQ-LLMBACKEND-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-VAULT-001",
+      "to": "DES-AIRA2-003",
+      "relation": "implements"
     }
   ],
   "diagnostics": [],
@@ -1261,6 +1368,10 @@
     "src/authz/matrix.ts": "3d0178beba548c2ff212f01fdadefc2ed013c2fa9999082460aa731789406a45",
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
     "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
+    "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
+    "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
+    "src/vault/credential-vault.ts": "bcbc4a9793c4d0de363a1a45c1df4ebece35d69ece55f0bdd71c82ff8d51a7a4",
+    "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",
     "vitest.config.ts": "713ab6f752564f158e0b3d084e716e6b33bbe968c43e639b678fcee0bdfcbcba"
   }
 }
