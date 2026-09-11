@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:58:09.435Z",
+  "generatedAt": "2026-09-11T12:05:15.516Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -797,6 +797,96 @@
       "kind": "code",
       "path": "src/eln-audit/ledger.ts",
       "line": 45
+    },
+    {
+      "id": "CODE-AIRA2-GRAPHRAG-001",
+      "kind": "code",
+      "path": "src/graphrag/embedding-capability.ts",
+      "line": 14
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-006",
+      "kind": "test",
+      "path": "src/graphrag/graphdb.test.ts",
+      "line": 4
+    },
+    {
+      "id": "CODE-AIRA2-GRAPHRAG-002",
+      "kind": "code",
+      "path": "src/graphrag/graphdb.ts",
+      "line": 71
+    },
+    {
+      "id": "CODE-AIRA2-GRAPHRAG-003",
+      "kind": "code",
+      "path": "src/graphrag/graphdb.ts",
+      "line": 165
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-001",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 36
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-002",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 49
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-003",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 65
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-004",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 86
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-005",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 104
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-013",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 135
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-014",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 174
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-015",
+      "kind": "test",
+      "path": "src/graphrag/graphrag-service.test.ts",
+      "line": 194
+    },
+    {
+      "id": "CODE-AIRA2-GRAPHRAG-004",
+      "kind": "code",
+      "path": "src/graphrag/graphrag-service.ts",
+      "line": 32
+    },
+    {
+      "id": "CODE-AIRA2-GRAPHRAG-005",
+      "kind": "code",
+      "path": "src/graphrag/graphrag-service.ts",
+      "line": 75
+    },
+    {
+      "id": "CODE-AIRA2-GRAPHRAG-006",
+      "kind": "code",
+      "path": "src/graphrag/graphrag-service.ts",
+      "line": 100
     },
     {
       "id": "TEST-AIRA2-LLM-001",
@@ -1803,6 +1893,151 @@
       "relation": "implements"
     },
     {
+      "from": "CODE-AIRA2-GRAPHRAG-001",
+      "to": "REQ-GRAPHRAG-014",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-001",
+      "to": "DES-AIRA2-009",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-006",
+      "to": "REQ-GRAPHRAG-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-002",
+      "to": "REQ-GRAPHRAG-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-002",
+      "to": "REQ-GRAPHRAG-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-002",
+      "to": "REQ-GRAPHRAG-013",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-002",
+      "to": "REQ-GRAPHRAG-015",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-002",
+      "to": "DES-AIRA2-009",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-003",
+      "to": "REQ-GRAPHRAG-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-003",
+      "to": "DES-AIRA2-009",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-001",
+      "to": "REQ-GRAPHRAG-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-002",
+      "to": "REQ-GRAPHRAG-002",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-003",
+      "to": "REQ-GRAPHRAG-003",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-004",
+      "to": "REQ-GRAPHRAG-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-005",
+      "to": "REQ-GRAPHRAG-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-013",
+      "to": "REQ-GRAPHRAG-013",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-014",
+      "to": "REQ-GRAPHRAG-014",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-015",
+      "to": "REQ-GRAPHRAG-015",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-004",
+      "to": "REQ-GRAPHRAG-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-004",
+      "to": "REQ-GRAPHRAG-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-004",
+      "to": "REQ-GRAPHRAG-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-004",
+      "to": "DES-AIRA2-009",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-005",
+      "to": "REQ-GRAPHRAG-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-005",
+      "to": "REQ-GRAPHRAG-014",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-005",
+      "to": "DES-AIRA2-009",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-006",
+      "to": "REQ-GRAPHRAG-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-006",
+      "to": "REQ-GRAPHRAG-013",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-006",
+      "to": "REQ-GRAPHRAG-015",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-006",
+      "to": "DES-AIRA2-009",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-AIRA2-LLM-001",
       "to": "REQ-LLMBACKEND-001",
       "relation": "verifies"
@@ -1986,6 +2221,11 @@
     "src/eln-audit/integrity-subsystem.ts": "bba748350fb723bcb6026d00590e049bafa4a1b3a92e076d01be79218c42baed",
     "src/eln-audit/ledger.test.ts": "ea18a1320d319bc3b5cd2ecb8e0752a217ed3ab5231532716643908cf8c06b86",
     "src/eln-audit/ledger.ts": "218d8d8e9160dda66c68e5cb8423e628a1055d68c3ce4013edf4942dae2f1001",
+    "src/graphrag/embedding-capability.ts": "1afa07bc99ffeefd6fd560502e7762db28a92411e373a7b266d452ca00f900b5",
+    "src/graphrag/graphdb.test.ts": "598da695aab7851403274f501fabcc1dd6072f3414ff9b6394c09f4566959e4e",
+    "src/graphrag/graphdb.ts": "8040921a030bbc4ddf3eb66822465ccd0168fe84302e6abc9af8e84745f33672",
+    "src/graphrag/graphrag-service.test.ts": "6ec938b347dadb5d558132e52e6289110087bc76ad32840e71a8058e5f0d2146",
+    "src/graphrag/graphrag-service.ts": "2a52b8c260642e725f0f513fe857dae6cec0d9d99237d1fd0d05287d7274e260",
     "src/llm/adapters.test.ts": "2b5e64d2e53bafd73f562598c547e47c9c231bd977d5511ff2f42e7b03b40b32",
     "src/llm/adapters.ts": "3a58add7b1ef48c05b8c8a8b29ab5d518c7b2bb147a88b991b58aab7f62d79f1",
     "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
