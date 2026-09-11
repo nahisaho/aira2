@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:28:53.800Z",
+  "generatedAt": "2026-09-11T11:34:37.518Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -527,6 +527,30 @@
       "kind": "code",
       "path": "src/auth/account.ts",
       "line": 42
+    },
+    {
+      "id": "TEST-AIRA2-AUTH-003",
+      "kind": "test",
+      "path": "src/auth/login.test.ts",
+      "line": 17
+    },
+    {
+      "id": "TEST-AIRA2-AUTH-004",
+      "kind": "test",
+      "path": "src/auth/login.test.ts",
+      "line": 34
+    },
+    {
+      "id": "CODE-AIRA2-AUTH-003",
+      "kind": "code",
+      "path": "src/auth/login.ts",
+      "line": 28
+    },
+    {
+      "id": "CODE-AIRA2-AUTH-004",
+      "kind": "code",
+      "path": "src/auth/login.ts",
+      "line": 36
     }
   ],
   "edges": [
@@ -1019,6 +1043,36 @@
       "from": "CODE-AIRA2-AUTH-002",
       "to": "DES-AIRA2-001",
       "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-AUTH-003",
+      "to": "REQ-MULTIUSER-007",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTH-004",
+      "to": "REQ-MULTIUSER-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-AUTH-003",
+      "to": "REQ-MULTIUSER-007",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTH-003",
+      "to": "DES-AIRA2-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTH-004",
+      "to": "REQ-MULTIUSER-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTH-004",
+      "to": "DES-AIRA2-001",
+      "relation": "implements"
     }
   ],
   "diagnostics": [],
@@ -1034,6 +1088,9 @@
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed",
     "src/auth/account.test.ts": "0db268e9e1d9079e246e9e2a8d8f05cc117d6279882f69ca231450b322b56401",
     "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
+    "src/auth/login.test.ts": "278383c58fe25b321e4dd4f2880b54b8ced0e264c8e42869dc3490dda6dc6937",
+    "src/auth/login.ts": "d11343d673fcda0ace52b3e9d598cd054c6a1feb9a231b3778056eba1855bcc3",
+    "src/auth/session.ts": "ee87250c936845a559197ab42a8e243d1f43d9ea4c2a4309ab43e1a774fe649b",
     "vitest.config.ts": "713ab6f752564f158e0b3d084e716e6b33bbe968c43e639b678fcee0bdfcbcba"
   }
 }

@@ -86,6 +86,92 @@
         "diagnostics": [],
         "order": 7
       }
+    },
+    {
+      "cycleId": "08dec8f3-82ab-4799-88bf-0c2fe7e44a4e",
+      "requirementId": "REQ-MULTIUSER-007",
+      "testId": "TEST-AIRA2-AUTH-003",
+      "testPath": "src/auth/login.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "1733fdb8afb815c8d7a89dcc1aa2b81dd7d41efde8e61f64b6c6e3aa0c7b1553",
+        "commandSha256": "7809b470c374b67358e18d1d201f85f32ca885e1589e901e337caff8528e6911",
+        "outputSha256": "356dcbcd9e611b95470330aa990a9facca112d63165a39cf1982e6448f8375c0",
+        "exitCode": 1,
+        "durationMs": 858,
+        "testFingerprint": "231315e46c184fc4ea17358a51c18a4c1895d431016baf3d300f073aaae6ca10",
+        "sourceFingerprint": "eb9bb9ed87ccda35860da700527002eb6fc3ed17c2b60b627b953b977a2f4af9",
+        "executionId": "e4a90ee1-cebc-422d-a1d6-29a5dbb09cc4",
+        "recordedAt": "2026-09-11T11:34:07.173Z",
+        "diagnostics": [],
+        "order": 8
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "f4dc934a545b3fa28e038c0b02941b38fef20ab965ffb804465867c2c13a67fc",
+        "commandSha256": "7809b470c374b67358e18d1d201f85f32ca885e1589e901e337caff8528e6911",
+        "outputSha256": "356dcbcd9e611b95470330aa990a9facca112d63165a39cf1982e6448f8375c0",
+        "exitCode": 0,
+        "durationMs": 856,
+        "testFingerprint": "231315e46c184fc4ea17358a51c18a4c1895d431016baf3d300f073aaae6ca10",
+        "sourceFingerprint": "c23a89a2e963faef3953932f347f24e40de87e9169cb812f8f7a8903525ec1c7",
+        "executionId": "f9b2fa6e-e2c2-4b25-900d-4c1e6fc68b68",
+        "recordedAt": "2026-09-11T11:34:29.272Z",
+        "diagnostics": [],
+        "order": 10
+      }
+    },
+    {
+      "cycleId": "62fbf3cf-4b7f-46e9-b943-ebc420abafd5",
+      "requirementId": "REQ-MULTIUSER-001",
+      "testId": "TEST-AIRA2-AUTH-004",
+      "testPath": "src/auth/login.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "90ade7541932b91490afa7046cedfd3c06ce3c75920ca8828e042a9d06967931",
+        "commandSha256": "a023e70725dac0e9b337a780c8e596d83fd5a8a3579ac90e0b50e04171639e87",
+        "outputSha256": "2ffc85213ca293885535f2cbe6d9eb30bc6133110bb89662187de93e25a24b78",
+        "exitCode": 1,
+        "durationMs": 805,
+        "testFingerprint": "908bec4cf2abf2334a0eaac882f8c007f94325e29966d0de16f2a4b44b4fa8ac",
+        "sourceFingerprint": "eb9bb9ed87ccda35860da700527002eb6fc3ed17c2b60b627b953b977a2f4af9",
+        "executionId": "889c2f07-de65-40c9-a078-9a35be2f44dc",
+        "recordedAt": "2026-09-11T11:34:06.103Z",
+        "diagnostics": [],
+        "order": 9
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "8e7bc972f9307164077684b434529d6f85c32afeef50123032b40a6329eacf29",
+        "commandSha256": "a023e70725dac0e9b337a780c8e596d83fd5a8a3579ac90e0b50e04171639e87",
+        "outputSha256": "2ffc85213ca293885535f2cbe6d9eb30bc6133110bb89662187de93e25a24b78",
+        "exitCode": 0,
+        "durationMs": 923,
+        "testFingerprint": "908bec4cf2abf2334a0eaac882f8c007f94325e29966d0de16f2a4b44b4fa8ac",
+        "sourceFingerprint": "c23a89a2e963faef3953932f347f24e40de87e9169cb812f8f7a8903525ec1c7",
+        "executionId": "4d7b74a1-910a-412b-bfb4-aac2daa83f4b",
+        "recordedAt": "2026-09-11T11:34:30.807Z",
+        "diagnostics": [],
+        "order": 11
+      }
     }
   ],
   "chain": [
@@ -136,6 +222,54 @@
       "phaseEvidenceSha256": "4fc4dcbcd5cda0e34a1a2fc6c955afa6ecc392a9d4f2da1deddeba489918732b",
       "previousSha256": "78468d8f6a55741daf9f13306fdf2b04df4af50479ecb7871299db0e8f57208b",
       "recordSha256": "394e362ce83ad936b5d256b0ce9563173dfbf94da59bea95d3edb895e51b54ad"
+    },
+    {
+      "sequence": 5,
+      "cycleId": "08dec8f3-82ab-4799-88bf-0c2fe7e44a4e",
+      "requirementId": "REQ-MULTIUSER-007",
+      "testId": "TEST-AIRA2-AUTH-003",
+      "testPath": "src/auth/login.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "3db938ed3a433db9b602ca690db00d9efcd423cfcf9778d320794de2d65a09d2",
+      "previousSha256": "394e362ce83ad936b5d256b0ce9563173dfbf94da59bea95d3edb895e51b54ad",
+      "recordSha256": "1dffa86a110f84843a0872963f8b01e809673feee44bb58fc24aa69d41f9dd1e"
+    },
+    {
+      "sequence": 6,
+      "cycleId": "62fbf3cf-4b7f-46e9-b943-ebc420abafd5",
+      "requirementId": "REQ-MULTIUSER-001",
+      "testId": "TEST-AIRA2-AUTH-004",
+      "testPath": "src/auth/login.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "86628fbdc1f9eaff1fd36705bf77c0f4e263014852d6377e1847db66df4a402b",
+      "previousSha256": "1dffa86a110f84843a0872963f8b01e809673feee44bb58fc24aa69d41f9dd1e",
+      "recordSha256": "c06b8f986c5004b4925db853475c21e04e97a5f0720eb49860514adcf79dbce0"
+    },
+    {
+      "sequence": 7,
+      "cycleId": "08dec8f3-82ab-4799-88bf-0c2fe7e44a4e",
+      "requirementId": "REQ-MULTIUSER-007",
+      "testId": "TEST-AIRA2-AUTH-003",
+      "testPath": "src/auth/login.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "0c8736b179e89bba7e072d4cd1abeb4ab0c9e1b9eef33b0df048a6a8f05efadd",
+      "previousSha256": "c06b8f986c5004b4925db853475c21e04e97a5f0720eb49860514adcf79dbce0",
+      "recordSha256": "8a28838977fe473b592732305421dfce453e8a3df9d7ad52c66e5a97d24829ef"
+    },
+    {
+      "sequence": 8,
+      "cycleId": "62fbf3cf-4b7f-46e9-b943-ebc420abafd5",
+      "requirementId": "REQ-MULTIUSER-001",
+      "testId": "TEST-AIRA2-AUTH-004",
+      "testPath": "src/auth/login.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "49a3a36553772b06cb6cb8e7b2c2a0885c8ac31a30c986c8bb0b3b6466cd3a58",
+      "previousSha256": "8a28838977fe473b592732305421dfce453e8a3df9d7ad52c66e5a97d24829ef",
+      "recordSha256": "bb0a1023d97f3488b3a121c854b1a8d6e9b1e94a792f150f818a95d6fe6fb239"
     }
   ]
 }
