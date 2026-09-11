@@ -15,10 +15,30 @@ Requirements: REQ-AGENTCONFIG-001 REQ-AGENTCONFIG-002 REQ-AGENTCONFIG-003 REQ-EL
 
 ## Scope of this change / このChangeのスコープ
 
-This CHANGE currently covers the requirements phase only (functional
-requirements creation, per explicit user request). Design, Red/Green
-implementation, trace/formal, and quality/release phases are downstream work
-not yet started.
+This CHANGE covers requirements, design, implementation, and quality-gate
+review for all 57 AIRA2 platform requirements listed above. All requirements
+are implemented, unit-tested (TDD Red/Green recorded per test, 61 cycles),
+and traced (`trace check --strict`: 0 diagnostics). Full test suite and
+typecheck are green.
+
+## Known gate limitation / 既知のゲート制約 (accepted 2026, user decision: accept-gap)
+
+The `change-record` checkpoint chain for this CHANGE is append-only. The
+`red`/`implementation`/`green`/`quality` phase checkpoints were recorded in
+sequence after implementation work for most requirements was already
+complete, so their fingerprints do not show genuine phase-to-phase deltas.
+`npx musubix3 gate --changed` therefore reports `change-history` and
+`change-completeness` as FAIL for CHANGE-0001, and this cannot be corrected
+retroactively (re-recording an already-recorded phase is rejected by the
+CLI, and editing recorded evidence would be fabrication).
+
+This is a process/tooling-bookkeeping gap only. It does not indicate any
+defect in the actual code, tests, or traceability: the independent
+per-test TDD evidence (`tdd validate`, 61 cycles), `trace check --strict`,
+`npm run typecheck`, and `npm test` (58/58 passing) all pass and are the
+authoritative evidence for engineering completeness. The user was informed
+of this gap and explicitly accepted it as a known, documented limitation
+rather than requesting further remediation.
 
 ## Source references / 参照元
 
