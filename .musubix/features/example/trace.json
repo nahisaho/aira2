@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T21:54:18.156Z",
+  "generatedAt": "2026-09-11T23:03:07.933Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -953,6 +953,18 @@
       "kind": "code",
       "path": "src/llm/gateway.ts",
       "line": 68
+    },
+    {
+      "id": "TEST-EXAMPLE-001",
+      "kind": "test",
+      "path": "src/readiness/readiness.test.ts",
+      "line": 4
+    },
+    {
+      "id": "CODE-EXAMPLE-001",
+      "kind": "code",
+      "path": "src/readiness/readiness.ts",
+      "line": 14
     },
     {
       "id": "TEST-AIRA2-VAULT-001",
@@ -2199,6 +2211,21 @@
       "relation": "implements"
     },
     {
+      "from": "TEST-EXAMPLE-001",
+      "to": "REQ-EXAMPLE-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-EXAMPLE-001",
+      "to": "REQ-EXAMPLE-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-EXAMPLE-001",
+      "to": "DES-EXAMPLE-001",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-AIRA2-VAULT-001",
       "to": "REQ-LLMBACKEND-003",
       "relation": "verifies"
@@ -2381,6 +2408,8 @@
     "src/llm/adapters.ts": "3a58add7b1ef48c05b8c8a8b29ab5d518c7b2bb147a88b991b58aab7f62d79f1",
     "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
     "src/llm/gateway.ts": "f92a386fad226df3961fccfb375653d749bef6ec7d6bedc9359c273ac1090de3",
+    "src/readiness/readiness.test.ts": "eb5dc040b2d5e5689aab6682e365e4d3ac34522fe6c5633d74f6ae4dd2d3020d",
+    "src/readiness/readiness.ts": "abe2e72545b6e80333d7ba7fd2a128f2ed24d133f4850048e7b109e2a6aa3103",
     "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
     "src/vault/credential-vault.ts": "bcbc4a9793c4d0de363a1a45c1df4ebece35d69ece55f0bdd71c82ff8d51a7a4",
     "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",

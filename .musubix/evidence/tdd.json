@@ -2550,6 +2550,49 @@
         "diagnostics": [],
         "order": 120
       }
+    },
+    {
+      "cycleId": "6fffcab2-3671-4ec8-be0a-55afa1c5022a",
+      "requirementId": "REQ-EXAMPLE-001",
+      "testId": "TEST-EXAMPLE-001",
+      "testPath": "src/readiness/readiness.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "6d2be084f6633da611d6928f33f1b32bca22b9584b6ec686a9de5e0bb9c02a59",
+        "commandSha256": "52c44170d6e7c6ddf9c66817228e307ecc003f9eda45ac39de015c3934b727cd",
+        "outputSha256": "7d4adc80e4a0790b53fc4c7b39bc51ce75558fa56af0acd904689b07b5fc8cdb",
+        "exitCode": 1,
+        "durationMs": 1017,
+        "testFingerprint": "25ae6ead30993e565fa1c7a7518e4482decdd9497aa48e4d7ac2b84e968fdbf2",
+        "sourceFingerprint": "4ef5040eb887fd3871b771f25bea3d3650a968fb0deec51f60bc6aeac9aa6fb9",
+        "executionId": "3c444965-0cd8-4a92-8639-4543aa1d906f",
+        "recordedAt": "2026-09-11T23:02:49.151Z",
+        "diagnostics": [],
+        "order": 121
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "a975b91dbe81a71b3199c671135748e1a2fe1ea4f115c861d149c02d0960d319",
+        "commandSha256": "52c44170d6e7c6ddf9c66817228e307ecc003f9eda45ac39de015c3934b727cd",
+        "outputSha256": "7d4adc80e4a0790b53fc4c7b39bc51ce75558fa56af0acd904689b07b5fc8cdb",
+        "exitCode": 0,
+        "durationMs": 885,
+        "testFingerprint": "25ae6ead30993e565fa1c7a7518e4482decdd9497aa48e4d7ac2b84e968fdbf2",
+        "sourceFingerprint": "ae12bbab0400158a7b644ae4eebf91518e8bcf6a4742d57e0eba51e44ece08c7",
+        "executionId": "ec16b1c7-5840-4510-a301-7c511290aafa",
+        "recordedAt": "2026-09-11T23:03:04.325Z",
+        "diagnostics": [],
+        "order": 122
+      }
     }
   ],
   "chain": [
@@ -3956,6 +3999,30 @@
       "phaseEvidenceSha256": "f0feaa6df6ca6474c4d325b748b5ae2009f7b86426d1bd20e4641458b87e6fbf",
       "previousSha256": "caa72d508b7869c7b1c441c6eaf0f2e2554a70d0e23a1b522c20a5f756f00418",
       "recordSha256": "e4b78efc7987f0ce5086407d1d08f0d4655ef3ed681306ddc7125d64ea3c0254"
+    },
+    {
+      "sequence": 118,
+      "cycleId": "6fffcab2-3671-4ec8-be0a-55afa1c5022a",
+      "requirementId": "REQ-EXAMPLE-001",
+      "testId": "TEST-EXAMPLE-001",
+      "testPath": "src/readiness/readiness.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "3a7c9d7b1ca5025a211ad8e115c77c766e6579f05cbc9844113752367215dfc5",
+      "previousSha256": "e4b78efc7987f0ce5086407d1d08f0d4655ef3ed681306ddc7125d64ea3c0254",
+      "recordSha256": "8cc9fa1f2ce39e71329880694b47168f4b407abc6f758991bc30a945e9ef6e3e"
+    },
+    {
+      "sequence": 119,
+      "cycleId": "6fffcab2-3671-4ec8-be0a-55afa1c5022a",
+      "requirementId": "REQ-EXAMPLE-001",
+      "testId": "TEST-EXAMPLE-001",
+      "testPath": "src/readiness/readiness.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "d220491d8dd979f5c07d0ff236925b72890964ff718a4eb6ba4b5f31bc35b7b5",
+      "previousSha256": "8cc9fa1f2ce39e71329880694b47168f4b407abc6f758991bc30a945e9ef6e3e",
+      "recordSha256": "1b4d27fd25b0491da8288209920bca1c4456f5dc52d47fd5450a8a3d8cd3b6fd"
     }
   ]
 }
