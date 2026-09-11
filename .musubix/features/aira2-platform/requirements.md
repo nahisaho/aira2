@@ -424,6 +424,85 @@ Pattern: optional-feature
 Statement: Where a user has access to multiple projects' Graph RAG databases, the system shall optionally support a federated query merging ranked results from each accessible database via Reciprocal Rank Fusion.
 Acceptance: A test issues a federated query across two accessible project databases and confirms the merged result set contains entries from both, ranked by RRF score.
 
+## 7. Runnable server & persistence / 起動可能サーバーと永続化
+
+### REQ-RUNTIME-001: Startable HTTP server / 起動可能なHTTPサーバー
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall be startable as a single HTTP server process via a documented npm command (`npm run server:start`), exposing a REST API and serving the web single-page application on the configured port.
+Acceptance: A test starts the server with the documented command and confirms it accepts a request to `/` returning the SPA's root document within 5 seconds of process start.
+
+### REQ-RUNTIME-006: Health-check endpoint / ヘルスチェックエンドポイント
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall expose a `GET /healthz` endpoint that returns HTTP 200 with body `{"status":"ok"}` once server startup has completed.
+Acceptance: A test starts the server, polls `GET /healthz` until it returns HTTP 200 with body `{"status":"ok"}`, and confirms this occurs within 5 seconds of process start.
+
+### REQ-RUNTIME-002: Durable persistence across restarts / 再起動をまたぐ永続化
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall persist, in a SQLite-backed store that survives a process restart, all state required to preserve every existing requirement's pre-restart behavior: user accounts and roles, LLM provider credentials, per-user default backend/model selections, and project-level backend overrides (REQ-LLMBACKEND-002..005/008), project membership/shares/authorization state and the per-user audit log (REQ-MULTIUSER-002..006/009..012), ELN records/protocols/versions/signatures/audit trails (REQ-ELN-*), per-project Agent Skills/MCP configuration (REQ-AGENTCONFIG-*), and each project's Graph RAG indexed vector/graph data sufficient to answer a previously indexed query (REQ-GRAPHRAG-001..003/013..015), not merely index metadata.
+Acceptance: A test creates a user, a credential, a signed ELN record, a project share (producing an audit-log entry per REQ-MULTIUSER-006), an Agent Skills/MCP configuration, and a Graph RAG-indexed document; restarts the server process; and confirms all of the following are unchanged and functional after restart: the user/credential/share/configuration are retrievable, the audit-log entry is intact, the ELN record's signature and audit trail are intact, and a Graph RAG query against the pre-restart indexed document returns a correctly cited result without re-indexing.
+
+### REQ-RUNTIME-003: REST API backing the GUI / GUIを支えるREST API
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall expose a REST API with operation groups for authentication/session (REQ-MULTIUSER-001/007), LLM backend/credential settings (REQ-LLMBACKEND-001..008), ELN records/signatures/audit history (REQ-ELN-*), Graph RAG indexing/query (REQ-GRAPHRAG-*), project membership/sharing/roles (REQ-MULTIUSER-002..005/009..012), per-project Agent Skills/MCP configuration (REQ-AGENTCONFIG-001..003), and chat/agent execution (REQ-RUNTIME-011).
+Acceptance: For each operation group, a test issues an authorized HTTP request and confirms the documented success response.
+
+### REQ-RUNTIME-007: REST API authorization enforcement / REST APIの認可強制
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall enforce, for every REST API request defined in REQ-RUNTIME-003 other than a request to establish or restore a session (login, registration, OAuth/OIDC callback), the same authentication and authorization-matrix rules already required of the in-process modules (REQ-MULTIUSER-003/011).
+Acceptance: For each operation group in REQ-RUNTIME-003, a test issues an equivalent request as an unauthorized or wrong-role caller and confirms the API returns an authorization-error HTTP status without performing the action.
+
+### REQ-RUNTIME-011: Chat/agent execution / チャット・エージェント実行
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall provide a chat interaction area where an authenticated user sends a message that is routed to the effective LLM backend and credentials determined for that user/project by REQ-LLMBACKEND-002 through REQ-LLMBACKEND-008, returning that backend's response.
+Acceptance: A test sends a chat message as an authenticated project member with no project override and confirms the response comes from that user's personal default backend; a test sets a project-level backend override and confirms a subsequent chat message from a different member of that project is routed to the override backend instead.
+
+### REQ-RUNTIME-004: Real-rendering web SPA / 実描画Web SPA
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall provide a React-based single-page application that renders, in a browser, the authentication (REQ-GUI-001), LLM settings (REQ-GUI-002), ELN (REQ-GUI-003), Graph RAG (REQ-GUI-004), projects, and chat (REQ-RUNTIME-011) screens by calling the REST API defined in REQ-RUNTIME-003, with the shared visual design of REQ-GUI-005 applied across all six.
+Acceptance: A test loads each of the six screens in a browser test environment and confirms visible DOM output reflecting live REST API data, not a stub or placeholder.
+
+### REQ-RUNTIME-008: SPA is the sole deployed UI / SPAのみが唯一の配布UI
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If the server is deployed, then the system shall not serve or otherwise expose the prior minimal-contract (non-rendering) UI layer as an independently reachable route or build artifact.
+Acceptance: A test enumerates the deployed server's routes and build artifacts and confirms none serve the prior minimal-contract UI layer directly.
+
+### REQ-RUNTIME-005: Environment-based configuration / 環境変数による設定
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall read `PORT` (default `3000`), `AIRA2_DB_PATH` (default `./data/aira2.sqlite`), and per-provider administrator shared LLM credential variables (`AIRA2_SHARED_CREDENTIAL_<PROVIDER>`, absent by default, never defaulted to a built-in secret) from environment variables at startup.
+Acceptance: A test starts the server with no environment variables set and confirms `PORT=3000`, `AIRA2_DB_PATH=./data/aira2.sqlite`, and no administrator shared credential exist; a test sets each variable and restarts, confirming the overridden value takes effect.
+
+### REQ-RUNTIME-009: Environment credential bootstrap into encrypted store / 環境変数認証情報の暗号化ストアへの取り込み
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When an `AIRA2_SHARED_CREDENTIAL_<PROVIDER>` environment variable is present at startup and no administrator shared credential is yet stored for that provider, the system shall write its value into the encrypted SQLite credential store (REQ-LLMBACKEND-005) as that provider's administrator shared credential.
+Acceptance: A test starts the server with an `AIRA2_SHARED_CREDENTIAL_<PROVIDER>` variable set and no prior stored credential for that provider, and confirms the encrypted SQLite store contains a corresponding administrator shared credential for that provider immediately after startup.
+
+### REQ-RUNTIME-010: Stored shared credential never overwritten by environment / 保存済み共有認証情報を環境変数で上書きしない
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If an administrator shared credential is already stored for a provider, then the system shall not overwrite it with that provider's `AIRA2_SHARED_CREDENTIAL_<PROVIDER>` environment value on startup, regardless of whether the environment value has changed.
+Acceptance: A test bootstraps a shared credential from an environment variable, updates it via the API to a different value, restarts the server with the environment variable changed to a third value, and confirms the API-set (second) value remains in effect rather than the environment value.
+
 ## Notes / 注記
 
 - Design phase must define the authorization matrix referenced by REQ-MULTIUSER-009/011

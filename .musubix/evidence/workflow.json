@@ -40,6 +40,31 @@
       "phase": "complete",
       "status": "completed",
       "recordedAt": "2026-09-11T11:29:17.550Z"
+    },
+    {
+      "skill": "sdd-quality",
+      "version": "0.1.8",
+      "provenance": "self-reported",
+      "phase": "complete",
+      "status": "completed",
+      "reason": "Engineering evidence 100% green (58/58 tests, trace, tdd 61 cycles, typecheck); change-history/change-completeness accepted as documented known gap per user decision; release approval not requested since required checks remain failing",
+      "recordedAt": "2026-09-11T23:27:36.798Z"
+    },
+    {
+      "skill": "sdd-requirements",
+      "version": "0.1.8",
+      "provenance": "self-reported",
+      "phase": "complete",
+      "status": "completed",
+      "recordedAt": "2026-09-11T23:44:37.236Z"
+    },
+    {
+      "skill": "sdd-requirements",
+      "version": "0.1.8",
+      "provenance": "self-reported",
+      "phase": "complete",
+      "status": "completed",
+      "recordedAt": "2026-09-11T23:55:33.385Z"
     }
   ]
 }
