@@ -1,0 +1,415 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-11T07:01:27.623Z",
+  "nodes": [
+    {
+      "id": "ADR-0001",
+      "kind": "adr",
+      "path": ".musubix/decisions/ADR-0001.md",
+      "line": 1
+    },
+    {
+      "id": "REQ-MULTIUSER-001",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 18,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-007",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 25,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-002",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 32,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-003",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 39,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-004",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 46,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-005",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 53,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-006",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 60,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-008",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 67,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-MULTIUSER-009",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 74,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-LLMBACKEND-001",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 83,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-LLMBACKEND-002",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 90,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-LLMBACKEND-003",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 97,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-LLMBACKEND-004",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 104,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-LLMBACKEND-005",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 111,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-LLMBACKEND-007",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 118,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-LLMBACKEND-006",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 125,
+      "mandatory": false
+    },
+    {
+      "id": "REQ-LLMBACKEND-008",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 132,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GUI-001",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 141,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GUI-002",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 148,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GUI-003",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 155,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GUI-004",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 162,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GUI-005",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 169,
+      "mandatory": false
+    },
+    {
+      "id": "REQ-ELN-001",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 178,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-002",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 185,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-003",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 192,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-019",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 199,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-004",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 206,
+      "mandatory": false
+    },
+    {
+      "id": "REQ-ELN-005",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 213,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-011",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 220,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-013",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 227,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-014",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 234,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-006",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 241,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-016",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 248,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-017",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 255,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-018",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 262,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-007",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 269,
+      "mandatory": false
+    },
+    {
+      "id": "REQ-ELN-012",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 276,
+      "mandatory": false
+    },
+    {
+      "id": "REQ-ELN-008",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 283,
+      "mandatory": false
+    },
+    {
+      "id": "REQ-ELN-009",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 290,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-010",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 297,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-ELN-015",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 304,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-AGENTCONFIG-001",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 313,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-AGENTCONFIG-002",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 320,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-AGENTCONFIG-003",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 327,
+      "mandatory": false
+    },
+    {
+      "id": "REQ-GRAPHRAG-001",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 336,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-006",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 343,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-002",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 350,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-003",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 357,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-013",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 364,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-004",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 371,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-014",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 378,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-015",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 385,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-GRAPHRAG-005",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 392,
+      "mandatory": false
+    },
+    {
+      "id": "DES-EXAMPLE-001",
+      "kind": "design",
+      "path": ".musubix/features/example/design.md",
+      "line": 7
+    },
+    {
+      "id": "REQ-EXAMPLE-001",
+      "kind": "requirement",
+      "path": ".musubix/features/example/requirements.md",
+      "line": 10,
+      "mandatory": true
+    }
+  ],
+  "edges": [
+    {
+      "from": "DES-EXAMPLE-001",
+      "to": "REQ-EXAMPLE-001",
+      "relation": "satisfies"
+    },
+    {
+      "from": "ADR-0001",
+      "to": "DES-EXAMPLE-001",
+      "relation": "decides"
+    }
+  ],
+  "diagnostics": [],
+  "fingerprints": {
+    ".musubix/decisions/ADR-0001.md": "6e21f1b375cfa1aabdf058b1dc987f94974dc23571fe60e94ba340dc48295b0f",
+    ".musubix/features/aira2-platform/requirements.md": "4940ee6e4d5f4a83f617dc8423faf82be0cbb4ebb1375592bb6e948ce4c6318c",
+    ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
+    ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
+  }
+}

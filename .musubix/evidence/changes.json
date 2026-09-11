@@ -1,0 +1,519 @@
+{
+  "schemaVersion": 1,
+  "changes": [
+    {
+      "changeId": "CHANGE-0001",
+      "requirementIds": [
+        "REQ-AGENTCONFIG-001",
+        "REQ-AGENTCONFIG-002",
+        "REQ-AGENTCONFIG-003",
+        "REQ-ELN-001",
+        "REQ-ELN-002",
+        "REQ-ELN-003",
+        "REQ-ELN-004",
+        "REQ-ELN-005",
+        "REQ-ELN-006",
+        "REQ-ELN-007",
+        "REQ-ELN-008",
+        "REQ-ELN-009",
+        "REQ-ELN-010",
+        "REQ-ELN-011",
+        "REQ-ELN-012",
+        "REQ-ELN-013",
+        "REQ-ELN-014",
+        "REQ-ELN-015",
+        "REQ-ELN-016",
+        "REQ-ELN-017",
+        "REQ-ELN-018",
+        "REQ-ELN-019",
+        "REQ-GRAPHRAG-001",
+        "REQ-GRAPHRAG-002",
+        "REQ-GRAPHRAG-003",
+        "REQ-GRAPHRAG-004",
+        "REQ-GRAPHRAG-005",
+        "REQ-GRAPHRAG-006",
+        "REQ-GRAPHRAG-013",
+        "REQ-GRAPHRAG-014",
+        "REQ-GRAPHRAG-015",
+        "REQ-GUI-001",
+        "REQ-GUI-002",
+        "REQ-GUI-003",
+        "REQ-GUI-004",
+        "REQ-GUI-005",
+        "REQ-LLMBACKEND-001",
+        "REQ-LLMBACKEND-002",
+        "REQ-LLMBACKEND-003",
+        "REQ-LLMBACKEND-004",
+        "REQ-LLMBACKEND-005",
+        "REQ-LLMBACKEND-006",
+        "REQ-LLMBACKEND-007",
+        "REQ-LLMBACKEND-008",
+        "REQ-MULTIUSER-001",
+        "REQ-MULTIUSER-002",
+        "REQ-MULTIUSER-003",
+        "REQ-MULTIUSER-004",
+        "REQ-MULTIUSER-005",
+        "REQ-MULTIUSER-006",
+        "REQ-MULTIUSER-007",
+        "REQ-MULTIUSER-008",
+        "REQ-MULTIUSER-009"
+      ],
+      "phases": {
+        "impact": {
+          "phase": "impact",
+          "order": 1,
+          "recordedAt": "2026-09-11T07:01:11.379Z",
+          "fingerprints": {
+            "impact": "8365aec8b38a8f4b4699fda22cd962870dde8457afc7c51a85f4809037a41969",
+            "requirements": "ff0894290a42e88fb44a9ff534c4be0c520f43a7ab11f06ff0108b453c935fbe",
+            "design": "834e3edb363eda9011dfb2ee52e2d57a6b209412c415aac621cb88f959dee3a0",
+            "implementation": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "tests": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "tdd": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "requirementImplementations": {
+              "REQ-AGENTCONFIG-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-AGENTCONFIG-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-AGENTCONFIG-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-009": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-010": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-011": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-012": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-013": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-014": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-015": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-016": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-017": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-018": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-019": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-013": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-014": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-015": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-009": {
+                "paths": [],
+                "fingerprints": {}
+              }
+            }
+          }
+        },
+        "requirements": {
+          "phase": "requirements",
+          "order": 2,
+          "recordedAt": "2026-09-11T07:01:27.606Z",
+          "fingerprints": {
+            "impact": "8365aec8b38a8f4b4699fda22cd962870dde8457afc7c51a85f4809037a41969",
+            "requirements": "3b7107fc3a9aa43139e6f9678143a566ac6a897cca5d83ca3358ff47e5013ded",
+            "design": "834e3edb363eda9011dfb2ee52e2d57a6b209412c415aac621cb88f959dee3a0",
+            "implementation": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "tests": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "tdd": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "requirementImplementations": {
+              "REQ-AGENTCONFIG-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-AGENTCONFIG-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-AGENTCONFIG-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-009": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-010": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-011": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-012": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-013": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-014": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-015": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-016": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-017": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-018": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-ELN-019": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-013": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-014": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GRAPHRAG-015": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-GUI-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-LLMBACKEND-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-MULTIUSER-009": {
+                "paths": [],
+                "fingerprints": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

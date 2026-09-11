@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "stage": "requirements",
+  "artifacts": {
+    ".musubix/constitution.md": "f8b47fdc486f395bab05223a94821b145cf8df70ffde2c838a28f8d71fe0fa92",
+    ".musubix/features/aira2-platform/requirements.md": "cbddf90a839164e0ceb7d7c44b565d0fe623fe75a5211ea562c58e8c4bb0e565",
+    ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
+  },
+  "artifactSha256": "61d0481250b903bc21ffaa1636a4a07efdc8118bf27adf89a79d0f0c26c6ff1a",
+  "approver": "Hisaho Nakata",
+  "approvedAt": "2026-09-11T07:10:18.924Z"
+}

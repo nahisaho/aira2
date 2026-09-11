@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sequence": 1,
+      "kind": "change",
+      "entityId": "CHANGE-0001",
+      "phase": "impact",
+      "previousSha256": null,
+      "recordSha256": "ec545a1ec04f251580a706cceb952a4cf40b017f1b3f1939e6cef7079e71cdcf"
+    },
+    {
+      "sequence": 2,
+      "kind": "change",
+      "entityId": "CHANGE-0001",
+      "phase": "requirements",
+      "previousSha256": "ec545a1ec04f251580a706cceb952a4cf40b017f1b3f1939e6cef7079e71cdcf",
+      "recordSha256": "d546226b6190faaa5034c4146bce593a0e9a29c50852bd6aa27a2427acaeb8c8"
+    }
+  ]
+}
