@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:52:41.712Z",
+  "generatedAt": "2026-09-11T11:56:15.433Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -625,6 +625,54 @@
       "line": 31
     },
     {
+      "id": "TEST-AIRA2-APPROVAL-001",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 38
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-002",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 55
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-003",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 87
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-004",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 124
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-005",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 159
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-006",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 183
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-007",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 227
+    },
+    {
+      "id": "CODE-AIRA2-ELN-003",
+      "kind": "code",
+      "path": "src/eln/approval-signature-service.ts",
+      "line": 30
+    },
+    {
       "id": "TEST-AIRA2-ELN-001",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
@@ -664,7 +712,7 @@
       "id": "CODE-AIRA2-ELN-002",
       "kind": "code",
       "path": "src/eln/eln-core-service.ts",
-      "line": 72
+      "line": 74
     },
     {
       "id": "TEST-AIRA2-ELN-003",
@@ -1461,6 +1509,81 @@
       "relation": "implements"
     },
     {
+      "from": "TEST-AIRA2-APPROVAL-001",
+      "to": "REQ-ELN-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-APPROVAL-002",
+      "to": "REQ-ELN-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-APPROVAL-003",
+      "to": "REQ-ELN-016",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-APPROVAL-004",
+      "to": "REQ-ELN-017",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-APPROVAL-005",
+      "to": "REQ-ELN-018",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-APPROVAL-006",
+      "to": "REQ-ELN-010",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-APPROVAL-007",
+      "to": "REQ-ELN-015",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-ELN-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-ELN-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-ELN-010",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-ELN-015",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-ELN-016",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-ELN-017",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-ELN-018",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
+      "to": "DES-AIRA2-007",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-AIRA2-ELN-001",
       "to": "REQ-ELN-001",
       "relation": "verifies"
@@ -1792,8 +1915,10 @@
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
     "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
     "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
+    "src/eln/approval-signature-service.test.ts": "149b8be05bc7ac45d15642ca5dd0d9e06d51568eeb7e10cf7af12534fdaab9c9",
+    "src/eln/approval-signature-service.ts": "1952fd6c583893c65d9a46cc7ee59126e7cfba8f8dc041435a4007167d23383b",
     "src/eln/eln-core-service.test.ts": "c39a88855275037445902cfb5b68a97e6a32f5c099013394b2e70898ea448a5d",
-    "src/eln/eln-core-service.ts": "aeb9b8912df4e12362e7a8ddd89f7ff4ffd2d2ed458dea3b5403544cc055724a",
+    "src/eln/eln-core-service.ts": "78dcb7c70a97de4be2b3e61d35b61195a8c0818a1ea183974522d44231c195ea",
     "src/eln/protocol-store.test.ts": "9f7e27730411bb2778b46706d42058f0f34fd4f28b4b9eb0abc6269c7448d059",
     "src/eln/protocol-store.ts": "b3404acdbbce059ed871334b709c1901cb43dd63148c5a45a7ed1ae893c8330d",
     "src/eln-audit/integrity-subsystem.test.ts": "ff88c32081fa388e26f8138ccc8333317ef463392abb18befa383b8e936a5578",

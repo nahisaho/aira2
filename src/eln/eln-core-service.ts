@@ -39,6 +39,7 @@ interface ExperimentRecordEntry {
   versions: ExperimentRecordVersion[];
   inventoryLinks: InventoryLink[];
   provenance: ProvenanceLink | null;
+  voided: boolean;
 }
 
 export interface ExperimentRecordHistory {
@@ -46,6 +47,7 @@ export interface ExperimentRecordHistory {
   versions: ExperimentRecordVersion[];
   inventoryLinks: InventoryLink[];
   provenance: ProvenanceLink | null;
+  voided: boolean;
 }
 
 export interface SearchCriteria {
@@ -136,6 +138,7 @@ export class ElnCoreService {
       versions: [version],
       inventoryLinks: [],
       provenance: null,
+      voided: false,
     });
     this.ledger.appendAuditEntry(tx, 'create', projectId, 'record', version.recordVersionId, actor.accountId);
     tx.commit();
@@ -180,6 +183,7 @@ export class ElnCoreService {
       versions: entry.versions,
       inventoryLinks: entry.inventoryLinks,
       provenance: entry.provenance,
+      voided: entry.voided,
     };
   }
 
@@ -204,7 +208,19 @@ export class ElnCoreService {
     return this.getEntry(recordId).provenance;
   }
 
+  /** Marks a record as voided without deleting any content, version, or
+   * provenance/inventory data; callers (DES-AIRA2-007) must perform their
+   * own authorization/audit before invoking this. */
+  markVoided(recordId: string): void {
+    this.getEntry(recordId).voided = true;
+  }
+
+  isVoided(recordId: string): boolean {
+    return this.getEntry(recordId).voided;
+  }
+
   private matches(entry: ExperimentRecordEntry, criteria: SearchCriteria): ExperimentRecordVersion | null {
+    if (entry.voided) return null;
     if (entry.projectId !== criteria.projectId) return null;
     const latest = entry.versions[entry.versions.length - 1]!;
     if (criteria.protocolVersionId && latest.protocolVersionId !== criteria.protocolVersionId) return null;
