@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:49:11.558Z",
+  "generatedAt": "2026-09-11T11:52:41.712Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -623,6 +623,60 @@
       "kind": "code",
       "path": "src/authz/self-scope.ts",
       "line": 31
+    },
+    {
+      "id": "TEST-AIRA2-ELN-001",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 27
+    },
+    {
+      "id": "TEST-AIRA2-ELN-002",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 46
+    },
+    {
+      "id": "TEST-AIRA2-ELN-004",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 70
+    },
+    {
+      "id": "TEST-AIRA2-ELN-005",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 93
+    },
+    {
+      "id": "TEST-AIRA2-ELN-006",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 115
+    },
+    {
+      "id": "TEST-AIRA2-ELN-007",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 146
+    },
+    {
+      "id": "CODE-AIRA2-ELN-002",
+      "kind": "code",
+      "path": "src/eln/eln-core-service.ts",
+      "line": 72
+    },
+    {
+      "id": "TEST-AIRA2-ELN-003",
+      "kind": "test",
+      "path": "src/eln/protocol-store.test.ts",
+      "line": 4
+    },
+    {
+      "id": "CODE-AIRA2-ELN-001",
+      "kind": "code",
+      "path": "src/eln/protocol-store.ts",
+      "line": 20
     },
     {
       "id": "TEST-AIRA2-AUDIT-003",
@@ -1407,6 +1461,96 @@
       "relation": "implements"
     },
     {
+      "from": "TEST-AIRA2-ELN-001",
+      "to": "REQ-ELN-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-002",
+      "to": "REQ-ELN-002",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-004",
+      "to": "REQ-ELN-019",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-005",
+      "to": "REQ-ELN-007",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-005",
+      "to": "REQ-ELN-012",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-006",
+      "to": "REQ-ELN-008",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-007",
+      "to": "REQ-ELN-009",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-ELN-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-ELN-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-ELN-019",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-ELN-007",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-ELN-012",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-ELN-008",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-ELN-009",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
+      "to": "DES-AIRA2-005",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-003",
+      "to": "REQ-ELN-003",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-001",
+      "to": "REQ-ELN-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-001",
+      "to": "DES-AIRA2-005",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-AIRA2-AUDIT-003",
       "to": "REQ-ELN-013",
       "relation": "verifies"
@@ -1648,6 +1792,10 @@
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
     "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
     "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
+    "src/eln/eln-core-service.test.ts": "c39a88855275037445902cfb5b68a97e6a32f5c099013394b2e70898ea448a5d",
+    "src/eln/eln-core-service.ts": "aeb9b8912df4e12362e7a8ddd89f7ff4ffd2d2ed458dea3b5403544cc055724a",
+    "src/eln/protocol-store.test.ts": "9f7e27730411bb2778b46706d42058f0f34fd4f28b4b9eb0abc6269c7448d059",
+    "src/eln/protocol-store.ts": "b3404acdbbce059ed871334b709c1901cb43dd63148c5a45a7ed1ae893c8330d",
     "src/eln-audit/integrity-subsystem.test.ts": "ff88c32081fa388e26f8138ccc8333317ef463392abb18befa383b8e936a5578",
     "src/eln-audit/integrity-subsystem.ts": "bba748350fb723bcb6026d00590e049bafa4a1b3a92e076d01be79218c42baed",
     "src/eln-audit/ledger.test.ts": "ea18a1320d319bc3b5cd2ecb8e0752a217ed3ab5231532716643908cf8c06b86",
