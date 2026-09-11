@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-11T21:54:19.632Z",
+  "totalRequirements": 58,
+  "modeledRequirements": 8,
+  "modeledFraction": 0.13793103448275862,
+  "result": {
+    "valid": true,
+    "abstraction": "Consistency of explicit branch-scoped conditional, exact unit-normalized integer numeric, bounded temporal interval, deterministic state-transition, and controlled unconditional Boolean constraints; not implementation correctness.",
+    "assumptions": [
+      "Exact normalized subject/response pairs denote the same Boolean proposition.",
+      "Explicit Formal JSON fields use only their documented closed-world constraint semantics.",
+      "Temporal constraints model one nonnegative integer response delay in milliseconds within the intersection of declared afterMs/withinMs intervals, not scheduling or liveness.",
+      "Numeric ms/s/min values share an exact millisecond dimension; bytes/kib/mib values share an exact byte dimension; other and incompatible units remain separate.",
+      "State transitions require one target for each declared from-state/event pair; undeclared transitions are unconstrained.",
+      "Copilot supplies candidate requirements; deterministic checks do not establish their truth."
+    ],
+    "literals": [
+      {
+        "requirement": "REQ-MULTIUSER-007",
+        "atom": "[\"system\",\"present, at login, only the authentication methods enabled for that deployment as user-selectable options\"]",
+        "positive": true
+      },
+      {
+        "requirement": "REQ-MULTIUSER-010",
+        "atom": "[\"system\",\"permit an electronic signature to be applied only by a user account that is uniquely assigned to one natural person\"]",
+        "positive": true
+      },
+      {
+        "requirement": "REQ-MULTIUSER-012",
+        "atom": "[\"system\",\"preserve the original signer's identity on an electronically signed eln record regardless of any later access revocation for that signer\"]",
+        "positive": true
+      },
+      {
+        "requirement": "REQ-LLMBACKEND-003",
+        "atom": "[\"system\",\"let an administrator register shared api credentials per provider that are used as the default for users who have not configured their own credentials\"]",
+        "positive": true
+      },
+      {
+        "requirement": "REQ-LLMBACKEND-005",
+        "atom": "[\"system\",\"store all provider api credentials encrypted at rest\"]",
+        "positive": true
+      },
+      {
+        "requirement": "REQ-GRAPHRAG-006",
+        "atom": "[\"system\",\"supervise a project-isolated aira-graphdb process for each project with the built-in graph rag mcp server enabled, automatically restarting it after an unexpected exit\"]",
+        "positive": true
+      },
+      {
+        "requirement": "REQ-GRAPHRAG-013",
+        "atom": "[\"system\",\"return citations traceable to the source document for every graph rag query answer\"]",
+        "positive": true
+      },
+      {
+        "requirement": "REQ-EXAMPLE-001",
+        "atom": "[\"system\",\"report its readiness\"]",
+        "positive": true
+      }
+    ],
+    "constraints": [],
+    "unsupported": [
+      "REQ-MULTIUSER-001",
+      "REQ-MULTIUSER-002",
+      "REQ-MULTIUSER-003",
+      "REQ-MULTIUSER-004",
+      "REQ-MULTIUSER-005",
+      "REQ-MULTIUSER-006",
+      "REQ-MULTIUSER-008",
+      "REQ-MULTIUSER-009",
+      "REQ-MULTIUSER-011",
+      "REQ-LLMBACKEND-001",
+      "REQ-LLMBACKEND-002",
+      "REQ-LLMBACKEND-004",
+      "REQ-LLMBACKEND-007",
+      "REQ-LLMBACKEND-006",
+      "REQ-LLMBACKEND-008",
+      "REQ-GUI-001",
+      "REQ-GUI-002",
+      "REQ-GUI-003",
+      "REQ-GUI-004",
+      "REQ-GUI-005",
+      "REQ-ELN-001",
+      "REQ-ELN-002",
+      "REQ-ELN-003",
+      "REQ-ELN-019",
+      "REQ-ELN-004",
+      "REQ-ELN-005",
+      "REQ-ELN-011",
+      "REQ-ELN-013",
+      "REQ-ELN-014",
+      "REQ-ELN-020",
+      "REQ-ELN-006",
+      "REQ-ELN-016",
+      "REQ-ELN-017",
+      "REQ-ELN-018",
+      "REQ-ELN-007",
+      "REQ-ELN-012",
+      "REQ-ELN-008",
+      "REQ-ELN-009",
+      "REQ-ELN-010",
+      "REQ-ELN-015",
+      "REQ-AGENTCONFIG-001",
+      "REQ-AGENTCONFIG-002",
+      "REQ-AGENTCONFIG-003",
+      "REQ-GRAPHRAG-001",
+      "REQ-GRAPHRAG-002",
+      "REQ-GRAPHRAG-003",
+      "REQ-GRAPHRAG-004",
+      "REQ-GRAPHRAG-014",
+      "REQ-GRAPHRAG-015",
+      "REQ-GRAPHRAG-005"
+    ],
+    "diagnostics": [
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-006 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-008 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-009 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-MULTIUSER-011 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-LLMBACKEND-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-LLMBACKEND-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-LLMBACKEND-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-LLMBACKEND-007 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-LLMBACKEND-006 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-LLMBACKEND-008 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GUI-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GUI-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GUI-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GUI-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GUI-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-019 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-011 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-013 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-014 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-020 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-006 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-016 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-017 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-018 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-007 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-012 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-008 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-009 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-010 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-ELN-015 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-AGENTCONFIG-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-AGENTCONFIG-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-AGENTCONFIG-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GRAPHRAG-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GRAPHRAG-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GRAPHRAG-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GRAPHRAG-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GRAPHRAG-014 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GRAPHRAG-015 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-GRAPHRAG-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      }
+    ],
+    "consistency": "consistent",
+    "solver": {
+      "requested": "none",
+      "name": "none",
+      "command": "",
+      "version": "",
+      "status": "not-requested",
+      "durationMs": 0,
+      "output": "Solver execution disabled."
+    }
+  },
+  "fingerprints": {
+    ".musubix/features/aira2-platform/requirements.md": "cbddf90a839164e0ceb7d7c44b565d0fe623fe75a5211ea562c58e8c4bb0e565",
+    ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
+  }
+}

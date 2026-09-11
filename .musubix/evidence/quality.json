@@ -1,7 +1,993 @@
 {
   "schemaVersion": 1,
-  "status": "skipped",
-  "generatedAt": null,
-  "checks": [],
-  "reason": "No checks have run. Configure commands and run musubix3 gate."
+  "generatedAt": "2026-09-11T21:54:22.464Z",
+  "status": "fail",
+  "checks": [
+    {
+      "name": "policy",
+      "required": true,
+      "status": "pass",
+      "summary": "0 policy violation(s).",
+      "diagnostics": []
+    },
+    {
+      "name": "requirements",
+      "required": true,
+      "status": "pass",
+      "summary": "0 error(s).",
+      "diagnostics": []
+    },
+    {
+      "name": "design",
+      "required": true,
+      "status": "pass",
+      "summary": "0 error(s).",
+      "diagnostics": []
+    },
+    {
+      "name": "constitution",
+      "required": true,
+      "status": "pass",
+      "summary": "0 error(s).",
+      "diagnostics": []
+    },
+    {
+      "name": "trace",
+      "required": true,
+      "status": "fail",
+      "summary": "2 error(s).",
+      "diagnostics": [
+        {
+          "code": "TRACE_UNCOVERED",
+          "severity": "warning",
+          "message": "REQ-EXAMPLE-001 lacks implementation.",
+          "path": ".musubix/features/example/requirements.md",
+          "line": 10
+        },
+        {
+          "code": "TRACE_UNCOVERED",
+          "severity": "warning",
+          "message": "REQ-EXAMPLE-001 lacks tests.",
+          "path": ".musubix/features/example/requirements.md",
+          "line": 10
+        },
+        {
+          "code": "TRACE_COVERAGE",
+          "severity": "error",
+          "message": "implementation link coverage 0.98 is below 1."
+        },
+        {
+          "code": "TRACE_COVERAGE",
+          "severity": "error",
+          "message": "tests link coverage 0.98 is below 1."
+        }
+      ]
+    },
+    {
+      "name": "graph",
+      "required": true,
+      "status": "pass",
+      "summary": "0 error(s).",
+      "diagnostics": []
+    },
+    {
+      "name": "formal",
+      "required": false,
+      "status": "pass",
+      "summary": "8/58 requirements modeled; consistency consistent; solver not-requested.",
+      "diagnostics": [
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-006 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-008 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-009 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-011 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-LLMBACKEND-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-LLMBACKEND-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-LLMBACKEND-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-LLMBACKEND-007 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-LLMBACKEND-006 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-LLMBACKEND-008 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GUI-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GUI-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GUI-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GUI-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GUI-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-019 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-011 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-013 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-014 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-020 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-006 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-016 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-017 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-018 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-007 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-012 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-008 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-009 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-010 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-ELN-015 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-AGENTCONFIG-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-AGENTCONFIG-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-AGENTCONFIG-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GRAPHRAG-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GRAPHRAG-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GRAPHRAG-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GRAPHRAG-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GRAPHRAG-014 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GRAPHRAG-015 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-GRAPHRAG-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        }
+      ],
+      "durationMs": 0
+    },
+    {
+      "name": "workflow",
+      "required": true,
+      "status": "fail",
+      "summary": "5 workflow declaration(s) are not fully reconciled with Copilot invocation events.",
+      "diagnostics": [
+        {
+          "code": "WORKFLOW_INVOCATION_UNVERIFIED",
+          "severity": "error",
+          "message": "Workflow declarations have not been reconciled with a Copilot session log."
+        }
+      ]
+    },
+    {
+      "name": "tdd",
+      "required": true,
+      "status": "fail",
+      "summary": "60 Red-Green TDD cycle(s) recorded.",
+      "diagnostics": [
+        {
+          "code": "TDD_REQUIREMENT_UNCOVERED",
+          "severity": "error",
+          "message": "REQ-EXAMPLE-001 has no valid Red-Green cycle from an authoritative verifying test.",
+          "path": ".musubix/features/example/requirements.md",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "name": "change-history",
+      "required": true,
+      "status": "fail",
+      "summary": "1 staged change(s) checked for ordered artifact and TDD evidence.",
+      "diagnostics": [
+        {
+          "code": "CHANGE_PHASE_MISSING",
+          "severity": "error",
+          "message": "CHANGE-0001 is missing quality."
+        },
+        {
+          "code": "CHANGE_PHASE_MISSING",
+          "severity": "error",
+          "message": "CHANGE-0001 is missing red for REQ-AGENTCONFIG-001, REQ-AGENTCONFIG-002, REQ-AGENTCONFIG-003, REQ-ELN-001, REQ-ELN-002, REQ-ELN-003, REQ-ELN-004, REQ-ELN-005, REQ-ELN-006, REQ-ELN-007, REQ-ELN-008, REQ-ELN-009, REQ-ELN-010, REQ-ELN-011, REQ-ELN-012, REQ-ELN-013, REQ-ELN-014, REQ-ELN-015, REQ-ELN-016, REQ-ELN-017, REQ-ELN-018, REQ-ELN-019, REQ-ELN-020, REQ-GRAPHRAG-001, REQ-GRAPHRAG-002, REQ-GRAPHRAG-003, REQ-GRAPHRAG-004, REQ-GRAPHRAG-005, REQ-GRAPHRAG-006, REQ-GRAPHRAG-013, REQ-GRAPHRAG-014, REQ-GRAPHRAG-015, REQ-GUI-001, REQ-GUI-002, REQ-GUI-003, REQ-GUI-004, REQ-GUI-005, REQ-LLMBACKEND-001, REQ-LLMBACKEND-002, REQ-LLMBACKEND-003, REQ-LLMBACKEND-004, REQ-LLMBACKEND-005, REQ-LLMBACKEND-006, REQ-LLMBACKEND-007, REQ-LLMBACKEND-008, REQ-MULTIUSER-001, REQ-MULTIUSER-002, REQ-MULTIUSER-003, REQ-MULTIUSER-004, REQ-MULTIUSER-005, REQ-MULTIUSER-006, REQ-MULTIUSER-007, REQ-MULTIUSER-008, REQ-MULTIUSER-009, REQ-MULTIUSER-010, REQ-MULTIUSER-011, REQ-MULTIUSER-012."
+        },
+        {
+          "code": "CHANGE_PHASE_MISSING",
+          "severity": "error",
+          "message": "CHANGE-0001 is missing implementation for REQ-AGENTCONFIG-001, REQ-AGENTCONFIG-002, REQ-AGENTCONFIG-003, REQ-ELN-001, REQ-ELN-002, REQ-ELN-003, REQ-ELN-004, REQ-ELN-005, REQ-ELN-006, REQ-ELN-007, REQ-ELN-008, REQ-ELN-009, REQ-ELN-010, REQ-ELN-011, REQ-ELN-012, REQ-ELN-013, REQ-ELN-014, REQ-ELN-015, REQ-ELN-016, REQ-ELN-017, REQ-ELN-018, REQ-ELN-019, REQ-ELN-020, REQ-GRAPHRAG-001, REQ-GRAPHRAG-002, REQ-GRAPHRAG-003, REQ-GRAPHRAG-004, REQ-GRAPHRAG-005, REQ-GRAPHRAG-006, REQ-GRAPHRAG-013, REQ-GRAPHRAG-014, REQ-GRAPHRAG-015, REQ-GUI-001, REQ-GUI-002, REQ-GUI-003, REQ-GUI-004, REQ-GUI-005, REQ-LLMBACKEND-001, REQ-LLMBACKEND-002, REQ-LLMBACKEND-003, REQ-LLMBACKEND-004, REQ-LLMBACKEND-005, REQ-LLMBACKEND-006, REQ-LLMBACKEND-007, REQ-LLMBACKEND-008, REQ-MULTIUSER-001, REQ-MULTIUSER-002, REQ-MULTIUSER-003, REQ-MULTIUSER-004, REQ-MULTIUSER-005, REQ-MULTIUSER-006, REQ-MULTIUSER-007, REQ-MULTIUSER-008, REQ-MULTIUSER-009, REQ-MULTIUSER-010, REQ-MULTIUSER-011, REQ-MULTIUSER-012."
+        },
+        {
+          "code": "CHANGE_PHASE_MISSING",
+          "severity": "error",
+          "message": "CHANGE-0001 is missing green for REQ-AGENTCONFIG-001, REQ-AGENTCONFIG-002, REQ-AGENTCONFIG-003, REQ-ELN-001, REQ-ELN-002, REQ-ELN-003, REQ-ELN-004, REQ-ELN-005, REQ-ELN-006, REQ-ELN-007, REQ-ELN-008, REQ-ELN-009, REQ-ELN-010, REQ-ELN-011, REQ-ELN-012, REQ-ELN-013, REQ-ELN-014, REQ-ELN-015, REQ-ELN-016, REQ-ELN-017, REQ-ELN-018, REQ-ELN-019, REQ-ELN-020, REQ-GRAPHRAG-001, REQ-GRAPHRAG-002, REQ-GRAPHRAG-003, REQ-GRAPHRAG-004, REQ-GRAPHRAG-005, REQ-GRAPHRAG-006, REQ-GRAPHRAG-013, REQ-GRAPHRAG-014, REQ-GRAPHRAG-015, REQ-GUI-001, REQ-GUI-002, REQ-GUI-003, REQ-GUI-004, REQ-GUI-005, REQ-LLMBACKEND-001, REQ-LLMBACKEND-002, REQ-LLMBACKEND-003, REQ-LLMBACKEND-004, REQ-LLMBACKEND-005, REQ-LLMBACKEND-006, REQ-LLMBACKEND-007, REQ-LLMBACKEND-008, REQ-MULTIUSER-001, REQ-MULTIUSER-002, REQ-MULTIUSER-003, REQ-MULTIUSER-004, REQ-MULTIUSER-005, REQ-MULTIUSER-006, REQ-MULTIUSER-007, REQ-MULTIUSER-008, REQ-MULTIUSER-009, REQ-MULTIUSER-010, REQ-MULTIUSER-011, REQ-MULTIUSER-012."
+        },
+        {
+          "code": "CHANGE_REQUIREMENTS_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0001 did not change requirements after impact analysis."
+        },
+        {
+          "code": "CHANGE_DESIGN_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0001 did not change design after requirements."
+        }
+      ]
+    },
+    {
+      "name": "change-completeness",
+      "required": true,
+      "status": "fail",
+      "summary": "0/1 staged change(s) have semantically complete evidence.",
+      "diagnostics": [
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-AGENTCONFIG-001 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-AGENTCONFIG-002 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-AGENTCONFIG-003 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-001 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-002 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-003 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-004 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-005 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-006 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-007 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-008 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-009 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-010 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-011 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TEST",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-012 lacks authoritative annotated test declaration evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-012 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-013 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-014 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-015 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-016 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-017 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-018 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-019 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-ELN-020 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-001 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-002 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-003 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-004 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-005 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-006 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-013 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-014 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GRAPHRAG-015 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GUI-001 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GUI-002 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GUI-003 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GUI-004 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_ACCEPTANCE",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GUI-005 lacks nonempty measurable Acceptance criteria evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-GUI-005 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-001 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-002 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-003 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-004 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-005 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-006 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-007 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-LLMBACKEND-008 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-001 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-002 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-003 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-004 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-005 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-006 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-007 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-008 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_ACCEPTANCE",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-009 lacks nonempty measurable Acceptance criteria evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-009 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-010 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-011 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0001:REQ-MULTIUSER-012 lacks bounded Red-Green TDD evidence."
+        }
+      ]
+    },
+    {
+      "name": "command:typecheck",
+      "required": true,
+      "status": "pass",
+      "summary": "npm: completed, exit 0.",
+      "durationMs": 1107,
+      "exitCode": 0,
+      "stdout": "\n> aira2@0.1.0 typecheck\n> tsc -p tsconfig.json --noEmit\n\n",
+      "stderr": ""
+    },
+    {
+      "name": "command:test",
+      "required": true,
+      "status": "pass",
+      "summary": "npm: completed, exit 0.",
+      "durationMs": 1333,
+      "exitCode": 0,
+      "stdout": "\n> aira2@0.1.0 test\n> vitest run --reporter=json --outputFile=.musubix/evidence/native/test/aggregate.json\n\nJSON report written to /home/nahisaho/GitHub/aira2/.musubix/evidence/native/test/aggregate.json\n",
+      "stderr": ""
+    },
+    {
+      "name": "test-identities",
+      "required": false,
+      "status": "pass",
+      "summary": "56/56 annotated test IDs passed in structured command reports.",
+      "diagnostics": []
+    },
+    {
+      "name": "performance",
+      "required": false,
+      "status": "skipped",
+      "summary": "No deterministic performance budgets are declared.",
+      "diagnostics": []
+    },
+    {
+      "name": "mutation",
+      "required": false,
+      "status": "skipped",
+      "summary": "No mutation evidence is available.",
+      "diagnostics": []
+    },
+    {
+      "name": "model-correspondence",
+      "required": false,
+      "status": "fail",
+      "summary": "No requirements with explicit Formal JSON are available.",
+      "diagnostics": [
+        {
+          "code": "MODEL_CORRESPONDENCE_TRACE_STALE",
+          "severity": "error",
+          "message": "Generated trace evidence is missing, stale, or invalid.",
+          "path": ".musubix/evidence/model-correspondence.json"
+        }
+      ]
+    },
+    {
+      "name": "attestation",
+      "required": false,
+      "status": "skipped",
+      "summary": "Local evidence is explicitly unsigned.",
+      "diagnostics": []
+    },
+    {
+      "name": "approval",
+      "required": true,
+      "status": "fail",
+      "summary": "2/3 approval stage(s) are current.",
+      "diagnostics": [
+        {
+          "code": "APPROVAL_MISSING",
+          "severity": "error",
+          "message": "Current release approval is required.",
+          "path": ".musubix/evidence/approvals/release.json"
+        }
+      ]
+    },
+    {
+      "name": "commands",
+      "required": true,
+      "status": "pass",
+      "summary": "2 configured command(s) executed; optional failures are nonblocking."
+    },
+    {
+      "name": "constitution:RULE-001",
+      "required": true,
+      "status": "fail",
+      "summary": "trace.errors = 2; maximum 0."
+    },
+    {
+      "name": "constitution:RULE-002",
+      "required": true,
+      "status": "pass",
+      "summary": "commands.failures = 0; maximum 0."
+    },
+    {
+      "name": "constitution:RULE-003",
+      "required": true,
+      "status": "pass",
+      "summary": "commands.skipped = 0; maximum 0."
+    }
+  ],
+  "metrics": {
+    "requirements.errors": 0,
+    "policy.errors": 0,
+    "design.errors": 0,
+    "trace.errors": 2,
+    "graph.violations": 0,
+    "formal.errors": 0,
+    "formal.modeledFraction": 0.13793103448275862,
+    "commands.failures": 0,
+    "commands.skipped": 0,
+    "tests.annotatedIds": 56,
+    "tests.executedIds": 56,
+    "tdd.cycles": 60,
+    "tdd.errors": 1,
+    "changes.count": 1,
+    "changes.errors": 6,
+    "changes.complete": 0,
+    "changes.completenessErrors": 60,
+    "performance.budgets": 0,
+    "performance.errors": 0,
+    "mutation.requirements": 50,
+    "mutation.coveredRequirements": 0,
+    "mutation.mutants": 0,
+    "mutation.errors": 0,
+    "modelCorrespondence.requirements": 0,
+    "modelCorrespondence.coveredRequirements": 0,
+    "modelCorrespondence.errors": 1,
+    "attestation.errors": 0,
+    "approval.errors": 1,
+    "coverage.design": 1,
+    "coverage.implementation": 0.98,
+    "coverage.tests": 0.98
+  },
+  "mode": "changed",
+  "feature": null,
+  "changed": [
+    ".musubix/evidence/formal.json",
+    ".musubix/evidence/model-correspondence.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GUI-001.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GUI-002.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GUI-003.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GUI-004.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GUI-005.json",
+    ".musubix/evidence/native/test/aggregate.json",
+    ".musubix/evidence/order.json",
+    ".musubix/evidence/performance.json",
+    ".musubix/evidence/quality.json",
+    ".musubix/evidence/tdd.json",
+    ".musubix/features/aira2-platform/trace.json",
+    ".musubix/features/example/trace.json",
+    "src/web/auth-ui.test.ts",
+    "src/web/auth-ui.ts",
+    "src/web/design-system.test.ts",
+    "src/web/design-system.ts",
+    "src/web/eln-ui.test.ts",
+    "src/web/eln-ui.ts",
+    "src/web/graphrag-ui.test.ts",
+    "src/web/graphrag-ui.ts",
+    "src/web/llm-settings-ui.test.ts",
+    "src/web/llm-settings-ui.ts",
+    "src/web/projects-ui.ts"
+  ],
+  "impacted": [
+    "src/web/auth-ui.test.ts",
+    "src/web/auth-ui.ts",
+    "src/web/design-system.test.ts",
+    "src/web/design-system.ts",
+    "src/web/eln-ui.test.ts",
+    "src/web/eln-ui.ts",
+    "src/web/graphrag-ui.test.ts",
+    "src/web/graphrag-ui.ts",
+    "src/web/llm-settings-ui.test.ts",
+    "src/web/llm-settings-ui.ts",
+    "src/web/projects-ui.ts"
+  ],
+  "lastChangeAnalysis": {
+    "baseline": "HEAD",
+    "head": "16db12a550465b97103fb74147efb55571bdb38c",
+    "changed": [
+      ".musubix/evidence/formal.json",
+      ".musubix/evidence/model-correspondence.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GUI-001.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GUI-002.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GUI-003.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GUI-004.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GUI-005.json",
+      ".musubix/evidence/native/test/aggregate.json",
+      ".musubix/evidence/order.json",
+      ".musubix/evidence/performance.json",
+      ".musubix/evidence/quality.json",
+      ".musubix/evidence/tdd.json",
+      ".musubix/features/aira2-platform/trace.json",
+      ".musubix/features/example/trace.json",
+      "src/web/auth-ui.test.ts",
+      "src/web/auth-ui.ts",
+      "src/web/design-system.test.ts",
+      "src/web/design-system.ts",
+      "src/web/eln-ui.test.ts",
+      "src/web/eln-ui.ts",
+      "src/web/graphrag-ui.test.ts",
+      "src/web/graphrag-ui.ts",
+      "src/web/llm-settings-ui.test.ts",
+      "src/web/llm-settings-ui.ts",
+      "src/web/projects-ui.ts"
+    ],
+    "impacted": [
+      "src/web/auth-ui.test.ts",
+      "src/web/auth-ui.ts",
+      "src/web/design-system.test.ts",
+      "src/web/design-system.ts",
+      "src/web/eln-ui.test.ts",
+      "src/web/eln-ui.ts",
+      "src/web/graphrag-ui.test.ts",
+      "src/web/graphrag-ui.ts",
+      "src/web/llm-settings-ui.test.ts",
+      "src/web/llm-settings-ui.ts",
+      "src/web/projects-ui.ts"
+    ],
+    "generatedAt": "2026-09-11T21:54:22.464Z"
+  },
+  "fingerprints": {
+    ".gitignore": "103895a477759aa562444b01829db8904ec4fc440e5c01302412df01d02c55a9",
+    ".musubix/changes/CHANGE-0001.md": "d8feab98ebdaa0af85d4a725d1a07028abea3ce81ee63bc1d021029746909a45",
+    ".musubix/config.json": "3bed1daed6836928d286f4298fe293039d0b5676ef6a0b18984048bd84473c7a",
+    ".musubix/constitution.md": "f8b47fdc486f395bab05223a94821b145cf8df70ffde2c838a28f8d71fe0fa92",
+    ".musubix/decisions/ADR-0001.md": "6e21f1b375cfa1aabdf058b1dc987f94974dc23571fe60e94ba340dc48295b0f",
+    ".musubix/decisions/ADR-0002.md": "993f3fcc2c71828030be05b09ee94c70e3889edffdb08eedbebec983806cf262",
+    ".musubix/decisions/ADR-0003.md": "154414958951624db5c034ec8cc87b1f58cad13e2c7a95230bf2ef3cd474d020",
+    ".musubix/decisions/ADR-0004.md": "8cac98bc3f51a7d38447f6f7f1c537f53d33b32ba573f12ddf7fd1b148db7fa1",
+    ".musubix/decisions/ADR-0005.md": "b4295c4972f9e223c479c15e59d63429b472367470c2cff5dcc488568c1d956c",
+    ".musubix/features/aira2-platform/design.md": "1ecbd9b407802fe3e924f2ba237ca81d5047ef312456f23e7611024d1f3def46",
+    ".musubix/features/aira2-platform/requirements.md": "cbddf90a839164e0ceb7d7c44b565d0fe623fe75a5211ea562c58e8c4bb0e565",
+    ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
+    ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed",
+    ".musubix/policy-baseline.json": "ee0893b12f316ed75feb791bb987de9cec0af2f86c4d80a30384bced352a4e8c",
+    "package-lock.json": "6ea167b31882b4bf3386b9ba4b6db8572f6daa3ad6a5b3222765dff049965028",
+    "package.json": "ace57786fa449f1b3006b3ca985f793087031f71b55141732acb98f41855c231",
+    "reports/vitest-report.json": "5084dccac54dfff90ce71f32e69a99e69fb87fd8a9d64cc1024bff8098ee7794",
+    "src/agent-config/agent-skills-mcp-manager.test.ts": "daa01e46e19b6a6c585668d7cdf7b6e95cc437f1b7f333e7c2a4bf7b1137e056",
+    "src/agent-config/agent-skills-mcp-manager.ts": "2c35af8105d25ecbc3f76a2d9deb6cd892ed84de1ac98c857a908c3c440111bf",
+    "src/auth/account.test.ts": "0db268e9e1d9079e246e9e2a8d8f05cc117d6279882f69ca231450b322b56401",
+    "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
+    "src/auth/login.test.ts": "278383c58fe25b321e4dd4f2880b54b8ced0e264c8e42869dc3490dda6dc6937",
+    "src/auth/login.ts": "d11343d673fcda0ace52b3e9d598cd054c6a1feb9a231b3778056eba1855bcc3",
+    "src/auth/session.ts": "ee87250c936845a559197ab42a8e243d1f43d9ea4c2a4309ab43e1a774fe649b",
+    "src/authz/audit.ts": "371e18a52669ec1029915f393b15cba7d0a1c6a07dc5372baab9072675ecd9b2",
+    "src/authz/matrix.ts": "3d0178beba548c2ff212f01fdadefc2ed013c2fa9999082460aa731789406a45",
+    "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
+    "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
+    "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
+    "src/eln/approval-signature-service.test.ts": "149b8be05bc7ac45d15642ca5dd0d9e06d51568eeb7e10cf7af12534fdaab9c9",
+    "src/eln/approval-signature-service.ts": "1952fd6c583893c65d9a46cc7ee59126e7cfba8f8dc041435a4007167d23383b",
+    "src/eln/eln-core-service.test.ts": "c39a88855275037445902cfb5b68a97e6a32f5c099013394b2e70898ea448a5d",
+    "src/eln/eln-core-service.ts": "78dcb7c70a97de4be2b3e61d35b61195a8c0818a1ea183974522d44231c195ea",
+    "src/eln/protocol-store.test.ts": "9f7e27730411bb2778b46706d42058f0f34fd4f28b4b9eb0abc6269c7448d059",
+    "src/eln/protocol-store.ts": "b3404acdbbce059ed871334b709c1901cb43dd63148c5a45a7ed1ae893c8330d",
+    "src/eln-audit/integrity-subsystem.test.ts": "ff88c32081fa388e26f8138ccc8333317ef463392abb18befa383b8e936a5578",
+    "src/eln-audit/integrity-subsystem.ts": "bba748350fb723bcb6026d00590e049bafa4a1b3a92e076d01be79218c42baed",
+    "src/eln-audit/ledger.test.ts": "ea18a1320d319bc3b5cd2ecb8e0752a217ed3ab5231532716643908cf8c06b86",
+    "src/eln-audit/ledger.ts": "218d8d8e9160dda66c68e5cb8423e628a1055d68c3ce4013edf4942dae2f1001",
+    "src/graphrag/embedding-capability.ts": "1afa07bc99ffeefd6fd560502e7762db28a92411e373a7b266d452ca00f900b5",
+    "src/graphrag/graphdb.test.ts": "598da695aab7851403274f501fabcc1dd6072f3414ff9b6394c09f4566959e4e",
+    "src/graphrag/graphdb.ts": "8040921a030bbc4ddf3eb66822465ccd0168fe84302e6abc9af8e84745f33672",
+    "src/graphrag/graphrag-service.test.ts": "6ec938b347dadb5d558132e52e6289110087bc76ad32840e71a8058e5f0d2146",
+    "src/graphrag/graphrag-service.ts": "2a52b8c260642e725f0f513fe857dae6cec0d9d99237d1fd0d05287d7274e260",
+    "src/llm/adapters.test.ts": "2b5e64d2e53bafd73f562598c547e47c9c231bd977d5511ff2f42e7b03b40b32",
+    "src/llm/adapters.ts": "3a58add7b1ef48c05b8c8a8b29ab5d518c7b2bb147a88b991b58aab7f62d79f1",
+    "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
+    "src/llm/gateway.ts": "f92a386fad226df3961fccfb375653d749bef6ec7d6bedc9359c273ac1090de3",
+    "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
+    "src/vault/credential-vault.ts": "bcbc4a9793c4d0de363a1a45c1df4ebece35d69ece55f0bdd71c82ff8d51a7a4",
+    "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",
+    "src/web/auth-ui.test.ts": "b54de9fa08f2e566076571d5623f4664f4649f131f2eadc099febc827ff015cd",
+    "src/web/auth-ui.ts": "8bcbdbbc893b16bca3eaa92a9ce7431ae3e615826b6cd5e4295271a4567ed234",
+    "src/web/design-system.test.ts": "3d79c1851dcf8923fd5cab116f9721fbf6b16f0bcb4ebe9d8f71b47baf5c726a",
+    "src/web/design-system.ts": "3a01715b964c6c7da1c28c2ef0ccf2486bdd4a04ecc43511e59a3ee692a125d9",
+    "src/web/eln-ui.test.ts": "b6e671d6316d3ef942d76194dcb4671e7c9236c184cb2188620d33a7edf68176",
+    "src/web/eln-ui.ts": "b513b925f95e4760e9b0042e9a65fc0c57115b02e63d64e664402f2a59fbf8c4",
+    "src/web/graphrag-ui.test.ts": "4b0c13381d77abb40cb4414ff2ac9159f2189639681abec5887afe759f6f4dbc",
+    "src/web/graphrag-ui.ts": "5dc6a59dbbbcb4e4a869a03b2de46b9cee3915da83642444f723cf4fe040c8cf",
+    "src/web/llm-settings-ui.test.ts": "3738bc405c4e5e531903743c7f00eb60a6baa33e0243d03640d6d52fd95d965a",
+    "src/web/llm-settings-ui.ts": "2abced1cf4f8920ec9eb1422d0cfd08ecf5c6ff3aa7b315ecf84d1c6105435f5",
+    "src/web/projects-ui.ts": "d490917fa561f42877263ad27585685e5c85114cb656fd9f65aaeeb9ab30a4eb",
+    "tsconfig.json": "610347e32d54912961783e740dba14769edbfce0eaa94d9ce2129076d5e8db61",
+    "vitest.config.ts": "713ab6f752564f158e0b3d084e716e6b33bbe968c43e639b678fcee0bdfcbcba"
+  }
 }

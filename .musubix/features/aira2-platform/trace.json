@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T12:05:15.516Z",
+  "generatedAt": "2026-09-11T21:54:18.156Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -989,6 +989,72 @@
       "kind": "code",
       "path": "src/vault/crypto.ts",
       "line": 12
+    },
+    {
+      "id": "TEST-AIRA2-GUI-001",
+      "kind": "test",
+      "path": "src/web/auth-ui.test.ts",
+      "line": 22
+    },
+    {
+      "id": "CODE-AIRA2-GUI-002",
+      "kind": "code",
+      "path": "src/web/auth-ui.ts",
+      "line": 15
+    },
+    {
+      "id": "TEST-AIRA2-GUI-005",
+      "kind": "test",
+      "path": "src/web/design-system.test.ts",
+      "line": 56
+    },
+    {
+      "id": "CODE-AIRA2-GUI-001",
+      "kind": "code",
+      "path": "src/web/design-system.ts",
+      "line": 1
+    },
+    {
+      "id": "TEST-AIRA2-GUI-003",
+      "kind": "test",
+      "path": "src/web/eln-ui.test.ts",
+      "line": 33
+    },
+    {
+      "id": "CODE-AIRA2-GUI-004",
+      "kind": "code",
+      "path": "src/web/eln-ui.ts",
+      "line": 20
+    },
+    {
+      "id": "TEST-AIRA2-GUI-004",
+      "kind": "test",
+      "path": "src/web/graphrag-ui.test.ts",
+      "line": 30
+    },
+    {
+      "id": "CODE-AIRA2-GUI-005",
+      "kind": "code",
+      "path": "src/web/graphrag-ui.ts",
+      "line": 11
+    },
+    {
+      "id": "TEST-AIRA2-GUI-002",
+      "kind": "test",
+      "path": "src/web/llm-settings-ui.test.ts",
+      "line": 20
+    },
+    {
+      "id": "CODE-AIRA2-GUI-003",
+      "kind": "code",
+      "path": "src/web/llm-settings-ui.ts",
+      "line": 12
+    },
+    {
+      "id": "CODE-AIRA2-GUI-006",
+      "kind": "code",
+      "path": "src/web/projects-ui.ts",
+      "line": 9
     }
   ],
   "edges": [
@@ -2186,6 +2252,91 @@
       "from": "CODE-AIRA2-VAULT-001",
       "to": "DES-AIRA2-003",
       "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-GUI-001",
+      "to": "REQ-GUI-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-002",
+      "to": "REQ-GUI-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-002",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-GUI-005",
+      "to": "REQ-GUI-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-001",
+      "to": "REQ-GUI-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-001",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-GUI-003",
+      "to": "REQ-GUI-003",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-004",
+      "to": "REQ-GUI-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-004",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-GUI-004",
+      "to": "REQ-GUI-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-005",
+      "to": "REQ-GUI-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-005",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-GUI-002",
+      "to": "REQ-GUI-002",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-003",
+      "to": "REQ-GUI-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-003",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-006",
+      "to": "REQ-GUI-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-006",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
     }
   ],
   "diagnostics": [],
@@ -2233,6 +2384,17 @@
     "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
     "src/vault/credential-vault.ts": "bcbc4a9793c4d0de363a1a45c1df4ebece35d69ece55f0bdd71c82ff8d51a7a4",
     "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",
+    "src/web/auth-ui.test.ts": "b54de9fa08f2e566076571d5623f4664f4649f131f2eadc099febc827ff015cd",
+    "src/web/auth-ui.ts": "8bcbdbbc893b16bca3eaa92a9ce7431ae3e615826b6cd5e4295271a4567ed234",
+    "src/web/design-system.test.ts": "3d79c1851dcf8923fd5cab116f9721fbf6b16f0bcb4ebe9d8f71b47baf5c726a",
+    "src/web/design-system.ts": "3a01715b964c6c7da1c28c2ef0ccf2486bdd4a04ecc43511e59a3ee692a125d9",
+    "src/web/eln-ui.test.ts": "b6e671d6316d3ef942d76194dcb4671e7c9236c184cb2188620d33a7edf68176",
+    "src/web/eln-ui.ts": "b513b925f95e4760e9b0042e9a65fc0c57115b02e63d64e664402f2a59fbf8c4",
+    "src/web/graphrag-ui.test.ts": "4b0c13381d77abb40cb4414ff2ac9159f2189639681abec5887afe759f6f4dbc",
+    "src/web/graphrag-ui.ts": "5dc6a59dbbbcb4e4a869a03b2de46b9cee3915da83642444f723cf4fe040c8cf",
+    "src/web/llm-settings-ui.test.ts": "3738bc405c4e5e531903743c7f00eb60a6baa33e0243d03640d6d52fd95d965a",
+    "src/web/llm-settings-ui.ts": "2abced1cf4f8920ec9eb1422d0cfd08ecf5c6ff3aa7b315ecf84d1c6105435f5",
+    "src/web/projects-ui.ts": "d490917fa561f42877263ad27585685e5c85114cb656fd9f65aaeeb9ab30a4eb",
     "vitest.config.ts": "713ab6f752564f158e0b3d084e716e6b33bbe968c43e639b678fcee0bdfcbcba"
   }
 }
