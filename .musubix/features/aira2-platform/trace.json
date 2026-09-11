@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:34:37.518Z",
+  "generatedAt": "2026-09-11T11:38:20.273Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -551,6 +551,72 @@
       "kind": "code",
       "path": "src/auth/login.ts",
       "line": 36
+    },
+    {
+      "id": "CODE-AIRA2-AUTHZ-003",
+      "kind": "code",
+      "path": "src/authz/audit.ts",
+      "line": 1
+    },
+    {
+      "id": "CODE-AIRA2-AUTHZ-001",
+      "kind": "code",
+      "path": "src/authz/matrix.ts",
+      "line": 4
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-001",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 22
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-002",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 37
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-003",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 51
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-004",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 74
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-005",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 89
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-006",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 104
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-007",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 126
+    },
+    {
+      "id": "TEST-AIRA2-AUTHZ-008",
+      "kind": "test",
+      "path": "src/authz/project-authz.test.ts",
+      "line": 152
+    },
+    {
+      "id": "CODE-AIRA2-AUTHZ-002",
+      "kind": "code",
+      "path": "src/authz/project-authz.ts",
+      "line": 18
     }
   ],
   "edges": [
@@ -1073,6 +1139,106 @@
       "from": "CODE-AIRA2-AUTH-004",
       "to": "DES-AIRA2-001",
       "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-003",
+      "to": "REQ-MULTIUSER-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-003",
+      "to": "DES-AIRA2-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-001",
+      "to": "REQ-MULTIUSER-009",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-001",
+      "to": "DES-AIRA2-002",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-001",
+      "to": "REQ-MULTIUSER-009",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-003",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-003",
+      "to": "REQ-MULTIUSER-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-004",
+      "to": "REQ-MULTIUSER-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-005",
+      "to": "REQ-MULTIUSER-008",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-006",
+      "to": "REQ-MULTIUSER-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-007",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTHZ-008",
+      "to": "REQ-MULTIUSER-012",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-008",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "REQ-MULTIUSER-012",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTHZ-002",
+      "to": "DES-AIRA2-002",
+      "relation": "implements"
     }
   ],
   "diagnostics": [],
@@ -1091,6 +1257,10 @@
     "src/auth/login.test.ts": "278383c58fe25b321e4dd4f2880b54b8ced0e264c8e42869dc3490dda6dc6937",
     "src/auth/login.ts": "d11343d673fcda0ace52b3e9d598cd054c6a1feb9a231b3778056eba1855bcc3",
     "src/auth/session.ts": "ee87250c936845a559197ab42a8e243d1f43d9ea4c2a4309ab43e1a774fe649b",
+    "src/authz/audit.ts": "371e18a52669ec1029915f393b15cba7d0a1c6a07dc5372baab9072675ecd9b2",
+    "src/authz/matrix.ts": "3d0178beba548c2ff212f01fdadefc2ed013c2fa9999082460aa731789406a45",
+    "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
+    "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
     "vitest.config.ts": "713ab6f752564f158e0b3d084e716e6b33bbe968c43e639b678fcee0bdfcbcba"
   }
 }
