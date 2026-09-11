@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:40:55.997Z",
+  "generatedAt": "2026-09-11T11:43:53.071Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -623,6 +623,72 @@
       "kind": "code",
       "path": "src/authz/self-scope.ts",
       "line": 31
+    },
+    {
+      "id": "TEST-AIRA2-LLM-001",
+      "kind": "test",
+      "path": "src/llm/adapters.test.ts",
+      "line": 22
+    },
+    {
+      "id": "CODE-AIRA2-LLM-001",
+      "kind": "code",
+      "path": "src/llm/adapters.ts",
+      "line": 42
+    },
+    {
+      "id": "CODE-AIRA2-LLM-002",
+      "kind": "code",
+      "path": "src/llm/adapters.ts",
+      "line": 62
+    },
+    {
+      "id": "CODE-AIRA2-LLM-003",
+      "kind": "code",
+      "path": "src/llm/adapters.ts",
+      "line": 83
+    },
+    {
+      "id": "CODE-AIRA2-LLM-004",
+      "kind": "code",
+      "path": "src/llm/adapters.ts",
+      "line": 104
+    },
+    {
+      "id": "TEST-AIRA2-LLM-002",
+      "kind": "test",
+      "path": "src/llm/gateway.test.ts",
+      "line": 30
+    },
+    {
+      "id": "TEST-AIRA2-LLM-003",
+      "kind": "test",
+      "path": "src/llm/gateway.test.ts",
+      "line": 50
+    },
+    {
+      "id": "TEST-AIRA2-LLM-004",
+      "kind": "test",
+      "path": "src/llm/gateway.test.ts",
+      "line": 75
+    },
+    {
+      "id": "CODE-AIRA2-LLM-006",
+      "kind": "code",
+      "path": "src/llm/gateway.ts",
+      "line": 14
+    },
+    {
+      "id": "CODE-AIRA2-LLM-005",
+      "kind": "code",
+      "path": "src/llm/gateway.ts",
+      "line": 31
+    },
+    {
+      "id": "CODE-AIRA2-LLM-007",
+      "kind": "code",
+      "path": "src/llm/gateway.ts",
+      "line": 68
     },
     {
       "id": "TEST-AIRA2-VAULT-001",
@@ -1293,6 +1359,101 @@
       "relation": "implements"
     },
     {
+      "from": "TEST-AIRA2-LLM-001",
+      "to": "REQ-LLMBACKEND-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-001",
+      "to": "REQ-LLMBACKEND-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-001",
+      "to": "DES-AIRA2-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-002",
+      "to": "REQ-LLMBACKEND-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-002",
+      "to": "DES-AIRA2-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-003",
+      "to": "REQ-LLMBACKEND-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-003",
+      "to": "DES-AIRA2-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-004",
+      "to": "REQ-LLMBACKEND-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-004",
+      "to": "DES-AIRA2-004",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-LLM-002",
+      "to": "REQ-LLMBACKEND-002",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-LLM-003",
+      "to": "REQ-LLMBACKEND-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-LLM-004",
+      "to": "REQ-LLMBACKEND-008",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-006",
+      "to": "REQ-LLMBACKEND-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-006",
+      "to": "DES-AIRA2-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-005",
+      "to": "REQ-LLMBACKEND-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-005",
+      "to": "REQ-LLMBACKEND-008",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-005",
+      "to": "DES-AIRA2-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-007",
+      "to": "REQ-LLMBACKEND-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-007",
+      "to": "DES-AIRA2-004",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-AIRA2-VAULT-001",
       "to": "REQ-LLMBACKEND-003",
       "relation": "verifies"
@@ -1369,6 +1530,10 @@
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
     "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
     "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
+    "src/llm/adapters.test.ts": "2b5e64d2e53bafd73f562598c547e47c9c231bd977d5511ff2f42e7b03b40b32",
+    "src/llm/adapters.ts": "3a58add7b1ef48c05b8c8a8b29ab5d518c7b2bb147a88b991b58aab7f62d79f1",
+    "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
+    "src/llm/gateway.ts": "f92a386fad226df3961fccfb375653d749bef6ec7d6bedc9359c273ac1090de3",
     "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
     "src/vault/credential-vault.ts": "bcbc4a9793c4d0de363a1a45c1df4ebece35d69ece55f0bdd71c82ff8d51a7a4",
     "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",
