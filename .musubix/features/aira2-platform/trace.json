@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T11:43:53.071Z",
+  "generatedAt": "2026-09-11T11:49:11.558Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -623,6 +623,54 @@
       "kind": "code",
       "path": "src/authz/self-scope.ts",
       "line": 31
+    },
+    {
+      "id": "TEST-AIRA2-AUDIT-003",
+      "kind": "test",
+      "path": "src/eln-audit/integrity-subsystem.test.ts",
+      "line": 16
+    },
+    {
+      "id": "TEST-AIRA2-AUDIT-004",
+      "kind": "test",
+      "path": "src/eln-audit/integrity-subsystem.test.ts",
+      "line": 38
+    },
+    {
+      "id": "TEST-AIRA2-AUDIT-005",
+      "kind": "test",
+      "path": "src/eln-audit/integrity-subsystem.test.ts",
+      "line": 59
+    },
+    {
+      "id": "CODE-AIRA2-AUDIT-003",
+      "kind": "code",
+      "path": "src/eln-audit/integrity-subsystem.ts",
+      "line": 35
+    },
+    {
+      "id": "TEST-AIRA2-AUDIT-001",
+      "kind": "test",
+      "path": "src/eln-audit/ledger.test.ts",
+      "line": 4
+    },
+    {
+      "id": "TEST-AIRA2-AUDIT-002",
+      "kind": "test",
+      "path": "src/eln-audit/ledger.test.ts",
+      "line": 48
+    },
+    {
+      "id": "CODE-AIRA2-AUDIT-001",
+      "kind": "code",
+      "path": "src/eln-audit/ledger.ts",
+      "line": 20
+    },
+    {
+      "id": "CODE-AIRA2-AUDIT-002",
+      "kind": "code",
+      "path": "src/eln-audit/ledger.ts",
+      "line": 45
     },
     {
       "id": "TEST-AIRA2-LLM-001",
@@ -1359,6 +1407,76 @@
       "relation": "implements"
     },
     {
+      "from": "TEST-AIRA2-AUDIT-003",
+      "to": "REQ-ELN-013",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUDIT-004",
+      "to": "REQ-ELN-014",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUDIT-005",
+      "to": "REQ-ELN-020",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-003",
+      "to": "REQ-ELN-013",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-003",
+      "to": "REQ-ELN-014",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-003",
+      "to": "REQ-ELN-020",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-003",
+      "to": "DES-AIRA2-006",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-AUDIT-001",
+      "to": "REQ-ELN-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUDIT-002",
+      "to": "REQ-ELN-011",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-001",
+      "to": "REQ-ELN-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-001",
+      "to": "DES-AIRA2-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-002",
+      "to": "REQ-ELN-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-002",
+      "to": "REQ-ELN-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-002",
+      "to": "DES-AIRA2-006",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-AIRA2-LLM-001",
       "to": "REQ-LLMBACKEND-001",
       "relation": "verifies"
@@ -1530,6 +1648,10 @@
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
     "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
     "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
+    "src/eln-audit/integrity-subsystem.test.ts": "ff88c32081fa388e26f8138ccc8333317ef463392abb18befa383b8e936a5578",
+    "src/eln-audit/integrity-subsystem.ts": "bba748350fb723bcb6026d00590e049bafa4a1b3a92e076d01be79218c42baed",
+    "src/eln-audit/ledger.test.ts": "ea18a1320d319bc3b5cd2ecb8e0752a217ed3ab5231532716643908cf8c06b86",
+    "src/eln-audit/ledger.ts": "218d8d8e9160dda66c68e5cb8423e628a1055d68c3ce4013edf4942dae2f1001",
     "src/llm/adapters.test.ts": "2b5e64d2e53bafd73f562598c547e47c9c231bd977d5511ff2f42e7b03b40b32",
     "src/llm/adapters.ts": "3a58add7b1ef48c05b8c8a8b29ab5d518c7b2bb147a88b991b58aab7f62d79f1",
     "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
