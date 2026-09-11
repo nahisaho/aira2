@@ -1,44 +1,26 @@
-# CHANGE-0002: Runnable server, persistence, and real-rendering GUI / 起動可能サーバー・永続化・実描画GUI
+# CHANGE-0002: VOID — superseded by CHANGE-0003 / 無効化(CHANGE-0003に引き継ぎ)
 
 Feature: aira2-platform
 Classification: feature
+Status: void
 
-## Summary / 概要
+## Reason / 理由
 
-CHANGE-0001 delivered all AIRA2 platform logic (auth, LLM backends, ELN,
-Graph RAG, authorization, GUI contracts) as in-process TypeScript modules
-under a "minimal-contract" GUI design, with no runnable server and no
-persistent storage. This CHANGE adds: a startable Node.js HTTP server
-exposing a REST API, a SQLite-backed persistence layer so data survives a
-process restart, and a React (Vite) single-page application that actually
-renders six GUI areas (authentication, LLM settings, ELN, Graph RAG,
-projects, chat) in a browser by calling the REST API, replacing the prior
-non-rendering minimal-contract UI as the deployed interface. It also adds
-REQ-RUNTIME-011 defining chat/agent execution, which was previously named
-only as a styling target in REQ-GUI-005 with no functional requirement of
-its own.
+This CHANGE was opened for the runnable-server/persistence/real-rendering-SPA
+work, but its `change-record CHANGE-0002 impact` checkpoint was recorded
+against an incomplete 5-requirement set (REQ-RUNTIME-001..005) before the
+requirements were split into 11 atomic EARS statements during rubber-duck
+review (REQ-RUNTIME-001..011). `change-record` enforces the same requirement
+ID set across all phases of a given change, and its underlying monotonic
+evidence order is append-only/hash-chained, so this mismatch could not be
+corrected in place without altering already-chained evidence.
 
-Requirements: REQ-RUNTIME-001 REQ-RUNTIME-002 REQ-RUNTIME-003 REQ-RUNTIME-004 REQ-RUNTIME-005 REQ-RUNTIME-006 REQ-RUNTIME-007 REQ-RUNTIME-008 REQ-RUNTIME-009 REQ-RUNTIME-010 REQ-RUNTIME-011
+No phase beyond `impact` was recorded for CHANGE-0002, and no approval was
+requested or granted for it, so it is safe to abandon. All further work for
+the runnable server / persistence / real-rendering SPA requirements
+(REQ-RUNTIME-001 through REQ-RUNTIME-011) continues under
+**CHANGE-0003** (`.musubix/changes/CHANGE-0003.md`), which was opened with
+the correct, final 11-requirement set from its first `impact` recording.
 
-## Scope of this change / このChangeのスコープ
-
-- New: REQ-RUNTIME-001..011 (server startup, health check, durable
-  full-state persistence across restarts including the multi-user audit
-  log, a REST API covering Agent Skills/MCP configuration and chat plus
-  its authorization enforcement, a React SPA replacing the minimal-contract
-  UI for all six GUI areas, environment-based configuration, and
-  bootstrap-only shared-credential precedence rules that never overwrite
-  an administrator-set value).
-- Not modified: REQ-GUI-001..005 statements/acceptance are unchanged; their
-  observable behavior is now backed by a real REST API and rendered SPA
-  instead of an in-process minimal-contract controller, which is an
-  implementation change, not a requirement change.
-- Not modified: REQ-MULTIUSER-*, REQ-LLMBACKEND-*, REQ-ELN-*, REQ-GRAPHRAG-*,
-  REQ-AGENTCONFIG-* statements are unchanged; REQ-RUNTIME-002/003 explicitly
-  reference which of their state/actions must be durably persisted and
-  exposed over REST, respectively.
-
-## Source references / 参照元
-
-- CHANGE-0001 (`.musubix/changes/CHANGE-0001.md`) for the wrapped in-process
-  modules.
+CHANGE-0002 is retained only as a documented historical record of this
+correction; it carries no requirements of its own going forward.

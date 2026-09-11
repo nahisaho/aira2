@@ -5300,6 +5300,142 @@
           }
         }
       }
+    },
+    {
+      "changeId": "CHANGE-0003",
+      "requirementIds": [
+        "REQ-RUNTIME-001",
+        "REQ-RUNTIME-002",
+        "REQ-RUNTIME-003",
+        "REQ-RUNTIME-004",
+        "REQ-RUNTIME-005",
+        "REQ-RUNTIME-006",
+        "REQ-RUNTIME-007",
+        "REQ-RUNTIME-008",
+        "REQ-RUNTIME-009",
+        "REQ-RUNTIME-010",
+        "REQ-RUNTIME-011"
+      ],
+      "phases": {
+        "impact": {
+          "phase": "impact",
+          "order": 128,
+          "recordedAt": "2026-09-11T23:58:04.152Z",
+          "fingerprints": {
+            "impact": "5250e11fcf1a998c0c7d99afefa65410f4a830fce1002602945bd5082382631c",
+            "requirements": "641ce0bcaf97eafedaea23faf38650b418e1160095c944d8e09743b118f0848e",
+            "design": "47be2c221b9161003462b2b4bfec3855bc8aae9f7bf64b09cfe056c096d49cef",
+            "implementation": "dc436ef4883e9ee57eff768996cb294c926864b6593e2abde9ee9e3c36572649",
+            "tests": "16cfc54cb02df3b5152799052f0497045bb5d82e7d6483f393b458a4f6b76315",
+            "tdd": "dbff28cfd88f1763b9df7fae01284ee9ca317a1087f9597144e7146fd4320aba",
+            "requirementImplementations": {
+              "REQ-RUNTIME-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-009": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-010": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-011": {
+                "paths": [],
+                "fingerprints": {}
+              }
+            }
+          }
+        },
+        "requirements": {
+          "phase": "requirements",
+          "order": 129,
+          "recordedAt": "2026-09-11T23:58:10.206Z",
+          "fingerprints": {
+            "impact": "5250e11fcf1a998c0c7d99afefa65410f4a830fce1002602945bd5082382631c",
+            "requirements": "641ce0bcaf97eafedaea23faf38650b418e1160095c944d8e09743b118f0848e",
+            "design": "47be2c221b9161003462b2b4bfec3855bc8aae9f7bf64b09cfe056c096d49cef",
+            "implementation": "dc436ef4883e9ee57eff768996cb294c926864b6593e2abde9ee9e3c36572649",
+            "tests": "16cfc54cb02df3b5152799052f0497045bb5d82e7d6483f393b458a4f6b76315",
+            "tdd": "dbff28cfd88f1763b9df7fae01284ee9ca317a1087f9597144e7146fd4320aba",
+            "requirementImplementations": {
+              "REQ-RUNTIME-001": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-002": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-003": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-004": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-005": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-006": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-007": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-008": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-009": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-010": {
+                "paths": [],
+                "fingerprints": {}
+              },
+              "REQ-RUNTIME-011": {
+                "paths": [],
+                "fingerprints": {}
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
