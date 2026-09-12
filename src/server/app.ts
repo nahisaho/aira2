@@ -1,9 +1,20 @@
 import Fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify';
-import { readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { KNOWN_AUTH_METHODS, type AuthMethod, listSelectableAuthMethods } from '../auth/login.js';
+import fastifyStatic from '@fastify/static';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, extname, join, resolve } from 'node:path';
+import {
+  authenticate,
+  AuthMethodNotImplementedError,
+  InvalidCredentialsError,
+  KNOWN_AUTH_METHODS,
+  listSelectableAuthMethods,
+  type AccountDirectory,
+  type AuthMethod,
+  type AuthProvider,
+} from '../auth/login.js';
 import { createAccount, type Account, type Role } from '../auth/account.js';
 import { createSession, type Session } from '../auth/session.js';
+import { PasswordAuthProvider, hashPassword } from '../auth/password-provider.js';
 import { AuditLog } from '../authz/audit.js';
 import { PROJECT_ACTION_MATRIX } from '../authz/matrix.js';
 import { ProjectAuthorizationService, type ActorContext } from '../authz/project-authz.js';
@@ -20,7 +31,8 @@ import { GraphDbSupervisor } from '../graphrag/graphdb.js';
 import { GraphRagService } from '../graphrag/graphrag-service.js';
 import { SqliteStore, DEFAULT_DB_PATH } from './store.js';
 
-const VAULT_KEY = Buffer.alloc(32, 7);
+const TEST_ONLY_VAULT_KEY = Buffer.alloc(32, 7);
+const FRONTEND_DIST_DIR = 'frontend-dist';
 
 export interface EnvConfig {
   port: number;
@@ -30,6 +42,11 @@ export interface EnvConfig {
 
 export interface BuildAppOptions extends EnvConfig {
   adapters?: Partial<Record<ProviderId, LlmBackendAdapter>>;
+  vaultKey?: Buffer;
+  bootstrapAdminUsername?: string;
+  bootstrapAdminPassword?: string;
+  serveBuiltFrontend?: boolean;
+  frontendDistDir?: string;
 }
 
 export interface AppContext {
@@ -62,9 +79,33 @@ function defaultAdapters(): Partial<Record<ProviderId, LlmBackendAdapter>> {
   return {};
 }
 
+function isTestRuntime(env: Record<string, string | undefined> = process.env): boolean {
+  return env.NODE_ENV === 'test' || env.VITEST === 'true' || env.VITEST_WORKER_ID !== undefined;
+}
+
+/** @id CODE-AIRA2-RUNTIME-004
+ * @implements REQ-RUNTIME-005
+ * @design DES-AIRA2-011
+ */
+export function loadVaultKey(env: Record<string, string | undefined> = process.env): Buffer {
+  const encoded = env.AIRA2_VAULT_KEY;
+  if (!encoded) {
+    if (isTestRuntime(env)) {
+      return Buffer.from(TEST_ONLY_VAULT_KEY);
+    }
+    throw new Error('AIRA2_VAULT_KEY must be set to a 64-character hex string before starting the server');
+  }
+  if (!/^[0-9a-fA-F]{64}$/.test(encoded)) {
+    throw new Error('AIRA2_VAULT_KEY must be a 64-character hex string decoding to 32 bytes');
+  }
+  return Buffer.from(encoded, 'hex');
+}
+
 function toHttpStatus(error: unknown): number {
   const message = error instanceof Error ? error.message : String(error);
   if (error instanceof UnauthenticatedError) return 401;
+  if (error instanceof InvalidCredentialsError) return 401;
+  if (error instanceof AuthMethodNotImplementedError) return 501;
   if (/authorization denied/i.test(message)) return 403;
   if (/unsupported authentication method/i.test(message) || /disabled/i.test(message)) return 400;
   if (/unknown/i.test(message) || /No credential configured/i.test(message)) return 404;
@@ -101,11 +142,21 @@ function ensureAccount(store: SqliteStore, externalIdentity: string, displayName
   return account;
 }
 
+function storeBackedAccounts(store: SqliteStore): AccountDirectory {
+  return {
+    get: (externalIdentity) => store.getAccount<Account>(externalIdentity),
+    set: (externalIdentity, account) => {
+      store.upsertAccount(externalIdentity, account);
+      return account;
+    },
+  };
+}
+
 function buildContext(options: BuildAppOptions): AppContext {
   const store = new SqliteStore({ dbPath: options.dbPath });
   const audit = new AuditLog(store);
   const authz = new ProjectAuthorizationService(audit, { terminateSessionsAndConnections: () => undefined }, store);
-  const vault = new CredentialVault(VAULT_KEY, store);
+  const vault = new CredentialVault(options.vaultKey ?? loadVaultKey(), store);
   const gateway = new LlmBackendGateway(options.adapters ?? defaultAdapters(), vault, store);
   const ledger = new AuditLedger(store, authz);
   const protocolStore = new ProtocolStore(store);
@@ -145,6 +196,54 @@ function bootstrapSharedCredentials(context: AppContext, sharedCredentials: Part
       context.vault.setAdminSharedCredential(context.systemActor, provider, secret);
     }
   }
+}
+
+function bootstrapPasswordAdmin(context: AppContext, options: BuildAppOptions): void {
+  if (context.store.countPasswordCredentials() > 0) {
+    return;
+  }
+  const username = options.bootstrapAdminUsername ?? process.env.AIRA2_BOOTSTRAP_ADMIN_USERNAME;
+  const password = options.bootstrapAdminPassword ?? process.env.AIRA2_BOOTSTRAP_ADMIN_PASSWORD;
+  if (!username || !password) {
+    if (!isTestRuntime()) {
+      console.info('Password bootstrap admin not created because bootstrap credentials were not provided.');
+    }
+    return;
+  }
+  context.store.upsertPasswordCredential(username, hashPassword(password));
+  const account = createAccount({
+    displayName: username,
+    externalIdentity: username,
+    role: 'admin',
+    assignedPersonId: username,
+  });
+  context.store.upsertAccount(account.id, account);
+}
+
+function authProviders(context: AppContext): AuthProvider[] {
+  const reject = (method: 'github-oauth' | 'oidc'): AuthProvider => ({
+    method,
+    resolveExternalIdentity: () => {
+      throw new AuthMethodNotImplementedError(method);
+    },
+  });
+  return [new PasswordAuthProvider(context.store), reject('github-oauth'), reject('oidc')];
+}
+
+function shouldServeBuiltFrontend(options: BuildAppOptions): boolean {
+  return options.serveBuiltFrontend ?? process.env.NODE_ENV === 'production';
+}
+
+function frontendArtifacts(options: BuildAppOptions): { rootHtml: string; builtDir: string | null } {
+  if (shouldServeBuiltFrontend(options)) {
+    const builtDir = resolve(options.frontendDistDir ?? FRONTEND_DIST_DIR);
+    const builtIndex = join(builtDir, 'index.html');
+    if (!existsSync(builtIndex)) {
+      throw new Error(`Built frontend assets not found: ${builtIndex}. Run 'vite build' before starting the server.`);
+    }
+    return { rootHtml: readFileSync(builtIndex, 'utf8'), builtDir };
+  }
+  return { rootHtml: readFileSync('index.html', 'utf8'), builtDir: null };
 }
 
 type RequestWithActor = FastifyRequest & { aira2Actor?: ReturnType<AppContext['actorForAccount']>; aira2Account?: Account; aira2Session?: Session };
@@ -187,9 +286,20 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
    */
   const app = Fastify() as unknown as FastifyInstance & { aira2: AppContext };
   const context = buildContext(options);
-  const rootHtml = readFileSync('index.html', 'utf8');
+  const frontend = frontendArtifacts(options);
   bootstrapSharedCredentials(context, options.sharedCredentials);
+  bootstrapPasswordAdmin(context, options);
   app.aira2 = context;
+
+  if (frontend.builtDir) {
+    await app.register(fastifyStatic, {
+      root: frontend.builtDir,
+      prefix: '/',
+      wildcard: false,
+      decorateReply: false,
+      index: false,
+    });
+  }
 
   app.setErrorHandler((error, _request, reply) => {
     const message = error instanceof Error ? error.message : String(error);
@@ -201,20 +311,21 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
 
   app.get('/', async (_request, reply) => {
     reply.type('text/html; charset=utf-8');
-    return rootHtml;
+    return frontend.rootHtml;
   });
   app.get('/healthz', async () => ({ status: 'ok' }));
   app.get('/auth/methods', async () => listSelectableAuthMethods({ enabledMethods: KNOWN_AUTH_METHODS }));
 
   app.post('/auth/login/:method', async (request) => {
     const method = (request.params as { method: string }).method;
-    if (!(KNOWN_AUTH_METHODS as readonly string[]).includes(method)) {
-      throw new Error(`Unsupported authentication method: ${method}`);
-    }
-    const body = (request.body ?? {}) as { externalIdentity: string; displayName?: string; role?: Role };
-    const account = ensureAccount(context.store, body.externalIdentity, body.displayName ?? body.externalIdentity, body.role);
-    const session = createSession(account);
-    context.store.upsertSession(session.id, account.id, session);
+    const session = authenticate(
+      { enabledMethods: KNOWN_AUTH_METHODS },
+      authProviders(context),
+      method,
+      request.body ?? {},
+      storeBackedAccounts(context.store),
+    );
+    context.store.upsertSession(session.id, session.accountId, session);
     return session;
   });
 
@@ -284,12 +395,17 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
 
   app.post('/projects/:projectId/eln/protocols', { preHandler: requireSession }, async (request) => {
     const params = request.params as { projectId: string };
-    return context.protocolStore.createProtocol(params.projectId, (request.body as { content: string }).content);
+    return context.eln.createProtocol(actor(request), params.projectId, (request.body as { content: string }).content);
   });
 
   app.post('/projects/:projectId/eln/protocols/:id/versions', { preHandler: requireSession }, async (request) => {
-    const params = request.params as { id: string };
-    return context.protocolStore.createProtocolVersion(params.id, (request.body as { content: string }).content);
+    const params = request.params as { projectId: string; id: string };
+    return context.eln.createProtocolVersion(
+      actor(request),
+      params.projectId,
+      params.id,
+      (request.body as { content: string }).content,
+    );
   });
 
   app.post('/projects/:projectId/eln/protocols/:id/versions/:versionId/approve', { preHandler: requireSession }, async (request) => {
@@ -316,7 +432,7 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
 
   app.post('/projects/:projectId/eln/records/:id/export', { preHandler: requireSession }, async (request) => {
     const params = request.params as { projectId: string; id: string };
-    return context.eln.getRecordHistory(actor(request), params.projectId, params.id);
+    return context.eln.exportRecordHistory(actor(request), params.projectId, params.id);
   });
 
   app.delete('/projects/:projectId/eln/records/:id', { preHandler: requireSession }, async (request) => {
@@ -469,6 +585,20 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
     const params = request.params as { projectId: string; providerId: string };
     context.agentConfig.enableBuiltinMcpProvider(actor(request), params.projectId, params.providerId);
     return { status: 'ok' };
+  });
+
+  app.get('/*', async (request, reply) => {
+    const path = (request.params as { '*': string })['*'] ?? '';
+    if (path.startsWith('web/')) {
+      reply.status(404);
+      return { error: 'Not found' };
+    }
+    if (extname(path)) {
+      reply.status(404);
+      return { error: 'Not found' };
+    }
+    reply.type('text/html; charset=utf-8');
+    return frontend.rootHtml;
   });
 
   return app;

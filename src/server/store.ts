@@ -36,6 +36,10 @@ export class SqliteStore {
     this.db.close();
   }
 
+  runInTransaction<T>(operation: () => T): T {
+    return this.db.transaction(operation)();
+  }
+
   private initialize(): void {
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS accounts (
@@ -46,6 +50,10 @@ export class SqliteStore {
         id TEXT PRIMARY KEY,
         account_id TEXT NOT NULL,
         payload_json TEXT NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS password_credentials (
+        external_identity TEXT PRIMARY KEY,
+        password_hash TEXT NOT NULL
       );
       CREATE TABLE IF NOT EXISTS project_owners (
         project_id TEXT PRIMARY KEY,
@@ -194,6 +202,29 @@ export class SqliteStore {
 
   deleteSession(sessionId: string): void {
     this.db.prepare(`DELETE FROM sessions WHERE id = ?`).run(sessionId);
+  }
+
+  upsertPasswordCredential(externalIdentity: string, passwordHash: string): void {
+    this.db
+      .prepare(
+        `INSERT INTO password_credentials (external_identity, password_hash) VALUES (?, ?)
+         ON CONFLICT(external_identity) DO UPDATE SET password_hash = excluded.password_hash`,
+      )
+      .run(externalIdentity, passwordHash);
+  }
+
+  getPasswordCredential(externalIdentity: string): string | null {
+    const row = this.db
+      .prepare(`SELECT password_hash FROM password_credentials WHERE external_identity = ?`)
+      .get(externalIdentity) as { password_hash: string } | undefined;
+    return row?.password_hash ?? null;
+  }
+
+  countPasswordCredentials(): number {
+    const row = this.db
+      .prepare(`SELECT COUNT(*) as count FROM password_credentials`)
+      .get() as { count: number };
+    return row.count;
   }
 
   setProjectOwner(projectId: string, ownerUserId: string): void {

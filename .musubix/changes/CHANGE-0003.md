@@ -62,6 +62,45 @@ are the authoritative evidence for engineering completeness. The user was
 informed of this gap and explicitly accepted it as a known, documented
 limitation rather than requesting further remediation.
 
+## Post-implementation release-readiness fix pass / リリース前修正パス
+
+A pre-release rubber-duck review of the implemented CHANGE-0003 code found
+9 real defects across two review rounds (not requirement/design defects —
+implementation bugs): an authentication route that trusted client-supplied
+identity/role with no credential verification; a production SPA that never
+ran `vite build` and had 5 static-placeholder GUI areas; ELN service
+methods that authorized the caller's project but never verified a loaded
+record/protocol/version actually belonged to that project (cross-project
+read/write, including protocol-version linkage and signature-status
+lookups); ELN protocol create/version routes that bypassed authorization
+entirely and an export route using the wrong authorization action; a
+hardcoded source-controlled credential-vault encryption key; and ELN
+writes (record edits, inventory/provenance links) whose audit-ledger
+append was not wrapped in the same database transaction as the business
+write. All 9 were fixed with new TDD Red/Green evidence (real password
+authentication with bcrypt/scrypt-hashed credentials and a `501` response
+for unimplemented github-oauth/oidc, cryptographically random session IDs,
+a built-and-served production frontend calling live REST endpoints for all
+six GUI areas, project-scoped record/protocol/version/signature lookups,
+authorization-enforcing protocol routes, an environment-sourced vault key,
+and transactional ELN writes+audit appends) and independently verified by
+re-running the server, exercising the fixed endpoints with `curl`, and a
+second rubber-duck review pass. Full suite: 25 files / 79 tests passing,
+`npm run typecheck` clean, `tdd validate`: 0 diagnostics.
+
+## Known gate limitation (workflow) / 既知のゲート制約(workflow)
+
+The `workflow` gate check also reports `WORKFLOW_INVOCATION_ORDER` /
+`WORKFLOW_BINDING_MISSING` for `sdd-change:complete`, because the same SDD
+skills (`sdd-requirements`, `sdd-design`, `sdd-implementation`,
+`sdd-quality`, etc.) were invoked repeatedly and non-linearly across this
+long working session, and the reconciliation logic cannot cleanly bind a
+single `sdd-change:complete` declaration to one specific invocation event
+in that history. Like the `change-history`/`change-completeness` gap
+above, this is a workflow-declaration bookkeeping artifact, not a defect
+in the delivered code, tests, or traceability, and the user explicitly
+accepted it as a known, documented limitation.
+
 ## Source references / 参照元
 
 - CHANGE-0001 (`.musubix/changes/CHANGE-0001.md`) for the wrapped in-process

@@ -8,6 +8,11 @@ export interface DeploymentAuthConfig {
   enabledMethods: readonly AuthMethod[];
 }
 
+export interface AccountDirectory {
+  get(externalIdentity: string): Account | undefined;
+  set(externalIdentity: string, account: Account): unknown;
+}
+
 export interface AuthProvider {
   method: AuthMethod;
   resolveExternalIdentity(credentials: unknown): string;
@@ -22,6 +27,18 @@ export class UnsupportedAuthMethodError extends Error {
 export class AuthMethodDisabledError extends Error {
   constructor(method: string) {
     super(`Authentication method disabled for this deployment: ${method}`);
+  }
+}
+
+export class InvalidCredentialsError extends Error {
+  constructor(message = 'Invalid username or password') {
+    super(message);
+  }
+}
+
+export class AuthMethodNotImplementedError extends Error {
+  constructor(method: AuthMethod) {
+    super(`Authentication method '${method}' is not implemented for this release`);
   }
 }
 
@@ -42,7 +59,7 @@ export function authenticate(
   providers: AuthProvider[],
   method: string,
   credentials: unknown,
-  accounts: Map<string, Account>,
+  accounts: AccountDirectory,
 ): Session {
   if (!(KNOWN_AUTH_METHODS as readonly string[]).includes(method)) {
     throw new UnsupportedAuthMethodError(method);

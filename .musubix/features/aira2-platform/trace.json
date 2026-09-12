@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-12T01:22:57.216Z",
+  "generatedAt": "2026-09-12T02:25:52.034Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -663,13 +663,19 @@
       "id": "CODE-AIRA2-AUTH-003",
       "kind": "code",
       "path": "src/auth/login.ts",
-      "line": 28
+      "line": 45
     },
     {
       "id": "CODE-AIRA2-AUTH-004",
       "kind": "code",
       "path": "src/auth/login.ts",
-      "line": 36
+      "line": 53
+    },
+    {
+      "id": "CODE-AIRA2-AUTH-005",
+      "kind": "code",
+      "path": "src/auth/password-provider.ts",
+      "line": 13
     },
     {
       "id": "CODE-AIRA2-AUTHZ-003",
@@ -747,43 +753,49 @@
       "id": "TEST-AIRA2-APPROVAL-001",
       "kind": "test",
       "path": "src/eln/approval-signature-service.test.ts",
-      "line": 38
+      "line": 39
     },
     {
       "id": "TEST-AIRA2-APPROVAL-002",
       "kind": "test",
       "path": "src/eln/approval-signature-service.test.ts",
-      "line": 55
+      "line": 56
     },
     {
       "id": "TEST-AIRA2-APPROVAL-003",
       "kind": "test",
       "path": "src/eln/approval-signature-service.test.ts",
-      "line": 87
+      "line": 88
     },
     {
       "id": "TEST-AIRA2-APPROVAL-004",
       "kind": "test",
       "path": "src/eln/approval-signature-service.test.ts",
-      "line": 124
+      "line": 125
     },
     {
       "id": "TEST-AIRA2-APPROVAL-005",
       "kind": "test",
       "path": "src/eln/approval-signature-service.test.ts",
-      "line": 159
+      "line": 160
     },
     {
       "id": "TEST-AIRA2-APPROVAL-006",
       "kind": "test",
       "path": "src/eln/approval-signature-service.test.ts",
-      "line": 183
+      "line": 184
     },
     {
       "id": "TEST-AIRA2-APPROVAL-007",
       "kind": "test",
       "path": "src/eln/approval-signature-service.test.ts",
-      "line": 227
+      "line": 228
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-008",
+      "kind": "test",
+      "path": "src/eln/approval-signature-service.test.ts",
+      "line": 261
     },
     {
       "id": "CODE-AIRA2-ELN-003",
@@ -792,52 +804,106 @@
       "line": 31
     },
     {
+      "id": "CODE-AIRA2-ELN-012",
+      "kind": "code",
+      "path": "src/eln/approval-signature-service.ts",
+      "line": 135
+    },
+    {
       "id": "TEST-AIRA2-ELN-001",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
       "line": 51
     },
     {
-      "id": "TEST-AIRA2-ELN-002",
+      "id": "TEST-AIRA2-ELN-009",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
       "line": 70
     },
     {
+      "id": "TEST-AIRA2-AUDIT-007",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 101
+    },
+    {
+      "id": "TEST-AIRA2-ELN-010",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 135
+    },
+    {
+      "id": "TEST-AIRA2-AUDIT-008",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 158
+    },
+    {
+      "id": "TEST-AIRA2-APPROVAL-009",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 191
+    },
+    {
+      "id": "TEST-AIRA2-ELN-002",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 210
+    },
+    {
       "id": "TEST-AIRA2-ELN-004",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 94
+      "line": 234
     },
     {
       "id": "TEST-AIRA2-ELN-005",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 117
+      "line": 257
     },
     {
       "id": "TEST-AIRA2-ELN-006",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 139
+      "line": 279
     },
     {
       "id": "TEST-AIRA2-ELN-007",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 170
+      "line": 310
     },
     {
       "id": "TEST-AIRA2-ELN-008",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 193
+      "line": 333
     },
     {
       "id": "CODE-AIRA2-ELN-002",
       "kind": "code",
       "path": "src/eln/eln-core-service.ts",
       "line": 72
+    },
+    {
+      "id": "CODE-AIRA2-ELN-011",
+      "kind": "code",
+      "path": "src/eln/eln-core-service.ts",
+      "line": 93
+    },
+    {
+      "id": "CODE-AIRA2-ELN-013",
+      "kind": "code",
+      "path": "src/eln/eln-core-service.ts",
+      "line": 231
+    },
+    {
+      "id": "CODE-AIRA2-ELN-014",
+      "kind": "code",
+      "path": "src/eln/eln-core-service.ts",
+      "line": 254
     },
     {
       "id": "TEST-AIRA2-ELN-003",
@@ -1074,6 +1140,18 @@
       "line": 98
     },
     {
+      "id": "TEST-AIRA2-RUNTIME-006",
+      "kind": "test",
+      "path": "src/main.test.ts",
+      "line": 89
+    },
+    {
+      "id": "CODE-AIRA2-GUI-007",
+      "kind": "code",
+      "path": "src/main.tsx",
+      "line": 81
+    },
+    {
       "id": "TEST-EXAMPLE-001",
       "kind": "test",
       "path": "src/readiness/readiness.test.ts",
@@ -1089,25 +1167,67 @@
       "id": "TEST-AIRA2-RUNTIME-002",
       "kind": "test",
       "path": "src/server/app.test.ts",
-      "line": 25
+      "line": 28
+    },
+    {
+      "id": "TEST-AIRA2-RUNTIME-007",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 70
+    },
+    {
+      "id": "TEST-AIRA2-AUTH-005",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 84
+    },
+    {
+      "id": "TEST-AIRA2-AUTH-006",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 125
+    },
+    {
+      "id": "TEST-AIRA2-AUTH-007",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 156
     },
     {
       "id": "TEST-AIRA2-RUNTIME-003",
       "kind": "test",
       "path": "src/server/app.test.ts",
-      "line": 67
+      "line": 190
+    },
+    {
+      "id": "TEST-AIRA2-RUNTIME-008",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 294
     },
     {
       "id": "TEST-AIRA2-RUNTIME-005",
       "kind": "test",
       "path": "src/server/app.test.ts",
-      "line": 169
+      "line": 376
+    },
+    {
+      "id": "CODE-AIRA2-RUNTIME-004",
+      "kind": "code",
+      "path": "src/server/app.ts",
+      "line": 86
     },
     {
       "id": "CODE-AIRA2-RUNTIME-003",
       "kind": "code",
       "path": "src/server/app.ts",
-      "line": 184
+      "line": 283
+    },
+    {
+      "id": "TEST-AIRA2-AUTH-008",
+      "kind": "test",
+      "path": "src/server/bootstrap-admin.test.ts",
+      "line": 12
     },
     {
       "id": "TEST-AIRA2-RUNTIME-004",
@@ -1968,6 +2088,21 @@
       "relation": "implements"
     },
     {
+      "from": "CODE-AIRA2-AUTH-005",
+      "to": "REQ-MULTIUSER-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTH-005",
+      "to": "REQ-MULTIUSER-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUTH-005",
+      "to": "DES-AIRA2-001",
+      "relation": "implements"
+    },
+    {
       "from": "CODE-AIRA2-AUTHZ-003",
       "to": "REQ-MULTIUSER-006",
       "relation": "implements"
@@ -2113,6 +2248,11 @@
       "relation": "verifies"
     },
     {
+      "from": "TEST-AIRA2-APPROVAL-008",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "verifies"
+    },
+    {
       "from": "CODE-AIRA2-ELN-003",
       "to": "REQ-ELN-004",
       "relation": "implements"
@@ -2158,8 +2298,43 @@
       "relation": "implements"
     },
     {
+      "from": "CODE-AIRA2-ELN-012",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-012",
+      "to": "DES-AIRA2-002",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-AIRA2-ELN-001",
       "to": "REQ-ELN-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-009",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUDIT-007",
+      "to": "REQ-ELN-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-ELN-010",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUDIT-008",
+      "to": "REQ-ELN-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-APPROVAL-009",
+      "to": "REQ-MULTIUSER-011",
       "relation": "verifies"
     },
     {
@@ -2240,6 +2415,36 @@
     {
       "from": "CODE-AIRA2-ELN-002",
       "to": "DES-AIRA2-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-011",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-011",
+      "to": "DES-AIRA2-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-013",
+      "to": "REQ-ELN-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-013",
+      "to": "DES-AIRA2-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-014",
+      "to": "REQ-ELN-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-014",
+      "to": "DES-AIRA2-006",
       "relation": "implements"
     },
     {
@@ -2638,6 +2843,51 @@
       "relation": "implements"
     },
     {
+      "from": "TEST-AIRA2-RUNTIME-006",
+      "to": "REQ-RUNTIME-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "REQ-GUI-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "REQ-GUI-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "REQ-GUI-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "REQ-GUI-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "REQ-RUNTIME-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "REQ-RUNTIME-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GUI-007",
+      "to": "DES-AIRA2-012",
+      "relation": "implements"
+    },
+    {
       "from": "TEST-EXAMPLE-001",
       "to": "REQ-EXAMPLE-001",
       "relation": "verifies"
@@ -2678,6 +2928,26 @@
       "relation": "verifies"
     },
     {
+      "from": "TEST-AIRA2-RUNTIME-007",
+      "to": "REQ-RUNTIME-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTH-005",
+      "to": "REQ-MULTIUSER-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTH-006",
+      "to": "REQ-MULTIUSER-002",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUTH-007",
+      "to": "REQ-MULTIUSER-007",
+      "relation": "verifies"
+    },
+    {
       "from": "TEST-AIRA2-RUNTIME-003",
       "to": "REQ-RUNTIME-003",
       "relation": "verifies"
@@ -2693,6 +2963,11 @@
       "relation": "verifies"
     },
     {
+      "from": "TEST-AIRA2-RUNTIME-008",
+      "to": "REQ-RUNTIME-007",
+      "relation": "verifies"
+    },
+    {
       "from": "TEST-AIRA2-RUNTIME-005",
       "to": "REQ-RUNTIME-004",
       "relation": "verifies"
@@ -2701,6 +2976,16 @@
       "from": "TEST-AIRA2-RUNTIME-005",
       "to": "REQ-RUNTIME-008",
       "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-004",
+      "to": "REQ-RUNTIME-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-004",
+      "to": "DES-AIRA2-011",
+      "relation": "implements"
     },
     {
       "from": "CODE-AIRA2-RUNTIME-003",
@@ -2736,6 +3021,11 @@
       "from": "CODE-AIRA2-RUNTIME-003",
       "to": "DES-AIRA2-010",
       "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-AUTH-008",
+      "to": "REQ-MULTIUSER-002",
+      "relation": "verifies"
     },
     {
       "from": "TEST-AIRA2-RUNTIME-004",
@@ -2950,24 +3240,26 @@
     ".musubix/features/aira2-platform/requirements.md": "82be30abd62d4224b4fa63d18a93c481a2e8b123db8b9c303727d84c876368dc",
     ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed",
+    "frontend-dist/assets/index-BgKxxgmc.js": "333692b85a483ccb1a03e7e95f75e96f575c1cf619b37127999498e4f55478fc",
     "src/agent-config/agent-skills-mcp-manager.test.ts": "daa01e46e19b6a6c585668d7cdf7b6e95cc437f1b7f333e7c2a4bf7b1137e056",
     "src/agent-config/agent-skills-mcp-manager.ts": "407f9a2d7ba26e757097ecff67f56644a2aa6b59a8e190f7300caa8c4fc5db70",
     "src/auth/account.test.ts": "0db268e9e1d9079e246e9e2a8d8f05cc117d6279882f69ca231450b322b56401",
     "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
     "src/auth/login.test.ts": "278383c58fe25b321e4dd4f2880b54b8ced0e264c8e42869dc3490dda6dc6937",
-    "src/auth/login.ts": "d11343d673fcda0ace52b3e9d598cd054c6a1feb9a231b3778056eba1855bcc3",
-    "src/auth/session.ts": "ee87250c936845a559197ab42a8e243d1f43d9ea4c2a4309ab43e1a774fe649b",
+    "src/auth/login.ts": "6571d17d00ff09124773d664ae2402b2dd09981d0c1cf97ad93ada3fedd40736",
+    "src/auth/password-provider.ts": "a66c2f3cff649d3df88d80524efbaa8e95bad8b30a3cf088f9e46555e9313111",
+    "src/auth/session.ts": "6d2d51135f6a34ee8d2ecf77b37e7b60508c47c870c363545f2bb03d8fa0889b",
     "src/authz/audit.ts": "5abdda968eb0f68794defb3f387925fc4ba8eb60f083ba7442862f020dba5513",
     "src/authz/matrix.ts": "ff03dc897ce1705fb4f48ead251cd671a8a2fcc6d759d0797c3c4d666bf433d1",
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
     "src/authz/project-authz.ts": "993ac9e3706ea11eea925f3ab3a9838536ac850507908cbbcaa31e4febf3900e",
     "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
-    "src/eln/approval-signature-service.test.ts": "149b8be05bc7ac45d15642ca5dd0d9e06d51568eeb7e10cf7af12534fdaab9c9",
-    "src/eln/approval-signature-service.ts": "ab378ee0fafa23c277727b44449ee0016d0f0626a2f17462c89cad14d1ca7dda",
-    "src/eln/eln-core-service.test.ts": "4c4718d05b4aaf95097c22816d4ca4caf9ac7dfd1f47d833e158f92685e9ab2b",
-    "src/eln/eln-core-service.ts": "fea94fbdacd547b58174f949154d8975b62d1c00204b23c391d643beca7f08e1",
+    "src/eln/approval-signature-service.test.ts": "3e9a81d95edbac42524b50159788f586728df029fecaa8a5fc49ce32ec8a6e21",
+    "src/eln/approval-signature-service.ts": "61fa3216157e8879632cb89d92e878e70267a1cbaaa7be160a8c571c1d52957c",
+    "src/eln/eln-core-service.test.ts": "2a46e7d30047b471490bcc67cb3581293e26a6c152232a98beb21d7fcdaccdb5",
+    "src/eln/eln-core-service.ts": "335564e4f28219a862ba72e5bb691b08276192e84c0e31bff3f0461f6c4a747f",
     "src/eln/protocol-store.test.ts": "9f7e27730411bb2778b46706d42058f0f34fd4f28b4b9eb0abc6269c7448d059",
-    "src/eln/protocol-store.ts": "f55d3ecfe062d47934213ed300e9cff87ba4b5ddf3c6ce6e2e63b0345355a758",
+    "src/eln/protocol-store.ts": "b9761a30cf367e4d311c979709b788a70d97db41cf419edaf4175a526f3c2670",
     "src/eln-audit/integrity-subsystem.test.ts": "ff88c32081fa388e26f8138ccc8333317ef463392abb18befa383b8e936a5578",
     "src/eln-audit/integrity-subsystem.ts": "322e2499859715688a73d61087ca11e50c5e62766c4263b89bd92c268ab02dd0",
     "src/eln-audit/ledger.test.ts": "de6b378c0a9eff343f260e1be6d42ff47089a75883ba1165b3982fc65abea2e4",
@@ -2981,15 +3273,17 @@
     "src/llm/adapters.ts": "c50b1e3c3616ae663bfb1ac2de79bca81658c871bb1e13ce58881668042eb39a",
     "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
     "src/llm/gateway.ts": "11ac49fff84a949ae02392ac22db2a8dde612cd6989b735483d34d23809d77b8",
-    "src/main.tsx": "aadb7e4901c69fc1fa0d8c0099e21e62b8001be12f5963e115b9f8bf2262edcf",
+    "src/main.test.ts": "f115485d92c46e037f22ea7c6f06d988d0ac9d61001786f0f4fb365cc42e8d08",
+    "src/main.tsx": "ccfa49e972e45c5d2289448dcd92a61b8d41f892a4247066944e841fa4f90b50",
     "src/readiness/readiness.test.ts": "eb5dc040b2d5e5689aab6682e365e4d3ac34522fe6c5633d74f6ae4dd2d3020d",
     "src/readiness/readiness.ts": "abe2e72545b6e80333d7ba7fd2a128f2ed24d133f4850048e7b109e2a6aa3103",
-    "src/server/app.test.ts": "39173806543b4b717cb2c99329398546c35e02b71192791f35b69e24c25a01a7",
-    "src/server/app.ts": "a9680658e43fb999eda0f18f97d37cc0141451056f04c6e83e86d24fae8ed8a8",
+    "src/server/app.test.ts": "45a447e4fb9c0aa13d1fde1775a6f8d8607a0917a392eea253f3de8dedbc001b",
+    "src/server/app.ts": "81c1d95c1a82399edd48004bad174280d93cd7826c3f0836b104aa83a114ca61",
+    "src/server/bootstrap-admin.test.ts": "cf06176988b0f134568080c07c2a2ad2ea6a892c1e04ef1661176b28bf2ec76a",
     "src/server/server.test.ts": "4d6e4ded09e361e8df9d7ccc0b61b263b6ea3ae215bd7f93f48d5c5c4c32add4",
     "src/server/server.ts": "d388dc813b1f83e4e9d0591c4ae681573703a75801afed81bbb7f9ee87e1b448",
     "src/server/store.test.ts": "ca9151bd0b80b9b3ea89858b9ae3af33cae72a19ab48155a236aad8580b00055",
-    "src/server/store.ts": "d502223fcc481cd10ebb39f403786b392882bc71bdd432051f009f8989dc65c4",
+    "src/server/store.ts": "b836fd1bb60b95f7c0a6ecb65992d6c1336b75a34c8867df27b1147860004cce",
     "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
     "src/vault/credential-vault.ts": "6fd9ff29021976c12977b5a15b475d452a90d9650b017eabd12254598a67d59c",
     "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",

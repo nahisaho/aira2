@@ -7,6 +7,7 @@ import { ProtocolStore } from './protocol-store.js';
 import { ElnCoreService } from './eln-core-service.js';
 import { ElnApprovalSignatureService, SignatureRejectedError, type ReauthVerifier } from './approval-signature-service.js';
 import { createAccount } from '../auth/account.js';
+import { SqliteStore } from '../server/store.js';
 
 const FIELDS = {
   objective: 'Measure enzyme kinetics',
@@ -254,5 +255,51 @@ describe('non-destructive void of signed records', () => {
     expect(history.versions).toHaveLength(1);
     const signatures = approval.getSignatureStatus(author, 'project-1', record.recordId);
     expect(signatures).toHaveLength(1);
+  });
+});
+
+/** @id TEST-AIRA2-APPROVAL-008
+ * @verifies REQ-MULTIUSER-011
+ */
+describe('project-boundary enforcement for approval actions', () => {
+  it('TEST-AIRA2-APPROVAL-008 rejects cross-project approve, sign, and void attempts with the same not-found style errors used for unknown ids', () => {
+    const store = new SqliteStore({ dbPath: ':memory:' });
+    const authz = new ProjectAuthorizationService(
+      new AuditLog(store),
+      { terminateSessionsAndConnections: () => undefined },
+      store,
+    );
+    authz.createProject('owner-1', 'project-1');
+    authz.createProject('owner-2', 'project-2');
+    authz.grantShare({ accountId: 'owner-1' }, 'project-1', 'approver-1', 'editor');
+    const ledger = new AuditLedger(store);
+    const integrity = new ElnAuditIntegritySubsystem(ledger, store);
+    const protocolStore = new ProtocolStore(store);
+    const eln = new ElnCoreService(authz, ledger, protocolStore, store);
+    const reauth: ReauthVerifier = { verifyFreshCredential: () => true };
+    const approval = new ElnApprovalSignatureService(authz, ledger, integrity, protocolStore, eln, reauth, store);
+    const owner = { accountId: 'owner-1', account: humanAccount('owner-1') };
+    const outsider = { accountId: 'owner-2', account: humanAccount('owner-2') };
+    const protocol = protocolStore.createProtocol('project-1', 'SOP draft');
+    approval.approveProtocolVersion(owner, 'project-1', protocol.protocolVersionId);
+    const record = eln.createRecord(owner, 'project-1', FIELDS, protocol.protocolVersionId);
+
+    expect(() =>
+      approval.approveProtocolVersion(outsider, 'project-2', protocol.protocolVersionId),
+    ).toThrowError(`Unknown protocol version: ${protocol.protocolVersionId}`);
+    expect(() =>
+      approval.voidRecord(outsider, 'project-2', record.recordId),
+    ).toThrowError(`Unknown experiment record: ${record.recordId}`);
+    expect(() =>
+      approval.signRecordVersion(
+        outsider,
+        'project-2',
+        record.recordId,
+        record.recordVersionId,
+        record.contentHash,
+        'reviewed',
+        'owner-1',
+      ),
+    ).toThrowError(`Unknown experiment record: ${record.recordId}`);
   });
 });

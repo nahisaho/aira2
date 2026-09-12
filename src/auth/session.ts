@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import type { Account } from './account.js';
 
 export interface Session {
@@ -15,7 +16,7 @@ export function createSession(
   ttlMs: number = DEFAULT_SESSION_TTL_MS,
 ): Session {
   return {
-    id: `session:${account.id}:${now}`,
+    id: randomBytes(32).toString('hex'),
     accountId: account.id,
     issuedAt: now,
     expiresAt: now + ttlMs,

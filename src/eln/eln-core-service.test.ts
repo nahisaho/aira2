@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { mkdirSync, rmSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { ProjectAuthorizationService } from '../authz/project-authz.js';
@@ -64,6 +64,146 @@ describe('structured experiment records', () => {
     expect(record.predecessorVersionId).toBeNull();
 
     expect(() => service.createRecord({ accountId: 'stranger' }, 'project-1', FIELDS)).toThrow();
+  });
+});
+
+/** @id TEST-AIRA2-ELN-009
+ * @verifies REQ-MULTIUSER-011
+ */
+describe('project-boundary enforcement for records', () => {
+  it('TEST-AIRA2-ELN-009 rejects cross-project reads and edits with the same not-found outcome used for an unknown record id', () => {
+    const authz = new ProjectAuthorizationService(new AuditLog(), {
+      terminateSessionsAndConnections: () => undefined,
+    });
+    authz.createProject('owner-1', 'project-1');
+    authz.createProject('owner-2', 'project-2');
+    const ledger = new AuditLedger();
+    const protocolStore = new ProtocolStore();
+    const service = new ElnCoreService(authz, ledger, protocolStore);
+    const record = service.createRecord({ accountId: 'owner-1' }, 'project-1', FIELDS);
+    const actor = { accountId: 'owner-2' };
+
+    expect(() => service.getRecordHistory(actor, 'project-2', record.recordId)).toThrowError(
+      `Unknown experiment record: ${record.recordId}`,
+    );
+    expect(() => service.getProvenance(actor, 'project-2', record.recordId)).toThrowError(
+      `Unknown experiment record: ${record.recordId}`,
+    );
+    expect(() => service.editRecord(actor, 'project-2', record.recordId, FIELDS)).toThrowError(
+      `Unknown experiment record: ${record.recordId}`,
+    );
+    expect(() => service.getRecordHistory(actor, 'project-2', 'missing-record')).toThrowError(
+      'Unknown experiment record: missing-record',
+    );
+  });
+});
+
+/** @id TEST-AIRA2-AUDIT-007
+ * @verifies REQ-ELN-005
+ */
+describe('atomic ELN edit and audit append', () => {
+  it('TEST-AIRA2-AUDIT-007 rolls back a record edit when the audit append fails', () => {
+    const store = new SqliteStore({ dbPath: ':memory:' });
+    const authz = new ProjectAuthorizationService(
+      new AuditLog(store),
+      { terminateSessionsAndConnections: () => undefined },
+      store,
+    );
+    authz.createProject('owner-1', 'project-1');
+    const ledger = new AuditLedger(store);
+    const protocolStore = new ProtocolStore(store);
+    const service = new ElnCoreService(authz, ledger, protocolStore, store);
+    const record = service.createRecord({ accountId: 'owner-1' }, 'project-1', FIELDS);
+
+    vi.spyOn(ledger, 'appendAuditEntry').mockImplementation(() => {
+      throw new Error('forced audit failure');
+    });
+
+    expect(() =>
+      service.editRecord({ accountId: 'owner-1' }, 'project-1', record.recordId, {
+        ...FIELDS,
+        conclusion: 'should roll back',
+      }),
+    ).toThrowError('forced audit failure');
+
+    const history = service.getRecordHistory({ accountId: 'owner-1' }, 'project-1', record.recordId);
+    expect(history.versions).toHaveLength(1);
+    expect(history.versions[0]?.conclusion).toBe(FIELDS.conclusion);
+  });
+});
+
+/** @id TEST-AIRA2-ELN-010
+ * @verifies REQ-MULTIUSER-011
+ */
+describe('project-boundary enforcement for protocol version linkage', () => {
+  it('TEST-AIRA2-ELN-010 rejects linking an approved protocol version that belongs to a different project', () => {
+    const authz = new ProjectAuthorizationService(new AuditLog(), {
+      terminateSessionsAndConnections: () => undefined,
+    });
+    authz.createProject('owner-1', 'project-1');
+    authz.createProject('owner-2', 'project-2');
+    const ledger = new AuditLedger();
+    const protocolStore = new ProtocolStore();
+    const service = new ElnCoreService(authz, ledger, protocolStore);
+
+    const foreignVersion = protocolStore.createProtocol('project-2', 'Project 2 SOP');
+    protocolStore.markApproved(TRUSTED_APPROVAL_SUBSYSTEM, foreignVersion.protocolVersionId);
+
+    expect(() =>
+      service.createRecord({ accountId: 'owner-1' }, 'project-1', FIELDS, foreignVersion.protocolVersionId),
+    ).toThrowError(`Protocol version must be approved to link: ${foreignVersion.protocolVersionId}`);
+  });
+});
+
+/** @id TEST-AIRA2-AUDIT-008
+ * @verifies REQ-ELN-005
+ */
+describe('atomic ELN inventory/provenance edits and audit append', () => {
+  it('TEST-AIRA2-AUDIT-008 rolls back an inventory link when the audit append fails', () => {
+    const store = new SqliteStore({ dbPath: ':memory:' });
+    const authz = new ProjectAuthorizationService(
+      new AuditLog(store),
+      { terminateSessionsAndConnections: () => undefined },
+      store,
+    );
+    authz.createProject('owner-1', 'project-1');
+    const ledger = new AuditLedger(store);
+    const protocolStore = new ProtocolStore(store);
+    const service = new ElnCoreService(authz, ledger, protocolStore, store);
+    const record = service.createRecord({ accountId: 'owner-1' }, 'project-1', FIELDS);
+
+    vi.spyOn(ledger, 'appendAuditEntry').mockImplementation(() => {
+      throw new Error('forced audit failure');
+    });
+
+    expect(() =>
+      service.linkInventory({ accountId: 'owner-1' }, 'project-1', record.recordId, {
+        identifier: 'reagent-1',
+        lotNumber: 'lot-1',
+      }),
+    ).toThrowError('forced audit failure');
+
+    const inventory = service.getInventoryContext({ accountId: 'owner-1' }, 'project-1', record.recordId);
+    expect(inventory).toHaveLength(0);
+  });
+});
+
+/** @id TEST-AIRA2-APPROVAL-009
+ * @verifies REQ-MULTIUSER-011
+ */
+describe('project-boundary enforcement for signature status', () => {
+  it('TEST-AIRA2-APPROVAL-009 rejects reading signature status for a record in a different project', () => {
+    const { store, authz, ledger, protocolStore, service, approval } = persistenceSetup(':memory:');
+    authz.createProject('owner-2', 'project-2');
+    const record = service.createRecord({ accountId: 'owner-1' }, 'project-1', FIELDS);
+    const actor = { accountId: 'owner-2' };
+
+    expect(() => approval.getSignatureStatus(actor, 'project-2', record.recordId)).toThrowError(
+      `Unknown experiment record: ${record.recordId}`,
+    );
+    void store;
+    void ledger;
+    void protocolStore;
   });
 });
 

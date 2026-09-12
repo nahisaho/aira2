@@ -90,9 +90,17 @@ export class ElnCoreService {
     }
   }
 
-  private requireApprovedProtocolVersion(protocolVersionId: string): void {
+  /** @id CODE-AIRA2-ELN-011
+   * @implements REQ-MULTIUSER-011
+   * @design DES-AIRA2-002
+   * Requires the approved protocol version to belong to the same project as
+   * the record it is being linked to; cross-project version IDs are
+   * rejected with the same generic error as a missing version, to avoid
+   * disclosing that a version exists in another project.
+   */
+  private requireApprovedProtocolVersion(projectId: string, protocolVersionId: string): void {
     const version = this.protocolStore.getVersion(protocolVersionId);
-    if (!version || version.status !== 'approved') {
+    if (!version || version.projectId !== projectId || version.status !== 'approved') {
       throw new Error(`Protocol version must be approved to link: ${protocolVersionId}`);
     }
   }
@@ -126,6 +134,21 @@ export class ElnCoreService {
     };
   }
 
+  private getEntryForProject(projectId: string, recordId: string): ExperimentRecordEntry {
+    const entry = this.getEntry(recordId);
+    if (entry.projectId !== projectId) {
+      throw new Error(`Unknown experiment record: ${recordId}`);
+    }
+    return entry;
+  }
+
+  private requireProtocolForProject(projectId: string, protocolId: string): void {
+    const versions = this.protocolStore.listVersions(protocolId);
+    if (versions.length === 0 || versions[0]!.projectId !== projectId) {
+      throw new Error(`Unknown protocol: ${protocolId}`);
+    }
+  }
+
   listRecordIds(projectId: string): string[] {
     return this.store.listExperimentRecordIds(projectId);
   }
@@ -138,7 +161,7 @@ export class ElnCoreService {
   ): ExperimentRecordVersion {
     this.requireAuthorized(actor, projectId, 'eln.create');
     if (protocolVersionId) {
-      this.requireApprovedProtocolVersion(protocolVersionId);
+      this.requireApprovedProtocolVersion(projectId, protocolVersionId);
     }
 
     const recordId = `record-${randomUUID()}`;
@@ -153,13 +176,14 @@ export class ElnCoreService {
       createdAt: new Date().toISOString(),
     };
 
-    const tx = new TxContext();
-    this.store.insertExperimentRecord(recordId, projectId);
-    this.store.insertExperimentRecordVersion(version);
-    this.ledger.appendAuditEntry(tx, 'create', projectId, 'record', version.recordVersionId, actor.accountId);
-    tx.commit();
-
-    return version;
+    return this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.store.insertExperimentRecord(recordId, projectId);
+      this.store.insertExperimentRecordVersion(version);
+      this.ledger.appendAuditEntry(tx, 'create', projectId, 'record', version.recordVersionId, actor.accountId);
+      tx.commit();
+      return version;
+    });
   }
 
   editRecord(
@@ -169,7 +193,7 @@ export class ElnCoreService {
     fields: RecordFields,
   ): ExperimentRecordVersion {
     this.requireAuthorized(actor, projectId, 'eln.edit');
-    const entry = this.getEntry(recordId);
+    const entry = this.getEntryForProject(projectId, recordId);
     const previous = entry.versions[entry.versions.length - 1]!;
 
     const version: ExperimentRecordVersion = {
@@ -183,17 +207,18 @@ export class ElnCoreService {
       createdAt: new Date().toISOString(),
     };
 
-    const tx = new TxContext();
-    this.store.insertExperimentRecordVersion(version);
-    this.ledger.appendAuditEntry(tx, 'edit', projectId, 'record', version.recordVersionId, actor.accountId);
-    tx.commit();
-
-    return version;
+    return this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.store.insertExperimentRecordVersion(version);
+      this.ledger.appendAuditEntry(tx, 'edit', projectId, 'record', version.recordVersionId, actor.accountId);
+      tx.commit();
+      return version;
+    });
   }
 
   getRecordHistory(actor: ActorContext, projectId: string, recordId: string): ExperimentRecordHistory {
     this.requireAuthorized(actor, projectId, 'eln.view');
-    const entry = this.getEntry(recordId);
+    const entry = this.getEntryForProject(projectId, recordId);
     return {
       recordId: entry.recordId,
       versions: entry.versions,
@@ -203,29 +228,54 @@ export class ElnCoreService {
     };
   }
 
+  /** @id CODE-AIRA2-ELN-013
+   * @implements REQ-ELN-005
+   * @design DES-AIRA2-006
+   * Wraps the inventory-link write and its audit-ledger append in the same
+   * database transaction so a failed audit append rolls back the edit.
+   */
   linkInventory(actor: ActorContext, projectId: string, recordId: string, link: InventoryLink): void {
     this.requireAuthorized(actor, projectId, 'eln.edit');
-    const entry = this.getEntry(recordId);
-    this.store.setExperimentRecordInventoryLinks(recordId, [...entry.inventoryLinks, link] as unknown as Record<string, unknown>[]);
+    const entry = this.getEntryForProject(projectId, recordId);
+    const latestVersion = entry.versions[entry.versions.length - 1]!;
+    this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.store.setExperimentRecordInventoryLinks(recordId, [...entry.inventoryLinks, link] as unknown as Record<string, unknown>[]);
+      this.ledger.appendAuditEntry(tx, 'edit', projectId, 'record', latestVersion.recordVersionId, actor.accountId);
+      tx.commit();
+    });
   }
 
   getInventoryContext(actor: ActorContext, projectId: string, recordId: string): InventoryLink[] {
     this.requireAuthorized(actor, projectId, 'eln.view');
-    return this.getEntry(recordId).inventoryLinks;
+    return this.getEntryForProject(projectId, recordId).inventoryLinks;
   }
 
+  /** @id CODE-AIRA2-ELN-014
+   * @implements REQ-ELN-005
+   * @design DES-AIRA2-006
+   * Wraps the provenance-link write and its audit-ledger append in the same
+   * database transaction so a failed audit append rolls back the edit.
+   */
   linkProvenance(actor: ActorContext, projectId: string, recordId: string, provenance: ProvenanceLink): void {
     this.requireAuthorized(actor, projectId, 'eln.edit');
-    this.store.setExperimentRecordProvenance(recordId, provenance as unknown as Record<string, unknown>);
+    const entry = this.getEntryForProject(projectId, recordId);
+    const latestVersion = entry.versions[entry.versions.length - 1]!;
+    this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.store.setExperimentRecordProvenance(recordId, provenance as unknown as Record<string, unknown>);
+      this.ledger.appendAuditEntry(tx, 'edit', projectId, 'record', latestVersion.recordVersionId, actor.accountId);
+      tx.commit();
+    });
   }
 
   getProvenance(actor: ActorContext, projectId: string, recordId: string): ProvenanceLink | null {
     this.requireAuthorized(actor, projectId, 'eln.view');
-    return this.getEntry(recordId).provenance;
+    return this.getEntryForProject(projectId, recordId).provenance;
   }
 
-  markVoided(recordId: string): void {
-    this.getEntry(recordId);
+  markVoided(projectId: string, recordId: string): void {
+    this.getEntryForProject(projectId, recordId);
     this.store.setExperimentRecordVoided(recordId, true);
   }
 
@@ -267,5 +317,33 @@ export class ElnCoreService {
     this.requireAuthorized(actor, projectId, 'eln.export');
     const matches = this.search(actor, projectId, criteria);
     return { criteria, matches };
+  }
+
+  createProtocol(actor: ActorContext, projectId: string, content: string) {
+    this.requireAuthorized(actor, projectId, 'eln.create');
+    return this.protocolStore.createProtocol(projectId, content);
+  }
+
+  createProtocolVersion(actor: ActorContext, projectId: string, protocolId: string, content: string) {
+    this.requireAuthorized(actor, projectId, 'eln.edit');
+    this.requireProtocolForProject(projectId, protocolId);
+    return this.protocolStore.createProtocolVersion(protocolId, content);
+  }
+
+  exportRecordHistory(actor: ActorContext, projectId: string, recordId: string): ExperimentRecordHistory {
+    this.requireAuthorized(actor, projectId, 'eln.export');
+    const entry = this.getEntryForProject(projectId, recordId);
+    this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.ledger.appendAuditEntry(tx, 'export', projectId, 'record', recordId, actor.accountId);
+      tx.commit();
+    });
+    return {
+      recordId: entry.recordId,
+      versions: entry.versions,
+      inventoryLinks: entry.inventoryLinks,
+      provenance: entry.provenance,
+      voided: entry.voided,
+    };
   }
 }

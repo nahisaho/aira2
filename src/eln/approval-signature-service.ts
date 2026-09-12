@@ -55,12 +55,22 @@ export class ElnApprovalSignatureService {
     }
   }
 
+  private requireProtocolVersionInProject(projectId: string, protocolVersionId: string): void {
+    const version = this.protocolStore.getVersion(protocolVersionId);
+    if (!version || version.projectId !== projectId) {
+      throw new Error(`Unknown protocol version: ${protocolVersionId}`);
+    }
+  }
+
   approveProtocolVersion(actor: ApprovalActorContext, projectId: string, protocolVersionId: string): void {
     this.requireAuthorized(actor, projectId, 'eln.approve');
-    const tx = new TxContext();
-    this.protocolStore.markApproved(TRUSTED_APPROVAL_SUBSYSTEM, protocolVersionId);
-    this.ledger.appendAuditEntry(tx, 'approve', projectId, 'protocol', protocolVersionId, actor.accountId);
-    tx.commit();
+    this.requireProtocolVersionInProject(projectId, protocolVersionId);
+    this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.protocolStore.markApproved(TRUSTED_APPROVAL_SUBSYSTEM, protocolVersionId);
+      this.ledger.appendAuditEntry(tx, 'approve', projectId, 'protocol', protocolVersionId, actor.accountId);
+      tx.commit();
+    });
   }
 
   signRecordVersion(
@@ -112,24 +122,36 @@ export class ElnApprovalSignatureService {
       timestamp: new Date().toISOString(),
     };
 
-    const tx = new TxContext();
-    this.store.insertSignature(recordId, signature as unknown as Record<string, unknown>);
-    this.ledger.appendAuditEntry(tx, 'approve', projectId, 'record', recordVersionId, actor.accountId);
-    tx.commit();
+    this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.store.insertSignature(recordId, signature as unknown as Record<string, unknown>);
+      this.ledger.appendAuditEntry(tx, 'approve', projectId, 'record', recordVersionId, actor.accountId);
+      tx.commit();
+    });
 
     return signature;
   }
 
+  /** @id CODE-AIRA2-ELN-012
+   * @implements REQ-MULTIUSER-011
+   * @design DES-AIRA2-002
+   * Resolves the record through the project-bound history lookup before
+   * listing its signatures, so a record belonging to another project
+   * cannot be probed by ID substitution.
+   */
   getSignatureStatus(actor: ActorContext, projectId: string, recordId: string): SignatureRecord[] {
     this.requireAuthorized(actor, projectId, 'eln.view');
+    this.eln.getRecordHistory(actor, projectId, recordId);
     return this.store.listSignatures<SignatureRecord>(recordId);
   }
 
   voidRecord(actor: ActorContext, projectId: string, recordId: string): void {
     this.requireAuthorized(actor, projectId, 'eln.void');
-    const tx = new TxContext();
-    this.eln.markVoided(recordId);
-    this.ledger.appendAuditEntry(tx, 'void', projectId, 'record', recordId, actor.accountId);
-    tx.commit();
+    this.store.runInTransaction(() => {
+      const tx = new TxContext();
+      this.eln.markVoided(projectId, recordId);
+      this.ledger.appendAuditEntry(tx, 'void', projectId, 'record', recordId, actor.accountId);
+      tx.commit();
+    });
   }
 }

@@ -62,6 +62,10 @@ export class ProtocolStore {
     return this.store.getProtocolVersion(protocolVersionId) as ProtocolVersion | undefined;
   }
 
+  listVersions(protocolId: string): ProtocolVersion[] {
+    return this.store.listProtocolVersions(protocolId) as ProtocolVersion[];
+  }
+
   getAllVersions(projectId: string): ProtocolVersion[] {
     return this.store.listProtocolVersionsByProject(projectId) as ProtocolVersion[];
   }
