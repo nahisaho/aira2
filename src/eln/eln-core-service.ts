@@ -1,8 +1,9 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import type { ProjectAuthorizationService, ActorContext } from '../authz/project-authz.js';
 import { AuthorizationDeniedError } from '../authz/project-authz.js';
 import { AuditLedger, TxContext } from '../eln-audit/ledger.js';
 import type { ProtocolStore } from './protocol-store.js';
+import { SqliteStore } from '../server/store.js';
 
 export interface RecordFields {
   objective: string;
@@ -68,23 +69,19 @@ function contentHashOf(fields: RecordFields): string {
   return createHash('sha256').update(JSON.stringify(fields)).digest('hex');
 }
 
-let recordCounter = 0;
-let recordVersionCounter = 0;
-
 /** @id CODE-AIRA2-ELN-002
- * @implements REQ-ELN-001 REQ-ELN-002 REQ-ELN-019 REQ-ELN-007 REQ-ELN-012 REQ-ELN-008 REQ-ELN-009
+ * @implements REQ-ELN-001 REQ-ELN-002 REQ-ELN-019 REQ-ELN-007 REQ-ELN-012 REQ-ELN-008 REQ-ELN-009 REQ-RUNTIME-002
  * @design DES-AIRA2-005
  * Every state-changing command executes inside one atomic transaction that
  * also commits its audit event via DES-AIRA2-006's ledger; every read/write
  * resolves `authorize()` via DES-AIRA2-002 with a trusted actorContext.
  */
 export class ElnCoreService {
-  private readonly records = new Map<string, ExperimentRecordEntry>();
-
   constructor(
     private readonly authz: ProjectAuthorizationService,
     private readonly ledger: AuditLedger,
     private readonly protocolStore: ProtocolStore,
+    private readonly store: SqliteStore = new SqliteStore({ dbPath: ':memory:' }),
   ) {}
 
   private requireAuthorized(actor: ActorContext, projectId: string, action: string): void {
@@ -101,11 +98,36 @@ export class ElnCoreService {
   }
 
   private getEntry(recordId: string): ExperimentRecordEntry {
-    const entry = this.records.get(recordId);
-    if (!entry) {
+    const record = this.store.getExperimentRecord(recordId);
+    if (!record) {
       throw new Error(`Unknown experiment record: ${recordId}`);
     }
-    return entry;
+    const versions = this.store.listExperimentRecordVersions(recordId).map((row) => ({
+      recordVersionId: row.record_version_id as string,
+      recordId: row.record_id as string,
+      versionNumber: row.version_number as number,
+      protocolVersionId: (row.protocol_version_id as string | null) ?? null,
+      contentHash: row.content_hash as string,
+      predecessorVersionId: (row.predecessor_version_id as string | null) ?? null,
+      createdAt: row.created_at as string,
+      objective: row.objective as string,
+      method: row.method as string,
+      rawData: row.raw_data as string,
+      results: row.results as string,
+      conclusion: row.conclusion as string,
+    }));
+    return {
+      recordId: record.recordId,
+      projectId: record.projectId,
+      versions,
+      inventoryLinks: record.inventoryLinks as unknown as InventoryLink[],
+      provenance: record.provenance as unknown as ProvenanceLink | null,
+      voided: record.voided,
+    };
+  }
+
+  listRecordIds(projectId: string): string[] {
+    return this.store.listExperimentRecordIds(projectId);
   }
 
   createRecord(
@@ -119,10 +141,10 @@ export class ElnCoreService {
       this.requireApprovedProtocolVersion(protocolVersionId);
     }
 
-    const recordId = `record-${++recordCounter}`;
+    const recordId = `record-${randomUUID()}`;
     const version: ExperimentRecordVersion = {
       ...fields,
-      recordVersionId: `record-version-${++recordVersionCounter}`,
+      recordVersionId: `record-version-${randomUUID()}`,
       recordId,
       versionNumber: 1,
       protocolVersionId,
@@ -132,14 +154,8 @@ export class ElnCoreService {
     };
 
     const tx = new TxContext();
-    this.records.set(recordId, {
-      recordId,
-      projectId,
-      versions: [version],
-      inventoryLinks: [],
-      provenance: null,
-      voided: false,
-    });
+    this.store.insertExperimentRecord(recordId, projectId);
+    this.store.insertExperimentRecordVersion(version);
     this.ledger.appendAuditEntry(tx, 'create', projectId, 'record', version.recordVersionId, actor.accountId);
     tx.commit();
 
@@ -158,7 +174,7 @@ export class ElnCoreService {
 
     const version: ExperimentRecordVersion = {
       ...fields,
-      recordVersionId: `record-version-${++recordVersionCounter}`,
+      recordVersionId: `record-version-${randomUUID()}`,
       recordId,
       versionNumber: previous.versionNumber + 1,
       protocolVersionId: previous.protocolVersionId,
@@ -168,7 +184,7 @@ export class ElnCoreService {
     };
 
     const tx = new TxContext();
-    entry.versions.push(version);
+    this.store.insertExperimentRecordVersion(version);
     this.ledger.appendAuditEntry(tx, 'edit', projectId, 'record', version.recordVersionId, actor.accountId);
     tx.commit();
 
@@ -190,7 +206,7 @@ export class ElnCoreService {
   linkInventory(actor: ActorContext, projectId: string, recordId: string, link: InventoryLink): void {
     this.requireAuthorized(actor, projectId, 'eln.edit');
     const entry = this.getEntry(recordId);
-    entry.inventoryLinks.push(link);
+    this.store.setExperimentRecordInventoryLinks(recordId, [...entry.inventoryLinks, link] as unknown as Record<string, unknown>[]);
   }
 
   getInventoryContext(actor: ActorContext, projectId: string, recordId: string): InventoryLink[] {
@@ -200,7 +216,7 @@ export class ElnCoreService {
 
   linkProvenance(actor: ActorContext, projectId: string, recordId: string, provenance: ProvenanceLink): void {
     this.requireAuthorized(actor, projectId, 'eln.edit');
-    this.getEntry(recordId).provenance = provenance;
+    this.store.setExperimentRecordProvenance(recordId, provenance as unknown as Record<string, unknown>);
   }
 
   getProvenance(actor: ActorContext, projectId: string, recordId: string): ProvenanceLink | null {
@@ -208,11 +224,9 @@ export class ElnCoreService {
     return this.getEntry(recordId).provenance;
   }
 
-  /** Marks a record as voided without deleting any content, version, or
-   * provenance/inventory data; callers (DES-AIRA2-007) must perform their
-   * own authorization/audit before invoking this. */
   markVoided(recordId: string): void {
-    this.getEntry(recordId).voided = true;
+    this.getEntry(recordId);
+    this.store.setExperimentRecordVoided(recordId, true);
   }
 
   isVoided(recordId: string): boolean {
@@ -242,8 +256,8 @@ export class ElnCoreService {
   search(actor: ActorContext, projectId: string, criteria: SearchCriteria): ExperimentRecordVersion[] {
     this.requireAuthorized(actor, projectId, 'eln.view');
     const results: ExperimentRecordVersion[] = [];
-    for (const entry of this.records.values()) {
-      const match = this.matches(entry, criteria);
+    for (const recordId of this.store.listExperimentRecordIds(projectId)) {
+      const match = this.matches(this.getEntry(recordId), criteria);
       if (match) results.push(match);
     }
     return results;

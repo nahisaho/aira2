@@ -3,15 +3,18 @@ import { ProjectAuthorizationService } from '../authz/project-authz.js';
 import { AuditLog } from '../authz/audit.js';
 import { GraphDbSupervisor } from './graphdb.js';
 import { GraphRagService, NoCitableAnswerError, type GraphRagLlmGateway } from './graphrag-service.js';
+import type { BackendSelection } from '../llm/gateway.js';
 import type { ProviderId } from '../llm/adapters.js';
 
 function fakeLlmGateway(defaultProvider: ProviderId = 'openai') {
   const perProjectProvider = new Map<string, ProviderId>();
   const chatCalls: { projectId: string; providerId: ProviderId }[] = [];
   const gateway: GraphRagLlmGateway = {
-    resolveBackend: (_actor, projectId) => perProjectProvider.get(projectId) ?? defaultProvider,
+    resolveBackend: (_actor, projectId) =>
+      ({ providerId: perProjectProvider.get(projectId) ?? defaultProvider, model: 'default' }) satisfies BackendSelection,
     chat: async (_actor, projectId, request) => {
-      const providerId = gateway.resolveBackend(_actor, projectId);
+      const resolved = gateway.resolveBackend(_actor, projectId);
+      const providerId = typeof resolved === 'string' ? resolved : resolved.providerId;
       chatCalls.push({ projectId, providerId });
       return { providerId, content: `answer from ${providerId} for: ${request.messages.at(-1)?.content}` };
     },

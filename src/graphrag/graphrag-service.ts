@@ -1,12 +1,13 @@
 import type { ProjectAuthorizationService, ActorContext } from '../authz/project-authz.js';
 import { AuthorizationDeniedError } from '../authz/project-authz.js';
 import type { ProviderId, ChatRequest } from '../llm/adapters.js';
+import type { BackendSelection } from '../llm/gateway.js';
 import { EMBEDDING_CAPABILITY_MATRIX, effectiveEmbeddingModel } from './embedding-capability.js';
 import { GraphDbSupervisor, reciprocalRankFusion, type RetrievalCandidate } from './graphdb.js';
 import type { SourceDocument, GraphDbStats } from './graphdb.js';
 
 export interface GraphRagLlmGateway {
-  resolveBackend(actor: ActorContext, projectId: string): ProviderId;
+  resolveBackend(actor: ActorContext, projectId: string): ProviderId | BackendSelection;
   chat(actor: ActorContext, projectId: string, request: ChatRequest): Promise<{ providerId: ProviderId; content: string }>;
 }
 
@@ -68,7 +69,8 @@ export class GraphRagService {
   }
 
   private currentEffectiveModel(actor: ActorContext, projectId: string): string {
-    const providerId = this.llmGateway.resolveBackend(actor, projectId);
+    const selection = this.llmGateway.resolveBackend(actor, projectId);
+    const providerId = typeof selection === 'string' ? selection : selection.providerId;
     return effectiveEmbeddingModel(providerId).model;
   }
 
@@ -153,7 +155,8 @@ export class GraphRagService {
     }));
 
     const requestingProjectId = accessibleProjectIds[0]!;
-    const generationProviderId = this.llmGateway.resolveBackend(actor, requestingProjectId);
+    const resolved = this.llmGateway.resolveBackend(actor, requestingProjectId);
+    const generationProviderId = typeof resolved === 'string' ? resolved : resolved.providerId;
     const chatRequest: ChatRequest = { messages: [{ role: 'user', content: question }] };
     const chatResponse = await this.llmGateway.chat(actor, requestingProjectId, chatRequest);
 

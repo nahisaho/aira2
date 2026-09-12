@@ -24,7 +24,7 @@ export interface Transport {
 
 export interface LlmBackendAdapter {
   readonly providerId: ProviderId;
-  chat(request: ChatRequest): Promise<ChatResponse>;
+  chat(request: ChatRequest, options?: { credential: string; model: string }): Promise<ChatResponse>;
 }
 
 interface OpenAiStyleResponse {
@@ -70,11 +70,14 @@ export class OpenAiAdapter implements LlmBackendAdapter {
     private readonly endpoint: string,
     private readonly apiKey: string,
   ) {}
-  async chat(request: ChatRequest): Promise<ChatResponse> {
+  async chat(request: ChatRequest, options?: { credential: string; model: string }): Promise<ChatResponse> {
     const raw = (await this.transport.send(this.endpoint, {
       method: 'POST',
-      headers: { authorization: `Bearer ${this.apiKey}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ model: request.model ?? 'gpt-4o', messages: request.messages }),
+      headers: {
+        authorization: `Bearer ${options?.credential ?? this.apiKey}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ model: options?.model ?? request.model ?? 'gpt-4o', messages: request.messages }),
     })) as OpenAiStyleResponse;
     return { providerId: this.providerId, content: raw.choices?.[0]?.message?.content ?? '' };
   }
@@ -91,11 +94,11 @@ export class AzureOpenAiAdapter implements LlmBackendAdapter {
     private readonly endpoint: string,
     private readonly apiKey: string,
   ) {}
-  async chat(request: ChatRequest): Promise<ChatResponse> {
+  async chat(request: ChatRequest, options?: { credential: string; model: string }): Promise<ChatResponse> {
     const raw = (await this.transport.send(this.endpoint, {
       method: 'POST',
-      headers: { 'api-key': this.apiKey, 'content-type': 'application/json' },
-      body: JSON.stringify({ messages: request.messages }),
+      headers: { 'api-key': options?.credential ?? this.apiKey, 'content-type': 'application/json' },
+      body: JSON.stringify({ model: options?.model ?? request.model, messages: request.messages }),
     })) as OpenAiStyleResponse;
     return { providerId: this.providerId, content: raw.choices?.[0]?.message?.content ?? '' };
   }
@@ -112,7 +115,7 @@ export class AnthropicAdapter implements LlmBackendAdapter {
     private readonly endpoint: string,
     private readonly apiKey: string,
   ) {}
-  async chat(request: ChatRequest): Promise<ChatResponse> {
+  async chat(request: ChatRequest, options?: { credential: string; model: string }): Promise<ChatResponse> {
     const system = request.messages
       .filter((m) => m.role === 'system')
       .map((m) => m.content)
@@ -120,9 +123,9 @@ export class AnthropicAdapter implements LlmBackendAdapter {
     const nonSystemMessages = request.messages.filter((m) => m.role !== 'system');
     const raw = (await this.transport.send(this.endpoint, {
       method: 'POST',
-      headers: { 'x-api-key': this.apiKey, 'content-type': 'application/json' },
+      headers: { 'x-api-key': options?.credential ?? this.apiKey, 'content-type': 'application/json' },
       body: JSON.stringify({
-        model: request.model ?? 'claude-3-5-sonnet',
+        model: options?.model ?? request.model ?? 'claude-3-5-sonnet',
         system,
         messages: nonSystemMessages,
       }),

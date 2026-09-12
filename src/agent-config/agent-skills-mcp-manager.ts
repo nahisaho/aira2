@@ -1,5 +1,7 @@
 import type { ProjectAuthorizationService, ActorContext } from '../authz/project-authz.js';
 import { AuthorizationDeniedError } from '../authz/project-authz.js';
+import { randomUUID } from 'node:crypto';
+import { SqliteStore } from '../server/store.js';
 
 export interface AgentSkillConfig {
   skillId: string;
@@ -37,8 +39,6 @@ function requireAuthorized(
   }
 }
 
-let sourceCounter = 0;
-
 /** @id CODE-AIRA2-AGENTCFG-001
  * @implements REQ-AGENTCONFIG-001 REQ-AGENTCONFIG-002 REQ-AGENTCONFIG-003
  * @design DES-AIRA2-008
@@ -49,23 +49,21 @@ let sourceCounter = 0;
  * confirming (never silently overwriting local edits).
  */
 export class AgentSkillsMcpConfigManager {
-  private readonly skillsByProject = new Map<string, AgentSkillConfig[]>();
-  private readonly mcpServersByProject = new Map<string, McpServerConfig[]>();
-  private readonly sources = new Map<string, AgentSkillSource>();
-  private readonly sourcesByProject = new Map<string, Set<string>>();
-
-  constructor(private readonly authz: ProjectAuthorizationService) {}
+  constructor(
+    private readonly authz: ProjectAuthorizationService,
+    private readonly store: SqliteStore = new SqliteStore({ dbPath: ':memory:' }),
+  ) {}
 
   private requireAuthorized(actor: ActorContext, projectId: string, action: string): void {
     requireAuthorized(this.authz, actor, projectId, action);
   }
 
   private requireOwnedSource(projectId: string, sourceId: string): AgentSkillSource {
-    const projectSources = this.sourcesByProject.get(projectId);
-    if (!projectSources || !projectSources.has(sourceId)) {
+    const projectSources = this.store.listAgentSkillSources(projectId);
+    if (!projectSources.includes(sourceId)) {
       throw new Error(`Unknown agent skill source for project: ${sourceId}`);
     }
-    const source = this.sources.get(sourceId);
+    const source = this.store.getAgentSkillSource(sourceId);
     if (!source) {
       throw new Error(`Unknown agent skill source: ${sourceId}`);
     }
@@ -74,22 +72,22 @@ export class AgentSkillsMcpConfigManager {
 
   getAgentSkills(actor: ActorContext, projectId: string): AgentSkillConfig[] {
     this.requireAuthorized(actor, projectId, 'agent-skills.view');
-    return this.skillsByProject.get(projectId) ?? [];
+    return this.store.getAgentSkills(projectId);
   }
 
   setAgentSkills(actor: ActorContext, projectId: string, skills: AgentSkillConfig[]): void {
     this.requireAuthorized(actor, projectId, 'agent-skills.modify');
-    this.skillsByProject.set(projectId, skills);
+    this.store.replaceAgentSkills(projectId, skills);
   }
 
   getMcpServers(actor: ActorContext, projectId: string): McpServerConfig[] {
     this.requireAuthorized(actor, projectId, 'mcp-config.view');
-    return this.mcpServersByProject.get(projectId) ?? [];
+    return this.store.getMcpServers(projectId);
   }
 
   setMcpServers(actor: ActorContext, projectId: string, servers: McpServerConfig[]): void {
     this.requireAuthorized(actor, projectId, 'mcp-config.modify');
-    this.mcpServersByProject.set(projectId, servers);
+    this.store.replaceMcpServers(projectId, servers);
   }
 
   registerAgentSkillSource(
@@ -100,15 +98,12 @@ export class AgentSkillsMcpConfigManager {
   ): AgentSkillSource {
     this.requireAuthorized(actor, projectId, 'agent-skill-source.manage');
     const source: AgentSkillSource = {
-      sourceId: `agent-skill-source-${++sourceCounter}`,
+      sourceId: `agent-skill-source-${randomUUID()}`,
       repositoryUrl,
       accessCredentialRef,
       availableSkillIds: [],
     };
-    this.sources.set(source.sourceId, source);
-    const projectSources = this.sourcesByProject.get(projectId) ?? new Set<string>();
-    projectSources.add(source.sourceId);
-    this.sourcesByProject.set(projectId, projectSources);
+    this.store.putAgentSkillSource({ ...source, projectId });
     return source;
   }
 
@@ -120,8 +115,7 @@ export class AgentSkillsMcpConfigManager {
   removeAgentSkillSource(actor: ActorContext, projectId: string, sourceId: string): void {
     this.requireAuthorized(actor, projectId, 'agent-skill-source.manage');
     this.requireOwnedSource(projectId, sourceId);
-    this.sources.delete(sourceId);
-    this.sourcesByProject.get(projectId)?.delete(sourceId);
+    this.store.deleteAgentSkillSource(sourceId);
   }
 
   private computeDiff(sourceId: string, projectId: string, latestSkillIds: string[]): SkillSourceDiff {
@@ -154,19 +148,19 @@ export class AgentSkillsMcpConfigManager {
     this.requireAuthorized(actor, projectId, 'agent-skill-source.sync');
     const diff = this.computeDiff(sourceId, projectId, latestSkillIds);
     const source = this.requireOwnedSource(projectId, sourceId);
-    source.availableSkillIds = latestSkillIds;
+    this.store.putAgentSkillSource({ ...source, projectId, availableSkillIds: latestSkillIds });
     return diff;
   }
 
   enableBuiltinMcpProvider(actor: ActorContext, projectId: string, providerId: string): void {
     this.requireAuthorized(actor, projectId, 'mcp-provider.enable');
-    const servers = this.mcpServersByProject.get(projectId) ?? [];
+    const servers = this.store.getMcpServers(projectId);
     const existing = servers.find((s) => s.serverId === providerId);
     if (existing) {
       existing.enabled = true;
     } else {
       servers.push({ serverId: providerId, command: 'builtin', args: [providerId], enabled: true });
     }
-    this.mcpServersByProject.set(projectId, servers);
+    this.store.replaceMcpServers(projectId, servers);
   }
 }

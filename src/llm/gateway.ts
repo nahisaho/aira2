@@ -1,5 +1,7 @@
 import { authorizeSelf, type SelfScopeActorContext } from '../authz/self-scope.js';
 import type { ChatRequest, ChatResponse, LlmBackendAdapter, ProviderId } from './adapters.js';
+import { CredentialVault } from '../vault/credential-vault.js';
+import { SqliteStore } from '../server/store.js';
 
 export interface GatewayActorContext extends SelfScopeActorContext {
   authorizeProject(projectId: string, action: string): boolean;
@@ -27,46 +29,74 @@ export class BackendFailureError extends Error {
 }
 
 export const DEFAULT_PROVIDER_ID: ProviderId = 'github-copilot-cli';
+const DEFAULT_MODEL_BY_PROVIDER: Readonly<Record<ProviderId, string>> = {
+  'github-copilot-cli': 'copilot-default',
+  openai: 'gpt-4o',
+  'azure-openai': 'gpt-4o',
+  anthropic: 'claude-3-5-sonnet',
+};
+
+export interface BackendSelection {
+  providerId: ProviderId;
+  model: string;
+}
+
+export const DEFAULT_BACKEND_SELECTION: BackendSelection = {
+  providerId: DEFAULT_PROVIDER_ID,
+  model: DEFAULT_MODEL_BY_PROVIDER[DEFAULT_PROVIDER_ID],
+};
+
+function normalizeSelection(selection: ProviderId | BackendSelection): BackendSelection {
+  if (typeof selection === 'string') {
+    return { providerId: selection, model: DEFAULT_MODEL_BY_PROVIDER[selection] };
+  }
+  return selection;
+}
 
 /** @id CODE-AIRA2-LLM-005
- * @implements REQ-LLMBACKEND-002 REQ-LLMBACKEND-008
+ * @implements REQ-LLMBACKEND-002 REQ-LLMBACKEND-008 REQ-RUNTIME-011
  * @design DES-AIRA2-004
  */
 export class LlmBackendGateway {
-  private readonly userDefaults = new Map<string, ProviderId>();
-  private readonly projectOverrides = new Map<string, ProviderId>();
+  constructor(
+    private readonly adapters: Partial<Record<ProviderId, LlmBackendAdapter>>,
+    private readonly vault?: CredentialVault,
+    private readonly store: SqliteStore = new SqliteStore({ dbPath: ':memory:' }),
+  ) {}
 
-  constructor(private readonly adapters: Partial<Record<ProviderId, LlmBackendAdapter>>) {}
-
-  setUserDefaultBackend(actor: GatewayActorContext, providerId: ProviderId): void {
+  setUserDefaultBackend(actor: GatewayActorContext, selection: ProviderId | BackendSelection): void {
     if (!authorizeSelf(actor, 'llmbackend.user-default.modify')) {
       throw new LlmAuthorizationDeniedError('llmbackend.user-default.modify');
     }
-    this.userDefaults.set(actor.accountId, providerId);
+    const normalized = normalizeSelection(selection);
+    this.store.setUserBackendDefault(actor.accountId, normalized.providerId, normalized.model);
   }
 
   setProjectBackendOverride(
     actor: GatewayActorContext,
     projectId: string,
-    providerId: ProviderId,
+    selection: ProviderId | BackendSelection,
   ): void {
     if (!actor.authorizeProject(projectId, 'llmbackend.project-override.modify')) {
       throw new LlmAuthorizationDeniedError('llmbackend.project-override.modify');
     }
-    this.projectOverrides.set(projectId, providerId);
+    const normalized = normalizeSelection(selection);
+    this.store.setProjectBackendOverride(projectId, normalized.providerId, normalized.model);
   }
 
-  resolveBackend(actor: GatewayActorContext, projectId: string): ProviderId {
+  resolveBackend(actor: GatewayActorContext, projectId: string): BackendSelection {
     if (!actor.authorizeProject(projectId, 'llmbackend.project-override.view')) {
       throw new LlmAuthorizationDeniedError('llmbackend.project-override.view');
     }
     return (
-      this.projectOverrides.get(projectId) ?? this.userDefaults.get(actor.accountId) ?? DEFAULT_PROVIDER_ID
+      (this.store.getProjectBackendOverride(projectId) as BackendSelection | null) ??
+      (this.store.getUserBackendDefault(actor.accountId) as BackendSelection | null) ??
+      DEFAULT_BACKEND_SELECTION
     );
   }
 
   /** @id CODE-AIRA2-LLM-007
-   * @implements REQ-LLMBACKEND-006
+   * @implements REQ-LLMBACKEND-004 REQ-LLMBACKEND-006 REQ-RUNTIME-011
    * @design DES-AIRA2-004
    * On failure, rethrows a BackendFailureError tagged with the failing
    * provider — it must never silently retry against a different adapter.
@@ -76,15 +106,19 @@ export class LlmBackendGateway {
     projectId: string,
     request: ChatRequest,
   ): Promise<ChatResponse> {
-    const providerId = this.resolveBackend(actor, projectId);
-    const adapter = this.adapters[providerId];
+    const selection = this.resolveBackend(actor, projectId);
+    const adapter = this.adapters[selection.providerId];
     if (!adapter) {
-      throw new BackendFailureError(providerId, new Error('adapter not configured'));
+      throw new BackendFailureError(selection.providerId, new Error('adapter not configured'));
     }
     try {
-      return await adapter.chat(request);
+      const credential = this.vault?.getCredentialForRequest(actor, projectId, selection.providerId);
+      return await adapter.chat(
+        { ...request, model: selection.model },
+        credential ? { credential, model: selection.model } : undefined,
+      );
     } catch (cause) {
-      throw new BackendFailureError(providerId, cause);
+      throw new BackendFailureError(selection.providerId, cause);
     }
   }
 }

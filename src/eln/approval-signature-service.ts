@@ -1,10 +1,11 @@
 import type { ProjectAuthorizationService, ActorContext } from '../authz/project-authz.js';
 import { AuthorizationDeniedError } from '../authz/project-authz.js';
 import { AuditLedger, TxContext } from '../eln-audit/ledger.js';
-import { ElnAuditIntegritySubsystem, TRUSTED_SCHEDULER_PRINCIPAL } from '../eln-audit/integrity-subsystem.js';
+import { ElnAuditIntegritySubsystem } from '../eln-audit/integrity-subsystem.js';
 import type { ElnCoreService } from './eln-core-service.js';
 import { ProtocolStore, TRUSTED_APPROVAL_SUBSYSTEM } from './protocol-store.js';
 import { canSign, type Account } from '../auth/account.js';
+import { SqliteStore } from '../server/store.js';
 
 export interface ApprovalActorContext extends ActorContext {
   isAutomated?: boolean;
@@ -28,7 +29,7 @@ export interface ReauthVerifier {
 export class SignatureRejectedError extends Error {}
 
 /** @id CODE-AIRA2-ELN-003
- * @implements REQ-ELN-004 REQ-ELN-006 REQ-ELN-010 REQ-ELN-015 REQ-ELN-016 REQ-ELN-017 REQ-ELN-018
+ * @implements REQ-ELN-004 REQ-ELN-006 REQ-ELN-010 REQ-ELN-015 REQ-ELN-016 REQ-ELN-017 REQ-ELN-018 REQ-RUNTIME-002
  * @design DES-AIRA2-007
  * Sole component permitted to move a protocol version to `approved` (via
  * the trusted approval-subsystem token) and to bind electronic signatures
@@ -38,8 +39,6 @@ export class SignatureRejectedError extends Error {}
  * API path that mutates a signed version in place.
  */
 export class ElnApprovalSignatureService {
-  private readonly signaturesByRecord = new Map<string, SignatureRecord[]>();
-
   constructor(
     private readonly authz: ProjectAuthorizationService,
     private readonly ledger: AuditLedger,
@@ -47,6 +46,7 @@ export class ElnApprovalSignatureService {
     private readonly protocolStore: ProtocolStore,
     private readonly eln: ElnCoreService,
     private readonly reauth: ReauthVerifier,
+    private readonly store: SqliteStore = new SqliteStore({ dbPath: ':memory:' }),
   ) {}
 
   private requireAuthorized(actor: ActorContext, projectId: string, action: string): void {
@@ -83,7 +83,12 @@ export class ElnApprovalSignatureService {
     if (!this.reauth.verifyFreshCredential(actor)) {
       throw new SignatureRejectedError('A fresh re-authentication is required immediately before signing');
     }
-    if (this.integrity.isSigningBlocked({ ...actor, authorizeProject: (pid, action) => this.authz.authorize(actor, pid, action) }, projectId)) {
+    if (
+      this.integrity.isSigningBlocked(
+        { ...actor, authorizeProject: (pid, action) => this.authz.authorize(actor, pid, action) },
+        projectId,
+      )
+    ) {
       throw new SignatureRejectedError(`Signing is blocked for project ${projectId} pending a clean integrity check`);
     }
     if (meaning === 'approved' && actor.accountId === authorAccountId) {
@@ -108,9 +113,7 @@ export class ElnApprovalSignatureService {
     };
 
     const tx = new TxContext();
-    const existing = this.signaturesByRecord.get(recordId) ?? [];
-    existing.push(signature);
-    this.signaturesByRecord.set(recordId, existing);
+    this.store.insertSignature(recordId, signature as unknown as Record<string, unknown>);
     this.ledger.appendAuditEntry(tx, 'approve', projectId, 'record', recordVersionId, actor.accountId);
     tx.commit();
 
@@ -119,7 +122,7 @@ export class ElnApprovalSignatureService {
 
   getSignatureStatus(actor: ActorContext, projectId: string, recordId: string): SignatureRecord[] {
     this.requireAuthorized(actor, projectId, 'eln.view');
-    return this.signaturesByRecord.get(recordId) ?? [];
+    return this.store.listSignatures<SignatureRecord>(recordId);
   }
 
   voidRecord(actor: ActorContext, projectId: string, recordId: string): void {

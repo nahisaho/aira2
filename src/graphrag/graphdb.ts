@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import type { EffectiveEmbeddingModel } from './embedding-capability.js';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 export interface SourceDocument {
   documentId: string;
@@ -29,13 +30,6 @@ export interface GraphDbStats {
 
 const VECTOR_DIMENSIONS = 64;
 
-/**
- * Stands in for a real semantic embedding: hashes each token into one of
- * VECTOR_DIMENSIONS buckets and counts occurrences, so texts sharing
- * vocabulary produce vectors with non-zero cosine similarity while texts
- * with disjoint vocabulary produce (near-)zero similarity, mirroring how a
- * real embedding would separate related from unrelated content.
- */
 function embed(text: string): number[] {
   const vector = new Array<number>(VECTOR_DIMENSIONS).fill(0);
   for (const token of tokenize(text)) {
@@ -68,18 +62,41 @@ function tokenize(text: string): string[] {
   return text.toLowerCase().match(/[a-z0-9]+/g) ?? [];
 }
 
+interface ProjectGraphDbSnapshot {
+  documents: IndexedDocument[];
+  entities: string[];
+}
+
 /** @id CODE-AIRA2-GRAPHRAG-002
- * @implements REQ-GRAPHRAG-002 REQ-GRAPHRAG-003 REQ-GRAPHRAG-013 REQ-GRAPHRAG-015
+ * @implements REQ-GRAPHRAG-002 REQ-GRAPHRAG-003 REQ-GRAPHRAG-013 REQ-GRAPHRAG-015 REQ-RUNTIME-002
  * @design DES-AIRA2-009
- * Project-isolated in-process store standing in for a supervised
- * aira-graphdb process: indexes documents into a naive knowledge graph
- * (extracted entity nodes) plus a vector index and a BM25 term index, and
- * answers hybrid retrieval queries. Vectors indexed under a since-changed
- * embedding model are marked stale and excluded from query results.
+ * Project-isolated store standing in for a supervised aira-graphdb
+ * process: indexes documents into a naive knowledge graph (extracted
+ * entity nodes) plus vector/BM25 indexes, and persists each project's data
+ * to a dedicated durable file outside the shared SQLite database.
  */
 export class ProjectGraphDb {
   private readonly documents = new Map<string, IndexedDocument>();
   private readonly entities = new Set<string>();
+
+  constructor(
+    snapshot?: ProjectGraphDbSnapshot,
+    private readonly persist?: () => void,
+  ) {
+    for (const document of snapshot?.documents ?? []) {
+      this.documents.set(document.documentId, document);
+    }
+    for (const entity of snapshot?.entities ?? []) {
+      this.entities.add(entity);
+    }
+  }
+
+  snapshot(): ProjectGraphDbSnapshot {
+    return {
+      documents: Array.from(this.documents.values()),
+      entities: Array.from(this.entities.values()),
+    };
+  }
 
   indexDocument(doc: SourceDocument, embeddingModel: string): void {
     const existing = this.documents.get(doc.documentId);
@@ -95,13 +112,19 @@ export class ProjectGraphDb {
     for (const entity of extractEntities(doc.content)) {
       this.entities.add(entity);
     }
+    this.persist?.();
   }
 
   markStaleIfModelChanged(currentModel: string): void {
+    let changed = false;
     for (const doc of this.documents.values()) {
-      if (doc.embeddingModel !== currentModel) {
+      if (doc.embeddingModel !== currentModel && !doc.stale) {
         doc.stale = true;
+        changed = true;
       }
+    }
+    if (changed) {
+      this.persist?.();
     }
   }
 
@@ -111,6 +134,7 @@ export class ProjectGraphDb {
       doc.embeddingModel = currentModel;
       doc.stale = false;
     }
+    this.persist?.();
   }
 
   stats(): GraphDbStats {
@@ -163,32 +187,65 @@ export class ProjectGraphDb {
 }
 
 /** @id CODE-AIRA2-GRAPHRAG-003
- * @implements REQ-GRAPHRAG-006
+ * @implements REQ-GRAPHRAG-006 REQ-RUNTIME-002
  * @design DES-AIRA2-009
- * Supervises one ProjectGraphDb instance per project. The underlying data
- * (documents/entities/vectors) always lives on the ProjectGraphDb instance
- * itself, so a simulated crash-and-restart preserves indexed state while
- * incrementing a restart counter, and never touches another project's db.
+ * Supervises one ProjectGraphDb instance per project. Crash recovery and
+ * process restarts reload the per-project durable file-backed store.
  */
 export class GraphDbSupervisor {
   private readonly dbs = new Map<string, ProjectGraphDb>();
   private readonly alive = new Map<string, boolean>();
   private readonly restartCounts = new Map<string, number>();
 
+  constructor(private readonly baseDir?: string) {
+    if (this.baseDir) {
+      mkdirSync(this.baseDir, { recursive: true });
+    }
+  }
+
+  private projectFile(projectId: string): string {
+    if (!this.baseDir) {
+      throw new Error('No GraphDB persistence directory configured');
+    }
+    return join(this.baseDir, `${projectId}.json`);
+  }
+
+  private loadSnapshot(projectId: string): ProjectGraphDbSnapshot | undefined {
+    if (!this.baseDir) return undefined;
+    const file = this.projectFile(projectId);
+    if (!existsSync(file)) return undefined;
+    return JSON.parse(readFileSync(file, 'utf8')) as ProjectGraphDbSnapshot;
+  }
+
+  private persist(projectId: string): void {
+    if (!this.baseDir) return;
+    const db = this.dbs.get(projectId);
+    if (!db) return;
+    writeFileSync(this.projectFile(projectId), JSON.stringify(db.snapshot()), 'utf8');
+  }
+
   ensureRunning(projectId: string): ProjectGraphDb {
     if (!this.dbs.has(projectId)) {
-      this.dbs.set(projectId, new ProjectGraphDb());
+      this.dbs.set(
+        projectId,
+        new ProjectGraphDb(this.loadSnapshot(projectId), () => this.persist(projectId)),
+      );
       this.alive.set(projectId, true);
       this.restartCounts.set(projectId, 0);
     }
     if (!this.alive.get(projectId)) {
+      if (this.baseDir) {
+        this.dbs.set(
+          projectId,
+          new ProjectGraphDb(this.loadSnapshot(projectId), () => this.persist(projectId)),
+        );
+      }
       this.restartCounts.set(projectId, (this.restartCounts.get(projectId) ?? 0) + 1);
       this.alive.set(projectId, true);
     }
     return this.dbs.get(projectId)!;
   }
 
-  /** Test-only: simulates an unexpected process exit for a project's db. */
   simulateCrash(projectId: string): void {
     this.alive.set(projectId, false);
   }

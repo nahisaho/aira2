@@ -1,5 +1,6 @@
 import { decryptSecret, encryptSecret, type EncryptedPayload } from './crypto.js';
 import { authorizeSelf, type SelfScopeActorContext } from '../authz/self-scope.js';
+import { SqliteStore } from '../server/store.js';
 
 export type CredentialScope = 'admin-shared' | 'user-override';
 
@@ -44,22 +45,22 @@ function maskedValueFor(cred: StoredCredential): string {
  * @design DES-AIRA2-003
  */
 export class CredentialVault {
-  private readonly adminShared = new Map<string, StoredCredential>();
-  private readonly userOverrides = new Map<string, StoredCredential>();
-
-  constructor(private readonly key: Buffer) {}
+  constructor(
+    private readonly key: Buffer,
+    private readonly store: SqliteStore = new SqliteStore({ dbPath: ':memory:' }),
+  ) {}
 
   setAdminSharedCredential(actor: VaultActorContext, provider: string, secret: string): string {
     if (!authorizeSelf(actor, 'llmbackend.admin-credential.modify')) {
       throw new VaultAuthorizationDeniedError('llmbackend.admin-credential.modify');
     }
     const id = `admin:${provider}`;
-    this.adminShared.set(provider, {
+    this.store.upsertCredential({
       id,
       provider,
       scope: 'admin-shared',
       ownerAccountId: null,
-      encrypted: encryptSecret(secret, this.key),
+      encrypted: encryptSecret(secret, this.key) as unknown as Record<string, string>,
       maskHint: maskHintFor(secret),
     });
     return id;
@@ -70,12 +71,12 @@ export class CredentialVault {
       throw new VaultAuthorizationDeniedError('credential.user-override.modify');
     }
     const id = `user:${actor.accountId}:${provider}`;
-    this.userOverrides.set(`${actor.accountId}:${provider}`, {
+    this.store.upsertCredential({
       id,
       provider,
       scope: 'user-override',
       ownerAccountId: actor.accountId,
-      encrypted: encryptSecret(secret, this.key),
+      encrypted: encryptSecret(secret, this.key) as unknown as Record<string, string>,
       maskHint: maskHintFor(secret),
     });
     return id;
@@ -86,24 +87,25 @@ export class CredentialVault {
       throw new VaultAuthorizationDeniedError('credential.project.use');
     }
     const cred =
-      this.userOverrides.get(`${actor.accountId}:${provider}`) ?? this.adminShared.get(provider);
+      this.store.getCredential(provider, 'user-override', actor.accountId) ??
+      this.store.getCredential(provider, 'admin-shared', null);
     if (!cred) {
       throw new Error(`No credential configured for provider: ${provider}`);
     }
-    return decryptSecret(cred.encrypted, this.key);
+    return decryptSecret(cred.encrypted as unknown as EncryptedPayload, this.key);
   }
 
   listSelfCredentials(actor: VaultActorContext): MaskedCredentialEntry[] {
     if (!authorizeSelf(actor, 'credential.self.view')) {
       throw new VaultAuthorizationDeniedError('credential.self.view');
     }
-    return [...this.userOverrides.values()]
-      .filter((cred) => cred.ownerAccountId === actor.accountId)
+    return this.store
+      .listCredentials(actor.accountId)
       .map((cred) => ({
         id: cred.id,
         provider: cred.provider,
-        scope: cred.scope,
-        masked: maskedValueFor(cred),
+        scope: cred.scope as CredentialScope,
+        masked: maskedValueFor(cred as unknown as StoredCredential),
       }));
   }
 
@@ -111,16 +113,20 @@ export class CredentialVault {
     if (!actor.authorizeProject(projectId, 'credential.project.view')) {
       throw new VaultAuthorizationDeniedError('credential.project.view');
     }
-    return [...this.adminShared.values()].map((cred) => ({
+    return this.store.listCredentials(null).map((cred) => ({
       id: cred.id,
       provider: cred.provider,
-      scope: cred.scope,
-      masked: maskedValueFor(cred),
+      scope: cred.scope as CredentialScope,
+      masked: maskedValueFor(cred as unknown as StoredCredential),
     }));
   }
 
   /** Test/inspection-only: raw persisted rows, used to prove no plaintext leaks. */
   dumpRawStore(): StoredCredential[] {
-    return [...this.adminShared.values(), ...this.userOverrides.values()];
+    return this.store.listCredentials() as unknown as StoredCredential[];
+  }
+
+  hasAdminSharedCredential(provider: string): boolean {
+    return this.store.hasAdminCredential(provider);
   }
 }

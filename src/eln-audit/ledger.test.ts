@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { AuditLedger, TxContext } from './ledger.js';
+import { ProjectAuthorizationService } from '../authz/project-authz.js';
+import { AuditLog } from '../authz/audit.js';
 
 /** @id TEST-AIRA2-AUDIT-001
  * @verifies REQ-ELN-005
@@ -63,5 +65,37 @@ describe('audit ledger tamper detection', () => {
     ledger.__testOnlyMutateEntry('project-2', 2, (entry) => ({ ...entry, actorAccountId: 'attacker' }));
 
     expect(ledger.detectTamperedEntries('project-2')).toEqual([2]);
+  });
+});
+
+/** @id TEST-AIRA2-AUDIT-006
+ * @verifies REQ-RUNTIME-003 REQ-MULTIUSER-011
+ */
+describe('audit history retrieval', () => {
+  it('TEST-AIRA2-AUDIT-006 returns ordered audit history for the requested subject version only when the caller is authorized', () => {
+    const authz = new ProjectAuthorizationService(new AuditLog(), {
+      terminateSessionsAndConnections: () => undefined,
+    });
+    authz.createProject('owner-1', 'project-1');
+    authz.grantShare({ accountId: 'owner-1' }, 'project-1', 'editor-1', 'editor');
+    const ledger = new AuditLedger(undefined, authz);
+
+    const tx1 = new TxContext();
+    ledger.appendAuditEntry(tx1, 'create', 'project-1', 'record', 'record-v1', 'owner-1');
+    tx1.commit();
+    const tx2 = new TxContext();
+    ledger.appendAuditEntry(tx2, 'edit', 'project-1', 'record', 'record-v1', 'editor-1');
+    tx2.commit();
+    const tx3 = new TxContext();
+    ledger.appendAuditEntry(tx3, 'approve', 'project-1', 'record', 'record-v2', 'owner-1');
+    tx3.commit();
+
+    expect(() =>
+      ledger.getAuditHistory({ accountId: 'viewer-1' }, 'project-1', 'record', 'record-v1'),
+    ).toThrow();
+
+    const history = ledger.getAuditHistory({ accountId: 'editor-1' }, 'project-1', 'record', 'record-v1');
+    expect(history.map((entry) => entry.seq)).toEqual([1, 2]);
+    expect(history.every((entry) => entry.subjectVersionId === 'record-v1')).toBe(true);
   });
 });

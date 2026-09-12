@@ -1,8 +1,10 @@
 import { isProjectActionAllowed, type ProjectRole } from './matrix.js';
 import type { AuditLog } from './audit.js';
+import { SqliteStore } from '../server/store.js';
 
 export interface ActorContext {
   accountId: string;
+  isGlobalAdmin?: boolean;
 }
 
 export interface RevocationNotifier {
@@ -20,30 +22,27 @@ export class AuthorizationDeniedError extends Error {
  * @design DES-AIRA2-002
  */
 export class ProjectAuthorizationService {
-  private readonly owners = new Map<string, string>();
-  private readonly shares = new Map<string, ProjectRole>();
-
   constructor(
     private readonly audit: AuditLog,
     private readonly notifier: RevocationNotifier,
+    private readonly store: SqliteStore = new SqliteStore({ dbPath: ':memory:' }),
   ) {}
 
-  private shareKey(projectId: string, userId: string): string {
-    return `${projectId}:${userId}`;
-  }
-
   createProject(ownerId: string, projectId: string): void {
-    this.owners.set(projectId, ownerId);
+    this.store.setProjectOwner(projectId, ownerId);
   }
 
   getRole(projectId: string, userId: string): ProjectRole | undefined {
-    if (this.owners.get(projectId) === userId) {
+    if (this.store.getProjectOwner(projectId) === userId) {
       return 'owner';
     }
-    return this.shares.get(this.shareKey(projectId, userId));
+    return this.store.getProjectShare(projectId, userId) as ProjectRole | undefined;
   }
 
   authorize(actor: ActorContext, projectId: string, action: string): boolean {
+    if (action === 'project.share.manage' && actor.isGlobalAdmin) {
+      return true;
+    }
     const role = this.getRole(projectId, actor.accountId);
     return isProjectActionAllowed(role, action);
   }
@@ -57,7 +56,7 @@ export class ProjectAuthorizationService {
     if (!this.authorize(actor, projectId, 'project.share.manage')) {
       throw new AuthorizationDeniedError('project.share.manage');
     }
-    this.shares.set(this.shareKey(projectId, targetUserId), role);
+    this.store.setProjectShare(projectId, targetUserId, role);
     this.audit.record({
       userId: actor.accountId,
       timestamp: Date.now(),
@@ -73,7 +72,7 @@ export class ProjectAuthorizationService {
     // Revocation only removes the share mapping and notifies session/MCP
     // termination; it must never read or mutate signature-attribution
     // records owned by DES-AIRA2-007 (REQ-MULTIUSER-012).
-    this.shares.delete(this.shareKey(projectId, targetUserId));
+    this.store.deleteProjectShare(projectId, targetUserId);
     this.notifier.terminateSessionsAndConnections(projectId, targetUserId);
     this.audit.record({
       userId: actor.accountId,

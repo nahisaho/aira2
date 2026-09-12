@@ -26,7 +26,7 @@ export const PROJECT_ACTION_MATRIX: Readonly<Record<string, Readonly<Record<Proj
   'graphrag.modify': { owner: true, editor: false, viewer: false },
   'llmbackend.project-override.view': { owner: true, editor: true, viewer: true },
   'llmbackend.project-override.modify': { owner: true, editor: false, viewer: false },
-  'credential.project.use': { owner: true, editor: true, viewer: false },
+  'credential.project.use': { owner: true, editor: true, viewer: true },
   'credential.project.view': { owner: true, editor: false, viewer: false },
   'agent-skills.view': { owner: true, editor: true, viewer: true },
   'agent-skills.modify': { owner: true, editor: true, viewer: false },

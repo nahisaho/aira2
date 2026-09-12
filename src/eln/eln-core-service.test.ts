@@ -1,9 +1,15 @@
 import { describe, expect, it } from 'vitest';
+import { mkdirSync, rmSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { ProjectAuthorizationService } from '../authz/project-authz.js';
 import { AuditLog } from '../authz/audit.js';
 import { AuditLedger } from '../eln-audit/ledger.js';
 import { ProtocolStore, TRUSTED_APPROVAL_SUBSYSTEM } from './protocol-store.js';
 import { ElnCoreService } from './eln-core-service.js';
+import { ElnAuditIntegritySubsystem } from '../eln-audit/integrity-subsystem.js';
+import { ElnApprovalSignatureService, type ReauthVerifier } from './approval-signature-service.js';
+import { createAccount } from '../auth/account.js';
+import { SqliteStore } from '../server/store.js';
 
 function setup() {
   const authz = new ProjectAuthorizationService(new AuditLog(), {
@@ -14,6 +20,24 @@ function setup() {
   const protocolStore = new ProtocolStore();
   const service = new ElnCoreService(authz, ledger, protocolStore);
   return { authz, ledger, protocolStore, service };
+}
+
+function persistenceSetup(dbPath: string) {
+  const store = new SqliteStore({ dbPath });
+  const authz = new ProjectAuthorizationService(
+    new AuditLog(store),
+    { terminateSessionsAndConnections: () => undefined },
+    store,
+  );
+  authz.createProject('owner-1', 'project-1');
+  authz.grantShare({ accountId: 'owner-1' }, 'project-1', 'signer-1', 'editor');
+  const ledger = new AuditLedger(store);
+  const protocolStore = new ProtocolStore(store);
+  const service = new ElnCoreService(authz, ledger, protocolStore, store);
+  const integrity = new ElnAuditIntegritySubsystem(ledger, store);
+  const reauth: ReauthVerifier = { verifyFreshCredential: () => true };
+  const approval = new ElnApprovalSignatureService(authz, ledger, integrity, protocolStore, service, reauth, store);
+  return { store, authz, ledger, protocolStore, service, approval };
 }
 
 const FIELDS = {
@@ -163,6 +187,49 @@ describe('computational provenance integration', () => {
       notebookExecutionTraceRef: 'notebook-exec-77',
       citations: ['[cell:3]', '[cell:5]'],
       reproducibilityGateResults: 'pass',
+    });
+  });
+
+  /** @id TEST-AIRA2-ELN-008
+   * @verifies REQ-RUNTIME-002
+   */
+  describe('ELN persistence across restarts', () => {
+    it('TEST-AIRA2-ELN-008 preserves protocol versions, record history, signatures, and audit entries after reopening the SQLite store', () => {
+      const dbPath = resolve('data/test-artifacts/eln-persistence.sqlite');
+      mkdirSync(dirname(dbPath), { recursive: true });
+      rmSync(dbPath, { force: true });
+
+      {
+        const { store, protocolStore, service, approval, ledger } = persistenceSetup(dbPath);
+        const owner = { accountId: 'owner-1', account: createAccount({ displayName: 'owner', externalIdentity: 'owner-1', assignedPersonId: 'owner-1' }) };
+        const signer = { accountId: 'signer-1', account: createAccount({ displayName: 'signer', externalIdentity: 'signer-1', assignedPersonId: 'signer-1' }) };
+        const protocol = protocolStore.createProtocol('project-1', 'Approved SOP');
+        approval.approveProtocolVersion(owner, 'project-1', protocol.protocolVersionId);
+        const record = service.createRecord(owner, 'project-1', FIELDS, protocol.protocolVersionId);
+        const edited = service.editRecord(owner, 'project-1', record.recordId, { ...FIELDS, conclusion: 'after restart' });
+        approval.signRecordVersion(signer, 'project-1', record.recordId, edited.recordVersionId, edited.contentHash, 'reviewed', 'owner-1');
+        expect(ledger.listEntries('project-1').length).toBeGreaterThan(0);
+        store.close();
+      }
+
+      {
+        const { store, protocolStore, service, approval, ledger } = persistenceSetup(dbPath);
+        const owner = { accountId: 'owner-1', account: createAccount({ displayName: 'owner', externalIdentity: 'owner-1', assignedPersonId: 'owner-1' }) };
+        const protocolVersions = protocolStore.getAllVersions('project-1');
+        expect(protocolVersions.length).toBe(1);
+        expect(protocolVersions[0]?.status).toBe('approved');
+
+        const records = service.listRecordIds('project-1');
+        expect(records.length).toBe(1);
+        const history = service.getRecordHistory(owner, 'project-1', records[0]!);
+        expect(history.versions).toHaveLength(2);
+        expect(history.versions[1]?.conclusion).toBe('after restart');
+        expect(approval.getSignatureStatus(owner, 'project-1', records[0]!)).toHaveLength(1);
+        expect(ledger.listEntries('project-1').length).toBeGreaterThanOrEqual(3);
+        store.close();
+      }
+
+      rmSync(dbPath, { force: true });
     });
   });
 });

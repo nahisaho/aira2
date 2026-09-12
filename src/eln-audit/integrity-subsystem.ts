@@ -1,4 +1,5 @@
 import { AuditLedger } from './ledger.js';
+import { SqliteStore } from '../server/store.js';
 
 export interface ElnAuditActorContext {
   accountId: string;
@@ -33,7 +34,7 @@ function requireAuthorized(actor: ElnAuditActorContext, projectId: string, actio
 }
 
 /** @id CODE-AIRA2-AUDIT-003
- * @implements REQ-ELN-013 REQ-ELN-014 REQ-ELN-020
+ * @implements REQ-ELN-013 REQ-ELN-014 REQ-ELN-020 REQ-RUNTIME-002
  * @design DES-AIRA2-006
  * Tracks per-project signing-block state driven exclusively by scheduled
  * integrity checks: a manual check can report tampering but only a
@@ -41,13 +42,17 @@ function requireAuthorized(actor: ElnAuditActorContext, projectId: string, actio
  * signing block.
  */
 export class ElnAuditIntegritySubsystem {
-  private readonly state = new Map<string, ProjectIntegrityState>();
-  private readonly lastReport = new Map<string, IntegrityReport>();
+  constructor(
+    private readonly ledger: AuditLedger,
+    private readonly store: SqliteStore = new SqliteStore({ dbPath: ':memory:' }),
+  ) {}
 
-  constructor(private readonly ledger: AuditLedger) {}
-
-  private currentState(projectId: string): ProjectIntegrityState {
-    return this.state.get(projectId) ?? 'clean';
+  private currentSnapshot(projectId: string): { state: ProjectIntegrityState; lastReport: IntegrityReport | null } {
+    const snapshot = this.store.getIntegrityState(projectId);
+    return {
+      state: (snapshot?.state as ProjectIntegrityState | undefined) ?? 'clean',
+      lastReport: (snapshot?.lastReport as IntegrityReport | null | undefined) ?? null,
+    };
   }
 
   private runCheck(projectId: string, trigger: 'scheduled' | 'manual'): IntegrityReport {
@@ -60,14 +65,14 @@ export class ElnAuditIntegritySubsystem {
       tampered,
       tamperedSeqs,
     };
-    this.lastReport.set(projectId, report);
 
+    let nextState: ProjectIntegrityState = this.currentSnapshot(projectId).state;
     if (tampered) {
-      this.state.set(projectId, 'blocked');
+      nextState = 'blocked';
     } else if (trigger === 'scheduled') {
-      // Only a scheduled clean check may lift an existing block/clearance.
-      this.state.set(projectId, 'clean');
+      nextState = 'clean';
     }
+    this.store.setIntegrityState(projectId, nextState, report as unknown as Record<string, unknown>);
     return report;
   }
 
@@ -88,14 +93,14 @@ export class ElnAuditIntegritySubsystem {
 
   clearTamperAlert(actor: ElnAuditActorContext, projectId: string): void {
     requireAuthorized(actor, projectId, 'eln.audit-integrity.manage');
-    if (this.currentState(projectId) === 'blocked') {
-      this.state.set(projectId, 'clearedAwaitingScheduledCheck');
+    if (this.currentSnapshot(projectId).state === 'blocked') {
+      this.store.setIntegrityState(projectId, 'clearedAwaitingScheduledCheck', this.currentSnapshot(projectId).lastReport as unknown as Record<string, unknown> | null);
     }
   }
 
   isSigningBlocked(actor: ElnAuditActorContext, projectId: string): boolean {
     requireAuthorized(actor, projectId, 'eln.audit-integrity.view');
-    return this.currentState(projectId) !== 'clean';
+    return this.currentSnapshot(projectId).state !== 'clean';
   }
 
   getChainCheckpoint(
@@ -109,7 +114,7 @@ export class ElnAuditIntegritySubsystem {
       projectId,
       seq: last?.seq ?? 0,
       hash: last?.hash ?? null,
-      lastReport: this.lastReport.get(projectId) ?? null,
+      lastReport: this.currentSnapshot(projectId).lastReport,
     };
   }
 }
