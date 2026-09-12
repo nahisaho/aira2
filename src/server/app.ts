@@ -181,6 +181,10 @@ function approvalActor(request: FastifyRequest): ReturnType<AppContext['actorFor
 }
 
 export async function buildApp(options: BuildAppOptions): Promise<FastifyInstance & { aira2: AppContext }> {
+  /** @id CODE-AIRA2-RUNTIME-003
+   * @implements REQ-RUNTIME-003 REQ-RUNTIME-004 REQ-RUNTIME-007 REQ-RUNTIME-008 REQ-RUNTIME-011
+   * @design DES-AIRA2-012 DES-AIRA2-010
+   */
   const app = Fastify() as unknown as FastifyInstance & { aira2: AppContext };
   const context = buildContext(options);
   const rootHtml = readFileSync('index.html', 'utf8');

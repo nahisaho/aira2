@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-12T00:36:38.894Z",
+  "generatedAt": "2026-09-12T01:08:59.351Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -675,7 +675,7 @@
       "id": "CODE-AIRA2-AUTHZ-003",
       "kind": "code",
       "path": "src/authz/audit.ts",
-      "line": 1
+      "line": 3
     },
     {
       "id": "CODE-AIRA2-AUTHZ-001",
@@ -735,7 +735,7 @@
       "id": "CODE-AIRA2-AUTHZ-002",
       "kind": "code",
       "path": "src/authz/project-authz.ts",
-      "line": 18
+      "line": 20
     },
     {
       "id": "CODE-AIRA2-AUTHZ-004",
@@ -789,49 +789,55 @@
       "id": "CODE-AIRA2-ELN-003",
       "kind": "code",
       "path": "src/eln/approval-signature-service.ts",
-      "line": 30
+      "line": 31
     },
     {
       "id": "TEST-AIRA2-ELN-001",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 27
+      "line": 51
     },
     {
       "id": "TEST-AIRA2-ELN-002",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 46
+      "line": 70
     },
     {
       "id": "TEST-AIRA2-ELN-004",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 70
+      "line": 94
     },
     {
       "id": "TEST-AIRA2-ELN-005",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 93
+      "line": 117
     },
     {
       "id": "TEST-AIRA2-ELN-006",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 115
+      "line": 139
     },
     {
       "id": "TEST-AIRA2-ELN-007",
       "kind": "test",
       "path": "src/eln/eln-core-service.test.ts",
-      "line": 146
+      "line": 170
+    },
+    {
+      "id": "TEST-AIRA2-ELN-008",
+      "kind": "test",
+      "path": "src/eln/eln-core-service.test.ts",
+      "line": 193
     },
     {
       "id": "CODE-AIRA2-ELN-002",
       "kind": "code",
       "path": "src/eln/eln-core-service.ts",
-      "line": 74
+      "line": 72
     },
     {
       "id": "TEST-AIRA2-ELN-003",
@@ -867,31 +873,43 @@
       "id": "CODE-AIRA2-AUDIT-003",
       "kind": "code",
       "path": "src/eln-audit/integrity-subsystem.ts",
-      "line": 35
+      "line": 36
     },
     {
       "id": "TEST-AIRA2-AUDIT-001",
       "kind": "test",
       "path": "src/eln-audit/ledger.test.ts",
-      "line": 4
+      "line": 6
     },
     {
       "id": "TEST-AIRA2-AUDIT-002",
       "kind": "test",
       "path": "src/eln-audit/ledger.test.ts",
-      "line": 48
+      "line": 50
+    },
+    {
+      "id": "TEST-AIRA2-AUDIT-006",
+      "kind": "test",
+      "path": "src/eln-audit/ledger.test.ts",
+      "line": 71
     },
     {
       "id": "CODE-AIRA2-AUDIT-001",
       "kind": "code",
       "path": "src/eln-audit/ledger.ts",
-      "line": 20
+      "line": 23
     },
     {
       "id": "CODE-AIRA2-AUDIT-002",
       "kind": "code",
       "path": "src/eln-audit/ledger.ts",
-      "line": 45
+      "line": 48
+    },
+    {
+      "id": "CODE-AIRA2-AUDIT-004",
+      "kind": "code",
+      "path": "src/eln-audit/ledger.ts",
+      "line": 130
     },
     {
       "id": "CODE-AIRA2-GRAPHRAG-001",
@@ -903,85 +921,91 @@
       "id": "TEST-AIRA2-GRAPHRAG-006",
       "kind": "test",
       "path": "src/graphrag/graphdb.test.ts",
-      "line": 4
+      "line": 6
+    },
+    {
+      "id": "TEST-AIRA2-GRAPHRAG-007",
+      "kind": "test",
+      "path": "src/graphrag/graphdb.test.ts",
+      "line": 34
     },
     {
       "id": "CODE-AIRA2-GRAPHRAG-002",
       "kind": "code",
       "path": "src/graphrag/graphdb.ts",
-      "line": 71
+      "line": 70
     },
     {
       "id": "CODE-AIRA2-GRAPHRAG-003",
       "kind": "code",
       "path": "src/graphrag/graphdb.ts",
-      "line": 165
+      "line": 189
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-001",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 36
+      "line": 39
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-002",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 49
+      "line": 52
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-003",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 65
+      "line": 68
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-004",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 86
+      "line": 89
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-005",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 104
+      "line": 107
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-013",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 135
+      "line": 138
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-014",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 174
+      "line": 177
     },
     {
       "id": "TEST-AIRA2-GRAPHRAG-015",
       "kind": "test",
       "path": "src/graphrag/graphrag-service.test.ts",
-      "line": 194
+      "line": 197
     },
     {
       "id": "CODE-AIRA2-GRAPHRAG-004",
       "kind": "code",
       "path": "src/graphrag/graphrag-service.ts",
-      "line": 32
+      "line": 33
     },
     {
       "id": "CODE-AIRA2-GRAPHRAG-005",
       "kind": "code",
       "path": "src/graphrag/graphrag-service.ts",
-      "line": 75
+      "line": 77
     },
     {
       "id": "CODE-AIRA2-GRAPHRAG-006",
       "kind": "code",
       "path": "src/graphrag/graphrag-service.ts",
-      "line": 100
+      "line": 102
     },
     {
       "id": "TEST-AIRA2-LLM-001",
@@ -1005,13 +1029,13 @@
       "id": "CODE-AIRA2-LLM-003",
       "kind": "code",
       "path": "src/llm/adapters.ts",
-      "line": 83
+      "line": 86
     },
     {
       "id": "CODE-AIRA2-LLM-004",
       "kind": "code",
       "path": "src/llm/adapters.ts",
-      "line": 104
+      "line": 107
     },
     {
       "id": "TEST-AIRA2-LLM-002",
@@ -1035,19 +1059,19 @@
       "id": "CODE-AIRA2-LLM-006",
       "kind": "code",
       "path": "src/llm/gateway.ts",
-      "line": 14
+      "line": 16
     },
     {
       "id": "CODE-AIRA2-LLM-005",
       "kind": "code",
       "path": "src/llm/gateway.ts",
-      "line": 31
+      "line": 56
     },
     {
       "id": "CODE-AIRA2-LLM-007",
       "kind": "code",
       "path": "src/llm/gateway.ts",
-      "line": 68
+      "line": 98
     },
     {
       "id": "TEST-EXAMPLE-001",
@@ -1060,6 +1084,54 @@
       "kind": "code",
       "path": "src/readiness/readiness.ts",
       "line": 14
+    },
+    {
+      "id": "TEST-AIRA2-RUNTIME-002",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 25
+    },
+    {
+      "id": "TEST-AIRA2-RUNTIME-003",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 67
+    },
+    {
+      "id": "TEST-AIRA2-RUNTIME-005",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 169
+    },
+    {
+      "id": "CODE-AIRA2-RUNTIME-003",
+      "kind": "code",
+      "path": "src/server/app.ts",
+      "line": 184
+    },
+    {
+      "id": "TEST-AIRA2-RUNTIME-004",
+      "kind": "test",
+      "path": "src/server/server.test.ts",
+      "line": 6
+    },
+    {
+      "id": "CODE-AIRA2-RUNTIME-002",
+      "kind": "code",
+      "path": "src/server/server.ts",
+      "line": 3
+    },
+    {
+      "id": "TEST-AIRA2-RUNTIME-001",
+      "kind": "test",
+      "path": "src/server/store.test.ts",
+      "line": 59
+    },
+    {
+      "id": "CODE-AIRA2-RUNTIME-001",
+      "kind": "code",
+      "path": "src/server/store.ts",
+      "line": 18
     },
     {
       "id": "TEST-AIRA2-VAULT-001",
@@ -1089,7 +1161,7 @@
       "id": "CODE-AIRA2-VAULT-002",
       "kind": "code",
       "path": "src/vault/credential-vault.ts",
-      "line": 42
+      "line": 43
     },
     {
       "id": "CODE-AIRA2-VAULT-001",
@@ -1155,7 +1227,7 @@
       "id": "CODE-AIRA2-GUI-003",
       "kind": "code",
       "path": "src/web/llm-settings-ui.ts",
-      "line": 12
+      "line": 13
     },
     {
       "id": "CODE-AIRA2-GUI-006",
@@ -2077,6 +2149,11 @@
     },
     {
       "from": "CODE-AIRA2-ELN-003",
+      "to": "REQ-RUNTIME-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-003",
       "to": "DES-AIRA2-007",
       "relation": "implements"
     },
@@ -2116,6 +2193,11 @@
       "relation": "verifies"
     },
     {
+      "from": "TEST-AIRA2-ELN-008",
+      "to": "REQ-RUNTIME-002",
+      "relation": "verifies"
+    },
+    {
       "from": "CODE-AIRA2-ELN-002",
       "to": "REQ-ELN-001",
       "relation": "implements"
@@ -2152,6 +2234,11 @@
     },
     {
       "from": "CODE-AIRA2-ELN-002",
+      "to": "REQ-RUNTIME-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-002",
       "to": "DES-AIRA2-005",
       "relation": "implements"
     },
@@ -2163,6 +2250,11 @@
     {
       "from": "CODE-AIRA2-ELN-001",
       "to": "REQ-ELN-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-ELN-001",
+      "to": "REQ-RUNTIME-002",
       "relation": "implements"
     },
     {
@@ -2202,6 +2294,11 @@
     },
     {
       "from": "CODE-AIRA2-AUDIT-003",
+      "to": "REQ-RUNTIME-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-003",
       "to": "DES-AIRA2-006",
       "relation": "implements"
     },
@@ -2216,6 +2313,16 @@
       "relation": "verifies"
     },
     {
+      "from": "TEST-AIRA2-AUDIT-006",
+      "to": "REQ-RUNTIME-003",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-AUDIT-006",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "verifies"
+    },
+    {
       "from": "CODE-AIRA2-AUDIT-001",
       "to": "REQ-ELN-005",
       "relation": "implements"
@@ -2237,6 +2344,26 @@
     },
     {
       "from": "CODE-AIRA2-AUDIT-002",
+      "to": "REQ-RUNTIME-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-002",
+      "to": "DES-AIRA2-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-004",
+      "to": "REQ-RUNTIME-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-004",
+      "to": "REQ-MULTIUSER-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-AUDIT-004",
       "to": "DES-AIRA2-006",
       "relation": "implements"
     },
@@ -2253,6 +2380,11 @@
     {
       "from": "TEST-AIRA2-GRAPHRAG-006",
       "to": "REQ-GRAPHRAG-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-GRAPHRAG-007",
+      "to": "REQ-RUNTIME-002",
       "relation": "verifies"
     },
     {
@@ -2277,12 +2409,22 @@
     },
     {
       "from": "CODE-AIRA2-GRAPHRAG-002",
+      "to": "REQ-RUNTIME-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-002",
       "to": "DES-AIRA2-009",
       "relation": "implements"
     },
     {
       "from": "CODE-AIRA2-GRAPHRAG-003",
       "to": "REQ-GRAPHRAG-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-GRAPHRAG-003",
+      "to": "REQ-RUNTIME-002",
       "relation": "implements"
     },
     {
@@ -2467,12 +2609,27 @@
     },
     {
       "from": "CODE-AIRA2-LLM-005",
+      "to": "REQ-RUNTIME-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-005",
       "to": "DES-AIRA2-004",
       "relation": "implements"
     },
     {
       "from": "CODE-AIRA2-LLM-007",
+      "to": "REQ-LLMBACKEND-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-007",
       "to": "REQ-LLMBACKEND-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-LLM-007",
+      "to": "REQ-RUNTIME-011",
       "relation": "implements"
     },
     {
@@ -2493,6 +2650,151 @@
     {
       "from": "CODE-EXAMPLE-001",
       "to": "DES-EXAMPLE-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-002",
+      "to": "REQ-RUNTIME-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-002",
+      "to": "REQ-RUNTIME-005",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-002",
+      "to": "REQ-RUNTIME-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-002",
+      "to": "REQ-RUNTIME-009",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-002",
+      "to": "REQ-RUNTIME-010",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-003",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-007",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-011",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-005",
+      "to": "REQ-RUNTIME-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-005",
+      "to": "REQ-RUNTIME-008",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-003",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-004",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-007",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-008",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-003",
+      "to": "REQ-RUNTIME-011",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-003",
+      "to": "DES-AIRA2-012",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-003",
+      "to": "DES-AIRA2-010",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-004",
+      "to": "REQ-RUNTIME-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-004",
+      "to": "REQ-RUNTIME-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-002",
+      "to": "REQ-RUNTIME-001",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-002",
+      "to": "REQ-RUNTIME-006",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-002",
+      "to": "DES-AIRA2-011",
+      "relation": "implements"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-001",
+      "to": "REQ-RUNTIME-002",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-001",
+      "to": "REQ-LLMBACKEND-002",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-001",
+      "to": "REQ-LLMBACKEND-004",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-RUNTIME-001",
+      "to": "REQ-LLMBACKEND-008",
+      "relation": "verifies"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-001",
+      "to": "REQ-RUNTIME-002",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-001",
+      "to": "REQ-RUNTIME-005",
+      "relation": "implements"
+    },
+    {
+      "from": "CODE-AIRA2-RUNTIME-001",
+      "to": "DES-AIRA2-011",
       "relation": "implements"
     },
     {
@@ -2649,40 +2951,47 @@
     ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed",
     "src/agent-config/agent-skills-mcp-manager.test.ts": "daa01e46e19b6a6c585668d7cdf7b6e95cc437f1b7f333e7c2a4bf7b1137e056",
-    "src/agent-config/agent-skills-mcp-manager.ts": "2c35af8105d25ecbc3f76a2d9deb6cd892ed84de1ac98c857a908c3c440111bf",
+    "src/agent-config/agent-skills-mcp-manager.ts": "407f9a2d7ba26e757097ecff67f56644a2aa6b59a8e190f7300caa8c4fc5db70",
     "src/auth/account.test.ts": "0db268e9e1d9079e246e9e2a8d8f05cc117d6279882f69ca231450b322b56401",
     "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
     "src/auth/login.test.ts": "278383c58fe25b321e4dd4f2880b54b8ced0e264c8e42869dc3490dda6dc6937",
     "src/auth/login.ts": "d11343d673fcda0ace52b3e9d598cd054c6a1feb9a231b3778056eba1855bcc3",
     "src/auth/session.ts": "ee87250c936845a559197ab42a8e243d1f43d9ea4c2a4309ab43e1a774fe649b",
-    "src/authz/audit.ts": "371e18a52669ec1029915f393b15cba7d0a1c6a07dc5372baab9072675ecd9b2",
-    "src/authz/matrix.ts": "3d0178beba548c2ff212f01fdadefc2ed013c2fa9999082460aa731789406a45",
+    "src/authz/audit.ts": "5abdda968eb0f68794defb3f387925fc4ba8eb60f083ba7442862f020dba5513",
+    "src/authz/matrix.ts": "ff03dc897ce1705fb4f48ead251cd671a8a2fcc6d759d0797c3c4d666bf433d1",
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
-    "src/authz/project-authz.ts": "9341aec4478b5709536161f901c609ee6c4a0e618a9e979cda9bcca0fb9b549e",
+    "src/authz/project-authz.ts": "993ac9e3706ea11eea925f3ab3a9838536ac850507908cbbcaa31e4febf3900e",
     "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
     "src/eln/approval-signature-service.test.ts": "149b8be05bc7ac45d15642ca5dd0d9e06d51568eeb7e10cf7af12534fdaab9c9",
-    "src/eln/approval-signature-service.ts": "1952fd6c583893c65d9a46cc7ee59126e7cfba8f8dc041435a4007167d23383b",
-    "src/eln/eln-core-service.test.ts": "c39a88855275037445902cfb5b68a97e6a32f5c099013394b2e70898ea448a5d",
-    "src/eln/eln-core-service.ts": "78dcb7c70a97de4be2b3e61d35b61195a8c0818a1ea183974522d44231c195ea",
+    "src/eln/approval-signature-service.ts": "ab378ee0fafa23c277727b44449ee0016d0f0626a2f17462c89cad14d1ca7dda",
+    "src/eln/eln-core-service.test.ts": "4c4718d05b4aaf95097c22816d4ca4caf9ac7dfd1f47d833e158f92685e9ab2b",
+    "src/eln/eln-core-service.ts": "fea94fbdacd547b58174f949154d8975b62d1c00204b23c391d643beca7f08e1",
     "src/eln/protocol-store.test.ts": "9f7e27730411bb2778b46706d42058f0f34fd4f28b4b9eb0abc6269c7448d059",
-    "src/eln/protocol-store.ts": "b3404acdbbce059ed871334b709c1901cb43dd63148c5a45a7ed1ae893c8330d",
+    "src/eln/protocol-store.ts": "f55d3ecfe062d47934213ed300e9cff87ba4b5ddf3c6ce6e2e63b0345355a758",
     "src/eln-audit/integrity-subsystem.test.ts": "ff88c32081fa388e26f8138ccc8333317ef463392abb18befa383b8e936a5578",
-    "src/eln-audit/integrity-subsystem.ts": "bba748350fb723bcb6026d00590e049bafa4a1b3a92e076d01be79218c42baed",
-    "src/eln-audit/ledger.test.ts": "ea18a1320d319bc3b5cd2ecb8e0752a217ed3ab5231532716643908cf8c06b86",
-    "src/eln-audit/ledger.ts": "218d8d8e9160dda66c68e5cb8423e628a1055d68c3ce4013edf4942dae2f1001",
+    "src/eln-audit/integrity-subsystem.ts": "322e2499859715688a73d61087ca11e50c5e62766c4263b89bd92c268ab02dd0",
+    "src/eln-audit/ledger.test.ts": "de6b378c0a9eff343f260e1be6d42ff47089a75883ba1165b3982fc65abea2e4",
+    "src/eln-audit/ledger.ts": "3df31f6fbdc5c347ec74325168a9fd01f937f1ca4e32fc83813b008fceb27c05",
     "src/graphrag/embedding-capability.ts": "1afa07bc99ffeefd6fd560502e7762db28a92411e373a7b266d452ca00f900b5",
-    "src/graphrag/graphdb.test.ts": "598da695aab7851403274f501fabcc1dd6072f3414ff9b6394c09f4566959e4e",
-    "src/graphrag/graphdb.ts": "8040921a030bbc4ddf3eb66822465ccd0168fe84302e6abc9af8e84745f33672",
-    "src/graphrag/graphrag-service.test.ts": "6ec938b347dadb5d558132e52e6289110087bc76ad32840e71a8058e5f0d2146",
-    "src/graphrag/graphrag-service.ts": "2a52b8c260642e725f0f513fe857dae6cec0d9d99237d1fd0d05287d7274e260",
+    "src/graphrag/graphdb.test.ts": "c528a880e2984176744cf1ba2033740d3bdb47e1e55c16ff9d3d9b54b6aafcf7",
+    "src/graphrag/graphdb.ts": "d920e1c98798807fb04fc85c82f8fbacf88165bc7402deb83f140e5ee23469e8",
+    "src/graphrag/graphrag-service.test.ts": "ddaace72e348468f1e555c142a4ce66260d7077a6174fd5957e36c44fccf17da",
+    "src/graphrag/graphrag-service.ts": "f4a949c78275b7fc880a259c5ed4919fef17b82d9653d0d1fad00ab31154db0b",
     "src/llm/adapters.test.ts": "2b5e64d2e53bafd73f562598c547e47c9c231bd977d5511ff2f42e7b03b40b32",
-    "src/llm/adapters.ts": "3a58add7b1ef48c05b8c8a8b29ab5d518c7b2bb147a88b991b58aab7f62d79f1",
+    "src/llm/adapters.ts": "c50b1e3c3616ae663bfb1ac2de79bca81658c871bb1e13ce58881668042eb39a",
     "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
-    "src/llm/gateway.ts": "f92a386fad226df3961fccfb375653d749bef6ec7d6bedc9359c273ac1090de3",
+    "src/llm/gateway.ts": "11ac49fff84a949ae02392ac22db2a8dde612cd6989b735483d34d23809d77b8",
+    "src/main.tsx": "aadb7e4901c69fc1fa0d8c0099e21e62b8001be12f5963e115b9f8bf2262edcf",
     "src/readiness/readiness.test.ts": "eb5dc040b2d5e5689aab6682e365e4d3ac34522fe6c5633d74f6ae4dd2d3020d",
     "src/readiness/readiness.ts": "abe2e72545b6e80333d7ba7fd2a128f2ed24d133f4850048e7b109e2a6aa3103",
+    "src/server/app.test.ts": "39173806543b4b717cb2c99329398546c35e02b71192791f35b69e24c25a01a7",
+    "src/server/app.ts": "a9680658e43fb999eda0f18f97d37cc0141451056f04c6e83e86d24fae8ed8a8",
+    "src/server/server.test.ts": "4d6e4ded09e361e8df9d7ccc0b61b263b6ea3ae215bd7f93f48d5c5c4c32add4",
+    "src/server/server.ts": "d388dc813b1f83e4e9d0591c4ae681573703a75801afed81bbb7f9ee87e1b448",
+    "src/server/store.test.ts": "ca9151bd0b80b9b3ea89858b9ae3af33cae72a19ab48155a236aad8580b00055",
+    "src/server/store.ts": "d502223fcc481cd10ebb39f403786b392882bc71bdd432051f009f8989dc65c4",
     "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
-    "src/vault/credential-vault.ts": "bcbc4a9793c4d0de363a1a45c1df4ebece35d69ece55f0bdd71c82ff8d51a7a4",
+    "src/vault/credential-vault.ts": "6fd9ff29021976c12977b5a15b475d452a90d9650b017eabd12254598a67d59c",
     "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",
     "src/web/auth-ui.test.ts": "b54de9fa08f2e566076571d5623f4664f4649f131f2eadc099febc827ff015cd",
     "src/web/auth-ui.ts": "8bcbdbbc893b16bca3eaa92a9ce7431ae3e615826b6cd5e4295271a4567ed234",
@@ -2693,8 +3002,9 @@
     "src/web/graphrag-ui.test.ts": "4b0c13381d77abb40cb4414ff2ac9159f2189639681abec5887afe759f6f4dbc",
     "src/web/graphrag-ui.ts": "5dc6a59dbbbcb4e4a869a03b2de46b9cee3915da83642444f723cf4fe040c8cf",
     "src/web/llm-settings-ui.test.ts": "3738bc405c4e5e531903743c7f00eb60a6baa33e0243d03640d6d52fd95d965a",
-    "src/web/llm-settings-ui.ts": "2abced1cf4f8920ec9eb1422d0cfd08ecf5c6ff3aa7b315ecf84d1c6105435f5",
+    "src/web/llm-settings-ui.ts": "77e8a18121c7ca2cd67a467769211be4dea60b188ff0ff601e3440fa311cc990",
     "src/web/projects-ui.ts": "d490917fa561f42877263ad27585685e5c85114cb656fd9f65aaeeb9ab30a4eb",
+    "vite.config.ts": "3bf8a6551f8823076c61226018664e007499b20ad3f026185a8752c93efd6ba8",
     "vitest.config.ts": "713ab6f752564f158e0b3d084e716e6b33bbe968c43e639b678fcee0bdfcbcba"
   }
 }

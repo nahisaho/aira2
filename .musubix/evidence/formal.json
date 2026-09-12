@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T23:27:25.488Z",
-  "totalRequirements": 58,
+  "generatedAt": "2026-09-12T01:09:02.087Z",
+  "totalRequirements": 69,
   "modeledRequirements": 8,
-  "modeledFraction": 0.13793103448275862,
+  "modeledFraction": 0.11594202898550725,
   "result": {
     "valid": true,
     "abstraction": "Consistency of explicit branch-scoped conditional, exact unit-normalized integer numeric, bounded temporal interval, deterministic state-transition, and controlled unconditional Boolean constraints; not implementation correctness.",
@@ -108,7 +108,18 @@
       "REQ-GRAPHRAG-004",
       "REQ-GRAPHRAG-014",
       "REQ-GRAPHRAG-015",
-      "REQ-GRAPHRAG-005"
+      "REQ-GRAPHRAG-005",
+      "REQ-RUNTIME-001",
+      "REQ-RUNTIME-006",
+      "REQ-RUNTIME-002",
+      "REQ-RUNTIME-003",
+      "REQ-RUNTIME-007",
+      "REQ-RUNTIME-011",
+      "REQ-RUNTIME-004",
+      "REQ-RUNTIME-008",
+      "REQ-RUNTIME-005",
+      "REQ-RUNTIME-009",
+      "REQ-RUNTIME-010"
     ],
     "diagnostics": [
       {
@@ -360,6 +371,61 @@
         "code": "FORMAL_UNSUPPORTED",
         "severity": "warning",
         "message": "REQ-GRAPHRAG-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-001 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-006 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-002 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-003 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-007 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-011 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-004 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-008 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-005 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-009 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+      },
+      {
+        "code": "FORMAL_UNSUPPORTED",
+        "severity": "warning",
+        "message": "REQ-RUNTIME-010 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
       }
     ],
     "consistency": "consistent",
@@ -374,7 +440,7 @@
     }
   },
   "fingerprints": {
-    ".musubix/features/aira2-platform/requirements.md": "cbddf90a839164e0ceb7d7c44b565d0fe623fe75a5211ea562c58e8c4bb0e565",
+    ".musubix/features/aira2-platform/requirements.md": "82be30abd62d4224b4fa63d18a93c481a2e8b123db8b9c303727d84c876368dc",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
   }
 }

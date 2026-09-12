@@ -2593,6 +2593,302 @@
         "diagnostics": [],
         "order": 122
       }
+    },
+    {
+      "cycleId": "cb5102ea-c65d-43fb-944a-a88db7dfc60f",
+      "requirementId": "REQ-LLMBACKEND-008",
+      "testId": "TEST-AIRA2-RUNTIME-001",
+      "testPath": "src/server/store.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": false,
+        "scoped": true,
+        "resultObserved": false,
+        "reportSha256": "47a90c275911d00cdc23b981c9d0840d35cec1fbb99a663074b74dcc05401365",
+        "commandSha256": "0e4c996ce651cbb153c37348d8248559739780237e52e233c6353bcddaeb79c7",
+        "outputSha256": "d1ba495d5c6dd0c60126749dfce65467e6252959653c5340ef5b57c8fcc4041d",
+        "exitCode": 1,
+        "durationMs": 1076,
+        "testFingerprint": "bd7ae5ca4e65bcb8a94e6c0712636aba544075ef8a7b2c37cf7e247eb6003c81",
+        "sourceFingerprint": "adb81b82a09a4752244258a9d09f4ef95df11a5e749d512dc067bfdcd92277ac",
+        "executionId": "a3229542-5083-4ce8-b082-32df63115db1",
+        "recordedAt": "2026-09-12T00:56:00.523Z",
+        "diagnostics": [
+          {
+            "code": "TDD_REPORT_INVALID",
+            "severity": "error",
+            "message": "No annotated TEST-* identities were found in the vitest report.\nSuite failure: Failed to load url ./store.js (resolved id: ./store.js) in /home/nahisaho/GitHub/aira2/src/server/store.test.ts. Does the file exist?",
+            "path": ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-001.json"
+          }
+        ],
+        "order": 130
+      }
+    },
+    {
+      "cycleId": "af7a743a-bcee-4c9e-a063-8de2fa75f6d4",
+      "requirementId": "REQ-RUNTIME-002",
+      "testId": "TEST-AIRA2-ELN-008",
+      "testPath": "src/eln/eln-core-service.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "0d8bdcdc2f6a3aa7f845e8ed20290dbfffca6cf9b468b35ecc163935a2a01c18",
+        "commandSha256": "e99082281ec03cce69b78554f9d9f7a93e88ce8830ca562797441cab2b5ebe32",
+        "outputSha256": "34e4ba1808917fa26864c004169295829e435f75e4e0ef85f477d6d869d77773",
+        "exitCode": 1,
+        "durationMs": 1229,
+        "testFingerprint": "a7486064024d6872bc1c57413ea142d8d4c9e0f70599df2a97b0c7d0090ff3a4",
+        "sourceFingerprint": "53d5b254bf2a2cb45a9dd95f4ff765f9cf476a16f29cbba1071aa97c2d648cd2",
+        "executionId": "0dc3ae06-e6de-470a-b0ab-f7d5025f586a",
+        "recordedAt": "2026-09-12T00:59:37.430Z",
+        "diagnostics": [],
+        "order": 131
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "f7ac70abbba3e80634732d615e50b249b799ea15e64a62d8bb0b667217aa1227",
+        "commandSha256": "e99082281ec03cce69b78554f9d9f7a93e88ce8830ca562797441cab2b5ebe32",
+        "outputSha256": "34e4ba1808917fa26864c004169295829e435f75e4e0ef85f477d6d869d77773",
+        "exitCode": 0,
+        "durationMs": 1111,
+        "testFingerprint": "a7486064024d6872bc1c57413ea142d8d4c9e0f70599df2a97b0c7d0090ff3a4",
+        "sourceFingerprint": "ac2f3f267715a1b516d55b5ab66c755126108876a6570bc878595d352324265a",
+        "executionId": "21a711e5-c872-4af4-b0c1-0edc455f55d6",
+        "recordedAt": "2026-09-12T01:01:17.021Z",
+        "diagnostics": [],
+        "order": 132
+      }
+    },
+    {
+      "cycleId": "77308999-121b-4928-9bb3-218dbffb3f59",
+      "requirementId": "REQ-MULTIUSER-011",
+      "testId": "TEST-AIRA2-AUDIT-006",
+      "testPath": "src/eln-audit/ledger.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "1fee029b26d91c6c014d3277b5dad33567460f55b47416404cf7276d22142056",
+        "commandSha256": "a49ac8d5fce30fd78c310a25adafacdc1aa528fd7c06197ba5ab64264dc2554a",
+        "outputSha256": "4a6006f34c57d0d7a015fcdcf1a15c2f9798ab0a082602a194eb36e90df38947",
+        "exitCode": 1,
+        "durationMs": 1167,
+        "testFingerprint": "4620ae121ff6203c919fa2d15aa315291e3e0eede3ca966ac4ebffe3f6d8389b",
+        "sourceFingerprint": "cdbff715266e4e6180ab9e6e6b9d0f6bc57f32221ae392b8bb80c1371ade2c8b",
+        "executionId": "99669003-c832-4496-939e-431490b31796",
+        "recordedAt": "2026-09-12T01:01:25.578Z",
+        "diagnostics": [],
+        "order": 133
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "19176d2e10c3a8525d77b05faa2b6fade6cd43ed6b67a6317636176c3b2eb334",
+        "commandSha256": "a49ac8d5fce30fd78c310a25adafacdc1aa528fd7c06197ba5ab64264dc2554a",
+        "outputSha256": "4a6006f34c57d0d7a015fcdcf1a15c2f9798ab0a082602a194eb36e90df38947",
+        "exitCode": 0,
+        "durationMs": 1451,
+        "testFingerprint": "4620ae121ff6203c919fa2d15aa315291e3e0eede3ca966ac4ebffe3f6d8389b",
+        "sourceFingerprint": "c2759eca1526fe294d6fcfc4f5e193e5958833d3a481333665fb1edc839f4471",
+        "executionId": "62b5b31b-2f39-457c-9f00-76d5228f0afb",
+        "recordedAt": "2026-09-12T01:01:43.131Z",
+        "diagnostics": [],
+        "order": 134
+      }
+    },
+    {
+      "cycleId": "8717fd43-7063-4190-9faf-e8e13e196993",
+      "requirementId": "REQ-RUNTIME-002",
+      "testId": "TEST-AIRA2-GRAPHRAG-007",
+      "testPath": "src/graphrag/graphdb.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "ffb5b5527341000146dfc8ca8430fec1ffcac30820242caba30ca5e4bc497820",
+        "commandSha256": "43c23d3cffa3ee625047ba8ae8aa14b2621d018763de0445152d2a9c295cb113",
+        "outputSha256": "9709693773b14282c31e254af4be2275a4927a6f361e0c7aa8b88ee0940cde4d",
+        "exitCode": 1,
+        "durationMs": 1134,
+        "testFingerprint": "caddf2a396153b5eccc4378cd438639227eaf69ff9eb78148630c596c0d54a77",
+        "sourceFingerprint": "9fe0f8b09312315350df4ae3ff39d97c3738ea97ba533be34e46d78278610bd5",
+        "executionId": "abc2a9e0-261e-4cb7-b3e3-3767d2726c73",
+        "recordedAt": "2026-09-12T01:01:56.438Z",
+        "diagnostics": [],
+        "order": 135
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "5793a2602f6c78e19abd1046480e006ca267cc8592a805190e9dd0f25dd36f5a",
+        "commandSha256": "43c23d3cffa3ee625047ba8ae8aa14b2621d018763de0445152d2a9c295cb113",
+        "outputSha256": "9709693773b14282c31e254af4be2275a4927a6f361e0c7aa8b88ee0940cde4d",
+        "exitCode": 0,
+        "durationMs": 991,
+        "testFingerprint": "caddf2a396153b5eccc4378cd438639227eaf69ff9eb78148630c596c0d54a77",
+        "sourceFingerprint": "e2c93530cd074b7d9df280c879b04a79e166afeab72b047db7a6090ae144dcaf",
+        "executionId": "98680bb4-f8fc-4e01-9e41-38f81f4ee1cc",
+        "recordedAt": "2026-09-12T01:02:43.775Z",
+        "diagnostics": [],
+        "order": 136
+      }
+    },
+    {
+      "cycleId": "9d14397a-d314-4ac0-b6f6-acaddf6bfe8e",
+      "requirementId": "REQ-RUNTIME-010",
+      "testId": "TEST-AIRA2-RUNTIME-002",
+      "testPath": "src/server/app.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": false,
+        "scoped": true,
+        "resultObserved": false,
+        "reportSha256": "ff67b406caabff162ee8e2c3e2e12e5bc2b9df70534ccd15ecb682ac2db93e25",
+        "commandSha256": "3347f7e7d94b2c456866b718d50035b1b35d36ce2c4b0acc20e995917998b06e",
+        "outputSha256": "7f3bf78798ff8b5f540ee277181fa5616565ceadf436405a0e4157c661dc8dfb",
+        "exitCode": 1,
+        "durationMs": 931,
+        "testFingerprint": "a642dc9f1936f8cefaada28e0314ddfd42c2673034274d37f891445c0af43b4f",
+        "sourceFingerprint": "de23da02c8d15c53435ab6b974810f1ccff8a813a9572c30d23662279537883d",
+        "executionId": "5e8d3979-b642-4ba9-8899-a6d9760329ed",
+        "recordedAt": "2026-09-12T01:03:21.639Z",
+        "diagnostics": [
+          {
+            "code": "TDD_REPORT_INVALID",
+            "severity": "error",
+            "message": "No annotated TEST-* identities were found in the vitest report.\nSuite failure: Failed to load url ./app.js (resolved id: ./app.js) in /home/nahisaho/GitHub/aira2/src/server/app.test.ts. Does the file exist?",
+            "path": ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-002.json"
+          }
+        ],
+        "order": 137
+      }
+    },
+    {
+      "cycleId": "c805abd3-5183-401b-8ec1-f621750592af",
+      "requirementId": "REQ-RUNTIME-011",
+      "testId": "TEST-AIRA2-RUNTIME-003",
+      "testPath": "src/server/app.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": false,
+        "scoped": true,
+        "resultObserved": false,
+        "reportSha256": "34ce8612dfaadf92ab8c82865757c8af636f0d504de595e51debde67d923f5bf",
+        "commandSha256": "b694a4809005e967e62a023dde8bd8069c9ca02ae6a06871b0107a891cf5487c",
+        "outputSha256": "9e753b7e0063b0c385ee6f8dc1650b4184ab46fcb3f11741d2800832f377f3c3",
+        "exitCode": 1,
+        "durationMs": 922,
+        "testFingerprint": "7c3d6e00960ab01bfea823534ea28cdbb285d64139220fdd195b2e1215bc67b0",
+        "sourceFingerprint": "fb427186f7853a7cdfb059312cba19599cbdeb4305d6abd7f4c23f830f8ddcb9",
+        "executionId": "572199b9-de5e-43ef-aac1-c32e1d4fd347",
+        "recordedAt": "2026-09-12T01:03:30.130Z",
+        "diagnostics": [
+          {
+            "code": "TDD_REPORT_INVALID",
+            "severity": "error",
+            "message": "No annotated TEST-* identities were found in the vitest report.\nSuite failure: Failed to load url ./app.js (resolved id: ./app.js) in /home/nahisaho/GitHub/aira2/src/server/app.test.ts. Does the file exist?",
+            "path": ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-003.json"
+          }
+        ],
+        "order": 138
+      }
+    },
+    {
+      "cycleId": "85f3f869-c9c5-474f-82ca-0a31115a02b6",
+      "requirementId": "REQ-RUNTIME-006",
+      "testId": "TEST-AIRA2-RUNTIME-004",
+      "testPath": "src/server/server.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": false,
+        "scoped": true,
+        "resultObserved": false,
+        "reportSha256": "8e0f7690ce167efdf0f755b4c04bd044196af220d17d3fb709385d4979264758",
+        "commandSha256": "a64290bf2b060890ce1bfc7f43823c4d03ecd53cad3bb0d802e1231b8ea6b60f",
+        "outputSha256": "8c406a116336f6208eda9c5b7d2770ddb07b7abc9fd713c99a0c3bfd23640c1a",
+        "exitCode": 1,
+        "durationMs": 952,
+        "testFingerprint": "64a16daf173de271e5eb76c4ad2ce688fb4ca3966e4b198903764c04c6ea15de",
+        "sourceFingerprint": "3c79c72df900c996f697b610469c82f938281b9267b2ea0a6d9d842334022135",
+        "executionId": "4036116b-b2c3-44ba-bccf-658deaf3608a",
+        "recordedAt": "2026-09-12T01:05:16.328Z",
+        "diagnostics": [
+          {
+            "code": "TDD_REPORT_INVALID",
+            "severity": "error",
+            "message": "No annotated TEST-* identities were found in the vitest report.\nSuite failure: Failed to load url ./server.js (resolved id: ./server.js) in /home/nahisaho/GitHub/aira2/src/server/server.test.ts. Does the file exist?",
+            "path": ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-004.json"
+          }
+        ],
+        "order": 139
+      }
+    },
+    {
+      "cycleId": "af86ac17-7abb-4808-8d48-340842462b31",
+      "requirementId": "REQ-RUNTIME-008",
+      "testId": "TEST-AIRA2-RUNTIME-005",
+      "testPath": "src/server/app.test.ts",
+      "commandName": "test",
+      "red": {
+        "phase": "red",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "failed",
+        "reportSha256": "6aedc2725b27a7f034563058a218c1abc2e8d4e580cb491ec2bf176a721d673b",
+        "commandSha256": "0b107b236e3ffbd8200023dad2ddf235f3b85f5eafc0e39a8f02fce03721be1e",
+        "outputSha256": "341fdb041b915d97ebebc4e9e4f9900ac38e4f208184226e60ad17bf37cf7ea3",
+        "exitCode": 1,
+        "durationMs": 1265,
+        "testFingerprint": "b915b7f22731198f8bdc701dae1b02b65eef67894b5026837ac77d80968d3c53",
+        "sourceFingerprint": "bb4709eacd8c8a706ea74d03daf303b096e722df509a429516b29423dc669545",
+        "executionId": "31a6b6ec-b201-4140-8721-7d484e0c80cd",
+        "recordedAt": "2026-09-12T01:06:12.776Z",
+        "diagnostics": [],
+        "order": 140
+      },
+      "green": {
+        "phase": "green",
+        "valid": true,
+        "scoped": true,
+        "resultObserved": true,
+        "testStatus": "passed",
+        "reportSha256": "b0c14b0fbe11b2fb95240aa423c7afae37b6a220e7eb57254835989b5e41f3e0",
+        "commandSha256": "0b107b236e3ffbd8200023dad2ddf235f3b85f5eafc0e39a8f02fce03721be1e",
+        "outputSha256": "341fdb041b915d97ebebc4e9e4f9900ac38e4f208184226e60ad17bf37cf7ea3",
+        "exitCode": 0,
+        "durationMs": 1378,
+        "testFingerprint": "b915b7f22731198f8bdc701dae1b02b65eef67894b5026837ac77d80968d3c53",
+        "sourceFingerprint": "a82c1e4f3ca4d3106e3b50dbd5790c29bf3b5bdcb57e89c0fbaca1dde23e25ea",
+        "executionId": "94a23d79-e3d0-42c1-a9ce-486209ef230a",
+        "recordedAt": "2026-09-12T01:07:02.812Z",
+        "diagnostics": [],
+        "order": 141
+      }
     }
   ],
   "chain": [
@@ -4023,6 +4319,150 @@
       "phaseEvidenceSha256": "d220491d8dd979f5c07d0ff236925b72890964ff718a4eb6ba4b5f31bc35b7b5",
       "previousSha256": "8cc9fa1f2ce39e71329880694b47168f4b407abc6f758991bc30a945e9ef6e3e",
       "recordSha256": "1b4d27fd25b0491da8288209920bca1c4456f5dc52d47fd5450a8a3d8cd3b6fd"
+    },
+    {
+      "sequence": 120,
+      "cycleId": "cb5102ea-c65d-43fb-944a-a88db7dfc60f",
+      "requirementId": "REQ-LLMBACKEND-008",
+      "testId": "TEST-AIRA2-RUNTIME-001",
+      "testPath": "src/server/store.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "ab3ad7f0a7bfcec55b6a5e16740048b906352b92b5d063f343dc3f8b5eecd5f0",
+      "previousSha256": "1b4d27fd25b0491da8288209920bca1c4456f5dc52d47fd5450a8a3d8cd3b6fd",
+      "recordSha256": "d15dd583f12ec872d1551e32ac489893dbe043e9b025be96331e1dd7c7322fa3"
+    },
+    {
+      "sequence": 121,
+      "cycleId": "af7a743a-bcee-4c9e-a063-8de2fa75f6d4",
+      "requirementId": "REQ-RUNTIME-002",
+      "testId": "TEST-AIRA2-ELN-008",
+      "testPath": "src/eln/eln-core-service.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "948290983fae1071ad5d088d45749fe0d242eb1c0a0f3864edc03d368760d629",
+      "previousSha256": "d15dd583f12ec872d1551e32ac489893dbe043e9b025be96331e1dd7c7322fa3",
+      "recordSha256": "fd8dad4e30096dda3a383b26c76eb32033f96164864951ccd17f6924b566ff2f"
+    },
+    {
+      "sequence": 122,
+      "cycleId": "af7a743a-bcee-4c9e-a063-8de2fa75f6d4",
+      "requirementId": "REQ-RUNTIME-002",
+      "testId": "TEST-AIRA2-ELN-008",
+      "testPath": "src/eln/eln-core-service.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "10fb78840a58dd8ac2ee496ed115a4b3730652b2c3c774b556b3fdd67e08d55e",
+      "previousSha256": "fd8dad4e30096dda3a383b26c76eb32033f96164864951ccd17f6924b566ff2f",
+      "recordSha256": "a1a677064bca058bee1d82ad28f140d7583973931b6e0b0220b4e63c1de84170"
+    },
+    {
+      "sequence": 123,
+      "cycleId": "77308999-121b-4928-9bb3-218dbffb3f59",
+      "requirementId": "REQ-MULTIUSER-011",
+      "testId": "TEST-AIRA2-AUDIT-006",
+      "testPath": "src/eln-audit/ledger.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "73aec228a0903c86e329d74eaceee2ea4741db26264c0b8ea63ac31f80f93bef",
+      "previousSha256": "a1a677064bca058bee1d82ad28f140d7583973931b6e0b0220b4e63c1de84170",
+      "recordSha256": "33c1f771760f6b3950945fc1ed5cf66292d607843d54ac265482d4b76a456f82"
+    },
+    {
+      "sequence": 124,
+      "cycleId": "77308999-121b-4928-9bb3-218dbffb3f59",
+      "requirementId": "REQ-MULTIUSER-011",
+      "testId": "TEST-AIRA2-AUDIT-006",
+      "testPath": "src/eln-audit/ledger.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "0b26bb6c86a741dcd5117fdad500002019d179e730fd1e1ad651718a4ffa6c87",
+      "previousSha256": "33c1f771760f6b3950945fc1ed5cf66292d607843d54ac265482d4b76a456f82",
+      "recordSha256": "91931f52d37fab310bceedeb9691620261de5cf26cbcfe5734702cadabf12c80"
+    },
+    {
+      "sequence": 125,
+      "cycleId": "8717fd43-7063-4190-9faf-e8e13e196993",
+      "requirementId": "REQ-RUNTIME-002",
+      "testId": "TEST-AIRA2-GRAPHRAG-007",
+      "testPath": "src/graphrag/graphdb.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "fe889b472c2af90fb83e2248bc49225fd770e8a2a46433eec8a20a8ac710a7c5",
+      "previousSha256": "91931f52d37fab310bceedeb9691620261de5cf26cbcfe5734702cadabf12c80",
+      "recordSha256": "695b3713ec2576ba2efd89914a8d7dc96aafa2d0426e011443fdbf5013d8ac0b"
+    },
+    {
+      "sequence": 126,
+      "cycleId": "8717fd43-7063-4190-9faf-e8e13e196993",
+      "requirementId": "REQ-RUNTIME-002",
+      "testId": "TEST-AIRA2-GRAPHRAG-007",
+      "testPath": "src/graphrag/graphdb.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "c71bac0eb919886d157cf73db90f05e8d3b2b55db454add7d4cf58ddc9793172",
+      "previousSha256": "695b3713ec2576ba2efd89914a8d7dc96aafa2d0426e011443fdbf5013d8ac0b",
+      "recordSha256": "1084bde467b5d8f072f4da63394e8905e08f677dac7c3bfc850e043ae49ecb48"
+    },
+    {
+      "sequence": 127,
+      "cycleId": "9d14397a-d314-4ac0-b6f6-acaddf6bfe8e",
+      "requirementId": "REQ-RUNTIME-010",
+      "testId": "TEST-AIRA2-RUNTIME-002",
+      "testPath": "src/server/app.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "6ed97cd37e4ff2b932a06fae52d39ace9dce90a50fd6cdca638414d0744a5ee2",
+      "previousSha256": "1084bde467b5d8f072f4da63394e8905e08f677dac7c3bfc850e043ae49ecb48",
+      "recordSha256": "ded90248f23fd97d4a72e1cb7375cdb19db6acc5efdbbd096c7bfe4ad8bacca6"
+    },
+    {
+      "sequence": 128,
+      "cycleId": "c805abd3-5183-401b-8ec1-f621750592af",
+      "requirementId": "REQ-RUNTIME-011",
+      "testId": "TEST-AIRA2-RUNTIME-003",
+      "testPath": "src/server/app.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "b30187c1c22f1c6c65b0e7431fb182f4b88a69e765f456723081ce3d8f509ed9",
+      "previousSha256": "ded90248f23fd97d4a72e1cb7375cdb19db6acc5efdbbd096c7bfe4ad8bacca6",
+      "recordSha256": "f0649c557ced21687f808cd40dd74d3cf69107122e8f765fba62c5cfccf9b8b5"
+    },
+    {
+      "sequence": 129,
+      "cycleId": "85f3f869-c9c5-474f-82ca-0a31115a02b6",
+      "requirementId": "REQ-RUNTIME-006",
+      "testId": "TEST-AIRA2-RUNTIME-004",
+      "testPath": "src/server/server.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "2e1b96c23573a6539f4229540a7d0cd45ccad732bbf6640251fb3a67663eaabf",
+      "previousSha256": "f0649c557ced21687f808cd40dd74d3cf69107122e8f765fba62c5cfccf9b8b5",
+      "recordSha256": "71f5a71ccca293ccc969991f323708ae1c8aae52970b048aa9c17c1c73476d55"
+    },
+    {
+      "sequence": 130,
+      "cycleId": "af86ac17-7abb-4808-8d48-340842462b31",
+      "requirementId": "REQ-RUNTIME-008",
+      "testId": "TEST-AIRA2-RUNTIME-005",
+      "testPath": "src/server/app.test.ts",
+      "commandName": "test",
+      "phase": "red",
+      "phaseEvidenceSha256": "ad79869e80ad5a0f5bf8fc2f503101abbf06e57c948b1c75fd520678613ddc48",
+      "previousSha256": "71f5a71ccca293ccc969991f323708ae1c8aae52970b048aa9c17c1c73476d55",
+      "recordSha256": "87b8697bfbb24024521a0b3d3cc763189d4f406384d9ce2c62b8c22ae66e9ae2"
+    },
+    {
+      "sequence": 131,
+      "cycleId": "af86ac17-7abb-4808-8d48-340842462b31",
+      "requirementId": "REQ-RUNTIME-008",
+      "testId": "TEST-AIRA2-RUNTIME-005",
+      "testPath": "src/server/app.test.ts",
+      "commandName": "test",
+      "phase": "green",
+      "phaseEvidenceSha256": "ec49fdec9a6bf4d47f55f52dd9ee734da388921790d052b0a10fcc3d190d4798",
+      "previousSha256": "87b8697bfbb24024521a0b3d3cc763189d4f406384d9ce2c62b8c22ae66e9ae2",
+      "recordSha256": "d98301c1e2e06311d1f400455504073a6dd60fa9e290d683db1fea67ad90bdb3"
     }
   ]
 }
