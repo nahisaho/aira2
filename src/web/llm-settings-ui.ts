@@ -1,9 +1,10 @@
-import { LlmBackendGateway, type GatewayActorContext } from '../llm/gateway.js';
+import { LlmBackendGateway, type BackendSelection, type GatewayActorContext } from '../llm/gateway.js';
 import type { ProviderId } from '../llm/adapters.js';
 import { CredentialVault, type MaskedCredentialEntry, type VaultActorContext } from '../vault/credential-vault.js';
 import { DesignSystemRegistry } from './design-system.js';
 
 export interface LlmSettingsView {
+  selectedBackend: BackendSelection;
   selectedProvider: ProviderId;
   /** Only masked entries are ever surfaced to the client-rendered state. */
   credentials: MaskedCredentialEntry[];
@@ -26,8 +27,8 @@ export class LlmSettingsUiController {
     registry.register('settings');
   }
 
-  selectProvider(actor: GatewayActorContext, providerId: ProviderId): void {
-    this.gateway.setUserDefaultBackend(actor, providerId);
+  selectProvider(actor: GatewayActorContext, providerId: ProviderId, model = 'default'): void {
+    this.gateway.setUserDefaultBackend(actor, { providerId, model });
   }
 
   setCredential(actor: VaultActorContext, provider: string, secret: string): void {
@@ -36,7 +37,8 @@ export class LlmSettingsUiController {
 
   view(actor: GatewayActorContext & VaultActorContext, projectId: string): LlmSettingsView {
     return {
-      selectedProvider: this.gateway.resolveBackend(actor, projectId),
+      selectedBackend: this.gateway.resolveBackend(actor, projectId),
+      selectedProvider: this.gateway.resolveBackend(actor, projectId).providerId,
       credentials: this.vault.listSelfCredentials(actor),
     };
   }

@@ -6,13 +6,30 @@
   "description": "AIRA2 — multi-user electronic lab notebook platform with pluggable LLM backends",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "build:frontend": "vite build",
+    "dev": "vite",
+    "server:start": "npm run build && node dist/server/server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^22.10.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "jsdom": "^29.1.1",
     "typescript": "^5.7.2",
+    "vite": "^5.4.21",
     "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "fastify": "^5.12.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   }
 }
