@@ -65,6 +65,14 @@
       "phase": "complete",
       "status": "completed",
       "recordedAt": "2026-09-11T23:55:33.385Z"
+    },
+    {
+      "skill": "sdd-design",
+      "version": "0.1.8",
+      "provenance": "self-reported",
+      "phase": "complete",
+      "status": "completed",
+      "recordedAt": "2026-09-12T00:48:33.012Z"
     }
   ]
 }
