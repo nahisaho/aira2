@@ -1744,6 +1744,22 @@
       "phase": "green",
       "previousSha256": "5db7fd55d22be7d4176a26da60e489b160343742dd8e10f92b639d8d9ca94a5c",
       "recordSha256": "2cae31db09f099a3299e9bc8d6a2007f74dc844f3b0ea0996eb969d5a5f639ba"
+    },
+    {
+      "sequence": 219,
+      "kind": "change",
+      "entityId": "CHANGE-0003",
+      "phase": "green",
+      "previousSha256": "2cae31db09f099a3299e9bc8d6a2007f74dc844f3b0ea0996eb969d5a5f639ba",
+      "recordSha256": "fe313d6db1e8ab60e227a36cbdc2257e0a44b4a0fe7924496889d2989d4e926d"
+    },
+    {
+      "sequence": 220,
+      "kind": "change",
+      "entityId": "CHANGE-0003",
+      "phase": "quality",
+      "previousSha256": "fe313d6db1e8ab60e227a36cbdc2257e0a44b4a0fe7924496889d2989d4e926d",
+      "recordSha256": "c435d53a7ebfb2390ddb186a9a079fd9e47cca80fb74d015122c99f4785d552e"
     }
   ]
 }

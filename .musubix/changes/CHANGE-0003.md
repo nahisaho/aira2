@@ -101,6 +101,37 @@ above, this is a workflow-declaration bookkeeping artifact, not a defect
 in the delivered code, tests, or traceability, and the user explicitly
 accepted it as a known, documented limitation.
 
+## Known gate limitation (release approval permanently unreachable via CLI) / 既知のゲート制約(release承認は恒久的にCLI経由で到達不能)
+
+`npx musubix3 approval record release` hard-blocks with
+`"Release approval requires passing non-approval quality checks: workflow,
+change-history, change-completeness."` regardless of `requiredChecks`
+config, and this cannot be satisfied by `ask_user`-based acceptance alone.
+Investigation showed `change-completeness` reports "0/3 staged change(s)
+have semantically complete evidence" where the 3 changes are
+CHANGE-0001, CHANGE-0002, and CHANGE-0003 collectively — not just the
+change being released. CHANGE-0001's change-record phase history was
+never recorded in true chronological lockstep with its actual
+implementation (it predates this project's current change-record
+discipline), and that historical gap cannot be retroactively repaired:
+the code has long since been superseded and built upon, so there is no
+way to "redo" CHANGE-0001's TDD/change-record sequencing after the fact.
+Because `change-completeness`/`change-history` appear to score all
+staged changes in the project collectively, CHANGE-0001's permanently
+unfixable gap means these two checks — and therefore
+`approval record release` — can never pass for this repository via the
+musubix3 CLI, independent of how carefully CHANGE-0003 (or any future
+change) is executed.
+
+Given this, the user (`@nahisaho`) explicitly decided to accept the
+current, independently-verified state (clean typecheck, 25 files / 79
+tests passing, `trace build` 0 diagnostics, `tdd validate` 0
+diagnostics, three rubber-duck review passes with the final pass
+reporting zero remaining issues) as the de facto completion signal for
+CHANGE-0003, without a formal `musubix3 approval record release` entry.
+This is a tooling/ledger-bookkeeping limitation, not a defect in the
+delivered requirements, design, code, tests, or traceability evidence.
+
 ## Source references / 参照元
 
 - CHANGE-0001 (`.musubix/changes/CHANGE-0001.md`) for the wrapped in-process
