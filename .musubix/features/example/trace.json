@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T23:03:07.933Z",
+  "generatedAt": "2026-09-12T00:29:24.946Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -30,6 +30,12 @@
       "id": "ADR-0005",
       "kind": "adr",
       "path": ".musubix/decisions/ADR-0005.md",
+      "line": 1
+    },
+    {
+      "id": "ADR-0006",
+      "kind": "adr",
+      "path": ".musubix/decisions/ADR-0006.md",
       "line": 1
     },
     {
@@ -91,6 +97,18 @@
       "kind": "design",
       "path": ".musubix/features/aira2-platform/design.md",
       "line": 79
+    },
+    {
+      "id": "DES-AIRA2-011",
+      "kind": "design",
+      "path": ".musubix/features/aira2-platform/design.md",
+      "line": 87
+    },
+    {
+      "id": "DES-AIRA2-012",
+      "kind": "design",
+      "path": ".musubix/features/aira2-platform/design.md",
+      "line": 95
     },
     {
       "id": "REQ-MULTIUSER-001",
@@ -490,6 +508,83 @@
       "path": ".musubix/features/aira2-platform/requirements.md",
       "line": 420,
       "mandatory": false
+    },
+    {
+      "id": "REQ-RUNTIME-001",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 429,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-006",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 436,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-002",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 443,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-003",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 450,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-007",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 457,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-011",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 464,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-004",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 471,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-008",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 478,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-005",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 485,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-009",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 492,
+      "mandatory": true
+    },
+    {
+      "id": "REQ-RUNTIME-010",
+      "kind": "requirement",
+      "path": ".musubix/features/aira2-platform/requirements.md",
+      "line": 499,
+      "mandatory": true
     },
     {
       "id": "DES-EXAMPLE-001",
@@ -1096,6 +1191,11 @@
       "relation": "decides"
     },
     {
+      "from": "DES-AIRA2-001",
+      "to": "DES-AIRA2-011",
+      "relation": "depends-on"
+    },
+    {
       "from": "DES-AIRA2-002",
       "to": "REQ-MULTIUSER-003",
       "relation": "satisfies"
@@ -1146,6 +1246,11 @@
       "relation": "depends-on"
     },
     {
+      "from": "DES-AIRA2-002",
+      "to": "DES-AIRA2-011",
+      "relation": "depends-on"
+    },
+    {
       "from": "DES-AIRA2-003",
       "to": "REQ-LLMBACKEND-003",
       "relation": "satisfies"
@@ -1181,6 +1286,11 @@
       "relation": "depends-on"
     },
     {
+      "from": "DES-AIRA2-003",
+      "to": "DES-AIRA2-011",
+      "relation": "depends-on"
+    },
+    {
       "from": "DES-AIRA2-004",
       "to": "REQ-LLMBACKEND-001",
       "relation": "satisfies"
@@ -1213,6 +1323,11 @@
     {
       "from": "DES-AIRA2-004",
       "to": "DES-AIRA2-003",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-004",
+      "to": "DES-AIRA2-011",
       "relation": "depends-on"
     },
     {
@@ -1271,6 +1386,11 @@
       "relation": "depends-on"
     },
     {
+      "from": "DES-AIRA2-005",
+      "to": "DES-AIRA2-011",
+      "relation": "depends-on"
+    },
+    {
       "from": "DES-AIRA2-006",
       "to": "REQ-ELN-005",
       "relation": "satisfies"
@@ -1303,6 +1423,11 @@
     {
       "from": "DES-AIRA2-006",
       "to": "DES-AIRA2-002",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-006",
+      "to": "DES-AIRA2-011",
       "relation": "depends-on"
     },
     {
@@ -1366,6 +1491,11 @@
       "relation": "depends-on"
     },
     {
+      "from": "DES-AIRA2-007",
+      "to": "DES-AIRA2-011",
+      "relation": "depends-on"
+    },
+    {
       "from": "DES-AIRA2-008",
       "to": "REQ-AGENTCONFIG-001",
       "relation": "satisfies"
@@ -1388,6 +1518,11 @@
     {
       "from": "DES-AIRA2-008",
       "to": "DES-AIRA2-002",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-008",
+      "to": "DES-AIRA2-011",
       "relation": "depends-on"
     },
     {
@@ -1456,6 +1591,11 @@
       "relation": "depends-on"
     },
     {
+      "from": "DES-AIRA2-009",
+      "to": "DES-AIRA2-011",
+      "relation": "depends-on"
+    },
+    {
       "from": "DES-AIRA2-010",
       "to": "REQ-GUI-001",
       "relation": "satisfies"
@@ -1481,7 +1621,22 @@
       "relation": "satisfies"
     },
     {
+      "from": "DES-AIRA2-010",
+      "to": "REQ-RUNTIME-004",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-010",
+      "to": "REQ-RUNTIME-008",
+      "relation": "satisfies"
+    },
+    {
       "from": "ADR-0005",
+      "to": "DES-AIRA2-010",
+      "relation": "decides"
+    },
+    {
+      "from": "ADR-0006",
       "to": "DES-AIRA2-010",
       "relation": "decides"
     },
@@ -1518,6 +1673,121 @@
     {
       "from": "DES-AIRA2-010",
       "to": "DES-AIRA2-009",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-010",
+      "to": "DES-AIRA2-012",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-011",
+      "to": "REQ-RUNTIME-001",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-011",
+      "to": "REQ-RUNTIME-002",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-011",
+      "to": "REQ-RUNTIME-005",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-011",
+      "to": "REQ-RUNTIME-006",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-011",
+      "to": "REQ-RUNTIME-009",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-011",
+      "to": "REQ-RUNTIME-010",
+      "relation": "satisfies"
+    },
+    {
+      "from": "ADR-0005",
+      "to": "DES-AIRA2-011",
+      "relation": "decides"
+    },
+    {
+      "from": "ADR-0006",
+      "to": "DES-AIRA2-011",
+      "relation": "decides"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "REQ-RUNTIME-003",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "REQ-RUNTIME-007",
+      "relation": "satisfies"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "REQ-RUNTIME-011",
+      "relation": "satisfies"
+    },
+    {
+      "from": "ADR-0006",
+      "to": "DES-AIRA2-012",
+      "relation": "decides"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-001",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-002",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-003",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-004",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-005",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-006",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-007",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-008",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-009",
+      "relation": "depends-on"
+    },
+    {
+      "from": "DES-AIRA2-012",
+      "to": "DES-AIRA2-011",
       "relation": "depends-on"
     },
     {
@@ -2373,8 +2643,9 @@
     ".musubix/decisions/ADR-0003.md": "154414958951624db5c034ec8cc87b1f58cad13e2c7a95230bf2ef3cd474d020",
     ".musubix/decisions/ADR-0004.md": "8cac98bc3f51a7d38447f6f7f1c537f53d33b32ba573f12ddf7fd1b148db7fa1",
     ".musubix/decisions/ADR-0005.md": "b4295c4972f9e223c479c15e59d63429b472367470c2cff5dcc488568c1d956c",
-    ".musubix/features/aira2-platform/design.md": "1ecbd9b407802fe3e924f2ba237ca81d5047ef312456f23e7611024d1f3def46",
-    ".musubix/features/aira2-platform/requirements.md": "cbddf90a839164e0ceb7d7c44b565d0fe623fe75a5211ea562c58e8c4bb0e565",
+    ".musubix/decisions/ADR-0006.md": "b128d676d9ef3cac82966840793d9570b8edac8256f2a9a2979b4184dea6d30c",
+    ".musubix/features/aira2-platform/design.md": "7597a293148230b198d15c5e7b334d90c9a00a45829dca56a6de7f6a5c7b9e15",
+    ".musubix/features/aira2-platform/requirements.md": "82be30abd62d4224b4fa63d18a93c481a2e8b123db8b9c303727d84c876368dc",
     ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed",
     "src/agent-config/agent-skills-mcp-manager.test.ts": "daa01e46e19b6a6c585668d7cdf7b6e95cc437f1b7f333e7c2a4bf7b1137e056",
