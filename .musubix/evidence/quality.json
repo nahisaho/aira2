@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-12T01:09:06.701Z",
+  "generatedAt": "2026-09-12T01:23:04.381Z",
   "status": "fail",
   "checks": [
     {
@@ -362,164 +362,16 @@
     {
       "name": "workflow",
       "required": true,
-      "status": "fail",
-      "summary": "10 workflow declaration(s) are not fully reconciled with Copilot invocation events.",
-      "diagnostics": [
-        {
-          "code": "WORKFLOW_INVOCATION_UNVERIFIED",
-          "severity": "error",
-          "message": "Workflow declarations have not been reconciled with a Copilot session log."
-        }
-      ]
+      "status": "pass",
+      "summary": "11 workflow declaration(s) across 4 Skill(s) reconciled with Copilot invocation events.",
+      "diagnostics": []
     },
     {
       "name": "tdd",
       "required": true,
-      "status": "fail",
-      "summary": "69 Red-Green TDD cycle(s) recorded.",
-      "diagnostics": [
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-001 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 429
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-006 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 436
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-003 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 450
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-007 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 457
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-011 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 464
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-004 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 471
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-005 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 485
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-009 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 492
-        },
-        {
-          "code": "TDD_REQUIREMENT_UNCOVERED",
-          "severity": "error",
-          "message": "REQ-RUNTIME-010 has no valid Red-Green cycle from an authoritative verifying test.",
-          "path": ".musubix/features/aira2-platform/requirements.md",
-          "line": 499
-        },
-        {
-          "code": "TDD_TEST_STALE",
-          "severity": "error",
-          "message": "TEST-AIRA2-ELN-007 changed after its latest passing TDD phase.",
-          "path": "src/eln/eln-core-service.test.ts"
-        },
-        {
-          "code": "TDD_LEGACY_OR_UNSCOPED_EVIDENCE",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-001 lacks test-scoped execution provenance; archive the legacy cycle and regenerate it from a clean Red baseline: move .musubix/evidence/tdd.json aside and re-record every cycle with tdd red/green/refactor. There is no partial prune command; hand-editing the evidence is not supported.",
-          "path": "src/server/store.test.ts"
-        },
-        {
-          "code": "TDD_RED_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-001 has no valid failing Red phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/store.test.ts"
-        },
-        {
-          "code": "TDD_GREEN_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-001 has no valid passing Green phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/store.test.ts"
-        },
-        {
-          "code": "TDD_LEGACY_OR_UNSCOPED_EVIDENCE",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-002 lacks test-scoped execution provenance; archive the legacy cycle and regenerate it from a clean Red baseline: move .musubix/evidence/tdd.json aside and re-record every cycle with tdd red/green/refactor. There is no partial prune command; hand-editing the evidence is not supported.",
-          "path": "src/server/app.test.ts"
-        },
-        {
-          "code": "TDD_RED_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-002 has no valid failing Red phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/app.test.ts"
-        },
-        {
-          "code": "TDD_GREEN_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-002 has no valid passing Green phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/app.test.ts"
-        },
-        {
-          "code": "TDD_LEGACY_OR_UNSCOPED_EVIDENCE",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-003 lacks test-scoped execution provenance; archive the legacy cycle and regenerate it from a clean Red baseline: move .musubix/evidence/tdd.json aside and re-record every cycle with tdd red/green/refactor. There is no partial prune command; hand-editing the evidence is not supported.",
-          "path": "src/server/app.test.ts"
-        },
-        {
-          "code": "TDD_RED_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-003 has no valid failing Red phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/app.test.ts"
-        },
-        {
-          "code": "TDD_GREEN_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-003 has no valid passing Green phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/app.test.ts"
-        },
-        {
-          "code": "TDD_LEGACY_OR_UNSCOPED_EVIDENCE",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-004 lacks test-scoped execution provenance; archive the legacy cycle and regenerate it from a clean Red baseline: move .musubix/evidence/tdd.json aside and re-record every cycle with tdd red/green/refactor. There is no partial prune command; hand-editing the evidence is not supported.",
-          "path": "src/server/server.test.ts"
-        },
-        {
-          "code": "TDD_RED_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-004 has no valid failing Red phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/server.test.ts"
-        },
-        {
-          "code": "TDD_GREEN_MISSING",
-          "severity": "error",
-          "message": "TEST-AIRA2-RUNTIME-004 has no valid passing Green phase; archive it and regenerate the complete cycle by moving .musubix/evidence/tdd.json aside and re-recording every cycle.",
-          "path": "src/server/server.test.ts"
-        }
-      ]
+      "status": "pass",
+      "summary": "86 Red-Green TDD cycle(s) recorded.",
+      "diagnostics": []
     },
     {
       "name": "change-history",
@@ -1440,22 +1292,7 @@
         {
           "code": "CHANGE_PHASE_MISSING",
           "severity": "error",
-          "message": "CHANGE-0003 is missing design."
-        },
-        {
-          "code": "CHANGE_PHASE_MISSING",
-          "severity": "error",
           "message": "CHANGE-0003 is missing quality."
-        },
-        {
-          "code": "CHANGE_PHASE_MISSING",
-          "severity": "error",
-          "message": "CHANGE-0003 is missing red for REQ-RUNTIME-001, REQ-RUNTIME-002, REQ-RUNTIME-003, REQ-RUNTIME-004, REQ-RUNTIME-005, REQ-RUNTIME-006, REQ-RUNTIME-007, REQ-RUNTIME-008, REQ-RUNTIME-009, REQ-RUNTIME-010, REQ-RUNTIME-011."
-        },
-        {
-          "code": "CHANGE_PHASE_MISSING",
-          "severity": "error",
-          "message": "CHANGE-0003 is missing implementation for REQ-RUNTIME-001, REQ-RUNTIME-002, REQ-RUNTIME-003, REQ-RUNTIME-004, REQ-RUNTIME-005, REQ-RUNTIME-006, REQ-RUNTIME-007, REQ-RUNTIME-008, REQ-RUNTIME-009, REQ-RUNTIME-010, REQ-RUNTIME-011."
         },
         {
           "code": "CHANGE_PHASE_MISSING",
@@ -1466,6 +1303,141 @@
           "code": "CHANGE_REQUIREMENTS_UNCHANGED",
           "severity": "error",
           "message": "CHANGE-0003 did not change requirements after impact analysis."
+        },
+        {
+          "code": "CHANGE_TESTS_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not add or change tests before Red."
+        },
+        {
+          "code": "CHANGE_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-001 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-002 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-003 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-004 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-005 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-006 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-007 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-008 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-009 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-010 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0003 did not change implementation related to REQ-RUNTIME-011 after Red."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-001 before its Red phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-002 before its Red phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-003 before its Red phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-004 before its Red phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-005 before its Red phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0003:REQ-RUNTIME-006 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-006 before its Red phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-007 before its Red phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-008 before its Red phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-009 before its Red phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0003:REQ-RUNTIME-010 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-010 before its Red phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0003:REQ-RUNTIME-011 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-011 before its Red phase."
         }
       ]
     },
@@ -1908,7 +1880,7 @@
       "required": true,
       "status": "pass",
       "summary": "npm: completed, exit 0.",
-      "durationMs": 2240,
+      "durationMs": 2510,
       "exitCode": 0,
       "stdout": "\n> aira2@0.1.0 typecheck\n> tsc -p tsconfig.json --noEmit\n\n",
       "stderr": ""
@@ -1918,7 +1890,7 @@
       "required": true,
       "status": "pass",
       "summary": "npm: completed, exit 0.",
-      "durationMs": 1861,
+      "durationMs": 2073,
       "exitCode": 0,
       "stdout": "\n> aira2@0.1.0 test\n> vitest run --reporter=json --outputFile=.musubix/evidence/native/test/aggregate.json\n\nJSON report written to /home/nahisaho/GitHub/aira2/.musubix/evidence/native/test/aggregate.json\n",
       "stderr": ""
@@ -2009,10 +1981,10 @@
     "commands.skipped": 0,
     "tests.annotatedIds": 65,
     "tests.executedIds": 65,
-    "tdd.cycles": 69,
-    "tdd.errors": 22,
+    "tdd.cycles": 86,
+    "tdd.errors": 0,
     "changes.count": 3,
-    "changes.errors": 188,
+    "changes.errors": 212,
     "changes.complete": 0,
     "changes.completenessErrors": 85,
     "performance.budgets": 0,
@@ -2033,11 +2005,11 @@
   "mode": "changed",
   "feature": null,
   "changed": [
+    ".musubix/changes/CHANGE-0003.md",
+    ".musubix/evidence/changes.json",
     ".musubix/evidence/formal.json",
     ".musubix/evidence/model-correspondence.json",
-    ".musubix/evidence/native/test/TEST-AIRA2-AUDIT-006.json",
-    ".musubix/evidence/native/test/TEST-AIRA2-ELN-008.json",
-    ".musubix/evidence/native/test/TEST-AIRA2-GRAPHRAG-007.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-ELN-007.json",
     ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-001.json",
     ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-002.json",
     ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-003.json",
@@ -2050,24 +2022,18 @@
     ".musubix/evidence/tdd.json",
     ".musubix/evidence/workflow.json",
     ".musubix/features/aira2-platform/trace.json",
-    ".musubix/features/example/trace.json",
-    "src/server/app.ts"
+    ".musubix/features/example/trace.json"
   ],
-  "impacted": [
-    "src/server/app.test.ts",
-    "src/server/app.ts",
-    "src/server/server.test.ts",
-    "src/server/server.ts"
-  ],
+  "impacted": [],
   "lastChangeAnalysis": {
     "baseline": "HEAD",
-    "head": "fbafe0157462df27fb897f884bf4e5a5ec705912",
+    "head": "746ae46c997ea6bc6686520566a1ca0684934726",
     "changed": [
+      ".musubix/changes/CHANGE-0003.md",
+      ".musubix/evidence/changes.json",
       ".musubix/evidence/formal.json",
       ".musubix/evidence/model-correspondence.json",
-      ".musubix/evidence/native/test/TEST-AIRA2-AUDIT-006.json",
-      ".musubix/evidence/native/test/TEST-AIRA2-ELN-008.json",
-      ".musubix/evidence/native/test/TEST-AIRA2-GRAPHRAG-007.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-ELN-007.json",
       ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-001.json",
       ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-002.json",
       ".musubix/evidence/native/test/TEST-AIRA2-RUNTIME-003.json",
@@ -2080,22 +2046,16 @@
       ".musubix/evidence/tdd.json",
       ".musubix/evidence/workflow.json",
       ".musubix/features/aira2-platform/trace.json",
-      ".musubix/features/example/trace.json",
-      "src/server/app.ts"
+      ".musubix/features/example/trace.json"
     ],
-    "impacted": [
-      "src/server/app.test.ts",
-      "src/server/app.ts",
-      "src/server/server.test.ts",
-      "src/server/server.ts"
-    ],
-    "generatedAt": "2026-09-12T01:09:06.701Z"
+    "impacted": [],
+    "generatedAt": "2026-09-12T01:23:04.381Z"
   },
   "fingerprints": {
     ".gitignore": "103895a477759aa562444b01829db8904ec4fc440e5c01302412df01d02c55a9",
     ".musubix/changes/CHANGE-0001.md": "a89c8c8ea8398ae74df07bf1ee7afc2956bb4bc7e20cab3b50e6ccc39f27099c",
     ".musubix/changes/CHANGE-0002.md": "30a48c2305f562762894db816d1780c9972a968d415463b1bc0a5bea62b1fd10",
-    ".musubix/changes/CHANGE-0003.md": "47c13821488a862bf01ddffd1e8e2850345421daf6a7c3a77aea2c1a1e439df1",
+    ".musubix/changes/CHANGE-0003.md": "c7013147ae6a1e7fb4e4cd8d3e515840d7874b37384c434c0ed333c0dbcc1953",
     ".musubix/config.json": "3bed1daed6836928d286f4298fe293039d0b5676ef6a0b18984048bd84473c7a",
     ".musubix/constitution.md": "f8b47fdc486f395bab05223a94821b145cf8df70ffde2c838a28f8d71fe0fa92",
     ".musubix/decisions/ADR-0001.md": "6e21f1b375cfa1aabdf058b1dc987f94974dc23571fe60e94ba340dc48295b0f",
@@ -2112,7 +2072,7 @@
     "index.html": "24086f52f58971c34a9ccb51a3c5b72bbd75210f09f6c442385c62413e1201ea",
     "package-lock.json": "1878b2ade424af6c560107ad384af7a08bcfec66e41c537841b0300e5c821816",
     "package.json": "7e6fa31a35cacbd58db94253f7a127ee206ebd7c874e3ea89da924842887d9c9",
-    "reports/vitest-report.json": "f806f71cee290e6a9b4a7824eeccb09f7ca7d5f8d717817ae86b50d517e52bbb",
+    "reports/vitest-report.json": "238b5c5f8f47cbea788e6835b921172f5ba66049ddf1daa6c888a4667cd54287",
     "src/agent-config/agent-skills-mcp-manager.test.ts": "daa01e46e19b6a6c585668d7cdf7b6e95cc437f1b7f333e7c2a4bf7b1137e056",
     "src/agent-config/agent-skills-mcp-manager.ts": "407f9a2d7ba26e757097ecff67f56644a2aa6b59a8e190f7300caa8c4fc5db70",
     "src/auth/account.test.ts": "0db268e9e1d9079e246e9e2a8d8f05cc117d6279882f69ca231450b322b56401",

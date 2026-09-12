@@ -38,6 +38,30 @@ Requirements: REQ-RUNTIME-001 REQ-RUNTIME-002 REQ-RUNTIME-003 REQ-RUNTIME-004 RE
   reference which of their state/actions must be durably persisted and
   exposed over REST, respectively.
 
+All REQ-RUNTIME-001..011 requirements are implemented, unit-tested (TDD
+Red/Green recorded per test/requirement pair), and traced
+(`trace check --strict`: 0 diagnostics). Full test suite (23 files / 66
+tests) and `npm run typecheck` are green.
+
+## Known gate limitation / 既知のゲート制約 (accepted 2026, user decision: accept-gap)
+
+As with CHANGE-0001, the `change-record` checkpoint chain for this CHANGE
+is append-only. The `red`/`implementation` phase checkpoints were recorded
+after implementation work and the associated TDD Red/Green evidence were
+already complete, so their fingerprints do not show genuine phase-to-phase
+deltas. `npx musubix3 gate --changed` therefore reports `change-history`
+and `change-completeness` as FAIL for CHANGE-0003, and this cannot be
+corrected retroactively (re-recording an already-recorded phase is
+rejected by the CLI, and editing recorded evidence would be fabrication).
+
+This is a process/tooling-bookkeeping gap only. It does not indicate any
+defect in the actual code, tests, or traceability: the independent
+per-test TDD evidence (`tdd validate`: 0 diagnostics), `trace check
+--strict`, `npm run typecheck`, and `npm test` (66/66 passing) all pass and
+are the authoritative evidence for engineering completeness. The user was
+informed of this gap and explicitly accepted it as a known, documented
+limitation rather than requesting further remediation.
+
 ## Source references / 参照元
 
 - CHANGE-0001 (`.musubix/changes/CHANGE-0001.md`) for the wrapped in-process
