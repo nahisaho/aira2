@@ -75,8 +75,8 @@ Acceptance: A test performs a login, a share grant, and a role change, then conf
 Priority: must
 Type: functional
 Pattern: event-driven
-Statement: When a project owner or admin revokes a previously granted share, the system shall terminate any active session or MCP connection the revoked user holds for that project.
-Acceptance: A test revokes a share while the revoked user has an active session in that project and confirms that session and any open MCP connection are terminated within a bounded time.
+Statement: When a project owner or admin revokes a previously granted share, the system shall terminate any active session or MCP connection the revoked user holds for that project within 5 seconds of the revocation taking effect.
+Acceptance: A test revokes a share while the revoked user has an active session in that project and confirms that session and any open MCP connection are terminated within 5 seconds.
 
 ### REQ-MULTIUSER-012: Signed record ownership preserved on revocation / 取消後も維持される署名者の帰属
 Priority: must
@@ -98,6 +98,272 @@ Type: functional
 Pattern: ubiquitous
 Statement: The system shall enforce the documented authorization matrix for every ELN and Graph RAG action requested by a project member.
 Acceptance: A test attempts each matrix-defined action under each of the three roles across ELN and Graph RAG resources and confirms only matrix-permitted role/action combinations succeed.
+
+### REQ-MULTIUSER-013: Project member invitation by email / メールによるプロジェクトメンバー招待
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a project owner or admin invites an email address to a project with a specified role of viewer or editor, the system shall create a pending invitation record and send an invitation message to that email address, without granting any project access until the invitation is accepted.
+Acceptance: A test creates an invitation for an email address not yet registered and confirms a pending invitation record exists, an invitation message is sent, and the invited address has no project access yet; a test attempts to create an invitation with role owner and confirms it is rejected.
+
+### REQ-MULTIUSER-014: Invitation acceptance grants role / 招待承諾によるロール付与
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When an authenticated user whose verified account email matches an invitation's target email accepts that pending invitation using its token before its expiry time, the system shall activate that invitation, granting the invited role on the project to that user and marking the invitation consumed.
+Acceptance: A test accepts a valid unexpired invitation as the matching authenticated user and confirms the resulting project role and a consumed invitation state; a test presents the same valid token from an authenticated account whose email does not match the invitation's target email and confirms the acceptance is rejected with no role granted.
+
+### REQ-MULTIUSER-039: Atomic invitation acceptance / 招待承諾の原子性
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall treat an invitation's pending-state check, target-email match check, role grant, and consumption as a single atomic operation that either fully succeeds exactly once or leaves the invitation and the accepting user's project role unchanged.
+Acceptance: A test issues two concurrent acceptance attempts for the same valid invitation token and confirms exactly one succeeds in granting the role and consuming the invitation, while the other is rejected with no additional role granted.
+
+### REQ-MULTIUSER-040: Verified email required for account identity matching / 本人確認済みメールによる本人性一致
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall maintain, for each account, at most one verified email address confirmed via an out-of-band confirmation link.
+Acceptance: A test confirms an email address via its out-of-band confirmation link and confirms it becomes that account's verified email.
+
+### REQ-MULTIUSER-045: Invitation matching restricted to verified email / 招待照合の確認済みメール限定
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If an account's email used for an invitation's target-email match is not that account's verified email, then the system shall reject the match.
+Acceptance: A test confirms an unverified email address on an account cannot satisfy an invitation's target-email match.
+
+### REQ-MULTIUSER-041: Verified email change re-verification / 確認済みメール変更の再確認
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a user changes their profile contact email through REQ-MULTIUSER-018's self-service update, the system shall send a time-limited out-of-band confirmation link to the new address.
+Acceptance: A test changes a profile's contact email and confirms a confirmation link is delivered to the new address.
+
+### REQ-MULTIUSER-049: Unconfirmed email change does not replace verified email / 未確認メール変更は確認済みメールを置換しない
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If a profile contact-email change's confirmation link has not yet been used, then the system shall not replace the account's previously verified email with the new address.
+Acceptance: A test changes a profile's contact email and confirms the previous verified email remains the account's verified email for invitation matching until the new email's confirmation link is used, after which the new email becomes verified.
+
+### REQ-MULTIUSER-042: Verified email uniqueness / 確認済みメールの一意性
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If an email confirmation link is used for an email address already verified on a different account at the moment its confirmation is atomically applied, then the system shall reject that confirmation, guaranteeing at most one account holds a given address as its verified email at any time.
+Acceptance: A test verifies an email address on one account, attempts to verify the same address as another account's confirmation target, and confirms the second confirmation is rejected; a test issues two concurrent confirmations of the same unverified address for two different accounts and confirms exactly one succeeds.
+
+### REQ-MULTIUSER-025: Invitation acceptance rejection / 招待承諾の拒否
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If an invitation acceptance is attempted with an expired, already-consumed, cancelled, or unknown token, then the system shall reject the acceptance without granting any project role.
+Acceptance: Separate tests attempt acceptance with an expired token, an already-consumed token, a cancelled token, and an unknown token, and confirm each is rejected with no role granted.
+
+### REQ-MULTIUSER-015: Project member management UI / プロジェクトメンバー管理UI
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall provide a UI, restricted to users authorized for `project.share.manage`, to list a project's current members and pending invitations with their roles, change a non-owner member's role, remove a non-owner member, and cancel a pending invitation.
+Acceptance: A test opens the member management UI as an owner and confirms the current members, their roles, and pending invitations are listed; a test performs a role change, a member removal, and an invitation cancellation through the UI and confirms each takes effect; a test confirms a non-authorized user cannot access the UI's mutating actions; a test confirms an attempt to remove or demote the project's sole owner through this UI is rejected.
+
+### REQ-MULTIUSER-029: Last owner protection / 最後のオーナー保護
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If a member-management or team-based action would remove or demote a project's sole remaining owner, then the system shall reject that action.
+Acceptance: A test attempts to remove the sole owner from a single-owner project and confirms rejection; a test attempts to change the sole owner's role to editor or viewer and confirms rejection; a test confirms the same action succeeds once a second owner exists.
+
+### REQ-MULTIUSER-016: Team entity for grouped access / グループアクセス用チームエンティティ
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall support a team entity, distinct from a project, that has a name and a set of member user accounts managed by a team admin.
+Acceptance: A test creates a team, adds and removes member accounts, and confirms only a team admin can perform those membership changes.
+
+### REQ-MULTIUSER-030: Team administration authorization / チーム管理の認可
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall restrict team creation to a global admin, and restrict team-admin assignment and team deletion for an existing team to a global admin or that team's own team admin.
+Acceptance: A test confirms a global admin can create a team; a test confirms a plain member account is rejected for team creation; a test confirms a global admin and that team's team admin can assign another team admin and delete the team, while a plain member account without team-admin standing is rejected for each.
+
+### REQ-MULTIUSER-017: Team-based project sharing / チーム単位のプロジェクト共有
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a project owner or admin grants a team a permission level of viewer or editor on a project, the system shall allow every current and subsequently added team member to access that project at that permission level.
+Acceptance: A test grants a team edit access to a project and confirms an existing team member can edit; a test adds a new member to that team afterward and confirms they immediately gain the same access; a test attempts to grant a team the owner permission level and confirms it is rejected.
+
+### REQ-MULTIUSER-031: Effective project role resolution / 実効プロジェクトロールの解決
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall resolve a user's effective role on a project as the most-permissive role among the project owner assignment, any direct share, and any team-based share whose team the user currently belongs to.
+Acceptance: A test grants a user a direct viewer share and, separately, editor access via team membership on the same project, and confirms the user's effective role is editor; a test removes the team-based grant and confirms the user's effective role reverts to viewer.
+
+### REQ-MULTIUSER-026: Team removal revokes team-based access / チーム除名によるアクセス取消
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a user is removed from a team that holds project access, the system shall terminate, within 5 seconds, any active session or MCP connection that user holds for a project whose access was derived solely from that team's membership.
+Acceptance: A test removes a member from a team that has project access while that member holds an active session and an open MCP connection for the project, and confirms both are terminated within 5 seconds and the member's next request to the project is denied; a test confirms a member who also holds a separate direct share or a share via another team retains access after removal from the first team.
+
+### REQ-MULTIUSER-018: User profile self-service / ユーザープロフィール自己管理
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall provide a UI and API for an authenticated user to view and update their own profile (display name and contact email), without permitting changes to their role or account identifiers.
+Acceptance: A test updates the authenticated user's display name and contact email through the UI/API and confirms the change persists; a test attempts to change the user's own role or account ID through the same endpoint and confirms it is rejected.
+
+### REQ-MULTIUSER-019: Self-service password change / セルフサービスパスワード変更
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When an authenticated password-method user submits a correct current password together with a new password, the system shall replace the stored credential with a hash of the new password.
+Acceptance: A test submits the correct current password with a new password and confirms the stored credential hash changes to match the new password; a test submits an incorrect current password and confirms the credential is unchanged.
+
+### REQ-MULTIUSER-027: Password change reissues the submitting session / パスワード変更によるセッションの再発行
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a user's password credential is replaced via self-service password change, the system shall reissue, bound to the new credential version, a replacement session for the bearer that submitted the change.
+Acceptance: A test creates a second session for a user, changes that user's password via self-service using a first session, and confirms the first session's original bearer no longer authenticates while a replacement session bound to the new credential version is returned to the caller and remains valid, and confirms the second session is invalidated per REQ-MULTIUSER-048.
+
+### REQ-MULTIUSER-020: Password reset token issuance / パスワードリセットトークンの発行
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a user requests a password reset for an email address, the system shall issue, for an email matching some account's current verified email only, a single-use, cryptographically random, time-limited reset token delivered out-of-band, while returning the same externally observable response regardless of whether the email matches a verified account email.
+Acceptance: A test requests a reset for an account's verified email and confirms a single-use, time-limited token is issued and delivered out-of-band; a test requests a reset for an unregistered email, and separately for a registered but not-yet-verified contact email, and confirms both responses are indistinguishable from the verified-email response with no token delivered.
+
+### REQ-MULTIUSER-036: Password reset request rate limiting / パスワードリセット要求のレート制限
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If password reset requests for the same email address or originating source exceed a configured rate within a configured time window, then the system shall reject further requests for that email address or source until the window elapses.
+Acceptance: A test submits reset requests for the same email beyond the configured limit within the window and confirms subsequent requests are rejected while the limit has not yet reset.
+
+### REQ-MULTIUSER-028: Password reset token single use / パスワードリセットトークンの単回使用
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If a password reset is attempted with a reused, expired, or unknown reset token, then the system shall reject the reset without changing the account's credential.
+Acceptance: A test attempts to reuse an already-consumed token and confirms rejection; a test attempts an expired or unknown token and confirms rejection.
+
+### REQ-MULTIUSER-032: Password reset completion / パスワードリセットの完了
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a user completes a password reset with a valid reset token, the system shall replace the account's stored credential with a hash of the submitted new password.
+Acceptance: A test completes a reset with an issued token and a new password and confirms login succeeds with the new password.
+
+### REQ-MULTIUSER-038: Password reset token consumption / パスワードリセットトークンの消費
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a password reset completes successfully using a reset token, the system shall mark that token consumed.
+Acceptance: A test completes a reset with a token and confirms a subsequent attempt to reuse that same token is rejected as already consumed.
+
+### REQ-MULTIUSER-037: Password reset invalidates existing sessions / パスワードリセットによる既存セッションの失効
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a password reset completes successfully for an account, the system shall invalidate every session that existed for that account before the reset.
+Acceptance: A test creates a session for an account, completes a password reset for that account, and confirms the pre-reset session is invalidated.
+
+### REQ-MULTIUSER-043: Atomic password reset completion / パスワードリセット完了の原子性
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall treat a reset token's validity check, consumption, credential replacement, and the account's credential-version increment as a single atomic operation that either fully succeeds exactly once or leaves the token, credential, and credential version unchanged.
+Acceptance: A test issues two concurrent reset attempts using the same valid token and confirms exactly one succeeds in replacing the credential, consuming the token, and incrementing the credential version together, while the other is rejected with no credential or version change; a test confirms no session issued before the reset can authenticate once the reset operation reports success.
+
+### REQ-MULTIUSER-046: Session credential-version binding / セッションの資格情報バージョン紐付け
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall record, for each issued session, the credential version of its account read atomically with that same session's issuance, such that no credential replacement can complete between the version read and the session record being committed.
+Acceptance: A test issues a session and confirms the stored session record's credential version matches the account's credential version at the atomically-committed moment of issuance.
+
+### REQ-MULTIUSER-050: Login fails on credential version change during verification / 検証中のバージョン変化によるログイン失敗
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If an account's credential version changes between a login attempt's successful credential verification and that same login attempt's session issuance, then the system shall fail that login attempt without issuing a session.
+Acceptance: A test pauses a login after its credential verification step succeeds against the old password, completes a password reset or self-service change for that account, resumes the paused login, and confirms it fails with no session issued rather than issuing a session recording the new version.
+
+### REQ-MULTIUSER-047: Credential replacement increments version / 資格情報置換によるバージョン増分
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When an account's password credential is replaced by self-service change or password reset, the system shall increment that account's credential version.
+Acceptance: A test replaces an account's credential via self-service change, and separately via reset, and confirms the account's credential version increments in each case.
+
+### REQ-MULTIUSER-048: Stale credential-version session rejection / 旧バージョンセッションの拒否
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If a session's recorded credential version does not match its account's current credential version, then the system shall reject that session as invalid.
+Acceptance: A test issues a session, replaces the account's credential (incrementing its version), and confirms the previously issued session is rejected; a test confirms a login that completes and is issued a session only after the credential replacement carries the new version and remains valid.
+
+### REQ-MULTIUSER-021: Multi-factor authentication enrollment / 多要素認証の登録
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When an authenticated user enrolls a time-based one-time-password (TOTP) second factor, the system shall store the shared secret encrypted at rest.
+Acceptance: A test enrolls TOTP for an account and confirms the persisted secret is not stored in plaintext and can only be recovered through the encrypted-storage decryption path.
+
+### REQ-MULTIUSER-034: MFA enrollment confirmation / MFA登録の確認
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When a user completes TOTP enrollment, the system shall activate that second factor only after the user supplies one valid TOTP code generated from the enrolled secret.
+Acceptance: A test enrolls a TOTP secret and confirms the factor remains inactive until a valid generated code is supplied, after which login begins requiring it; a test supplies an incorrect code during confirmation and confirms the factor remains inactive.
+
+### REQ-MULTIUSER-035: MFA required at login / ログイン時のMFA要求
+Priority: must
+Type: functional
+Pattern: state-driven
+Statement: While an account has an active TOTP second factor, the system shall require a valid TOTP code at login for that account before a session is issued.
+Acceptance: A test logs out an account with an active TOTP factor and confirms a subsequent login attempt with only the correct password is not issued a session until a valid TOTP code is also supplied; a test confirms an invalid TOTP code is rejected.
+
+### REQ-MULTIUSER-033: MFA verification throttling / MFA検証の試行制限
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If TOTP code verification attempts for an account exceed a configured number of consecutive failures, then the system shall temporarily lock further TOTP attempts for that account until a configured cooldown elapses.
+Acceptance: A test submits invalid TOTP codes beyond the configured failure limit and confirms further attempts are rejected during the cooldown, and confirms a valid code succeeds once the cooldown elapses.
+
+### REQ-MULTIUSER-044: TOTP code replay rejection / TOTPコードの再利用拒否
+Priority: must
+Type: functional
+Pattern: unwanted-behavior
+Statement: If a TOTP code is submitted for enrollment confirmation or login verification whose time-step counter was already accepted for that factor, then the system shall reject that code.
+Acceptance: A test submits a valid TOTP code that succeeds, then resubmits the identical code within its validity window and confirms it is rejected as already used.
+
+### REQ-MULTIUSER-022: Deployment-wide MFA enforcement / デプロイメント全体のMFA強制設定
+Priority: should
+Type: functional
+Pattern: state-driven
+Statement: While a deployment-level setting requires MFA, the system shall withhold a session for any login of an account without an enrolled second factor.
+Acceptance: A test enables the deployment-wide MFA-required setting, attempts login for an account with no enrolled factor, and confirms no session is issued; a test confirms an account with an enrolled factor logs in normally.
+
+### REQ-MULTIUSER-023: Active session listing / アクティブセッション一覧
+Priority: must
+Type: functional
+Pattern: ubiquitous
+Statement: The system shall provide a UI and API for an authenticated user to list all of their own currently active sessions, each showing a non-bearer display identifier, creation time, and expiry time, without disclosing any session's bearer token value.
+Acceptance: A test creates two sessions for the same account and confirms both appear in that user's session list with the required fields, that the listed identifier cannot itself be used to authenticate a request, and that another user's session list never includes them.
+
+### REQ-MULTIUSER-024: Self-service session revocation / セルフサービスセッション終了
+Priority: must
+Type: functional
+Pattern: event-driven
+Statement: When an authenticated user requests termination of one of their own listed sessions other than the current one, the system shall immediately invalidate that session so it can no longer be used to authenticate a request.
+Acceptance: A test creates a second session for an account, revokes it via the session-list UI/API from the first session, and confirms the revoked session is rejected on its next use while the current session remains valid.
 
 ## 2. Pluggable LLM backends / 複数LLMバックエンド対応
 

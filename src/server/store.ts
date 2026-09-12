@@ -263,6 +263,13 @@ export class SqliteStore {
     this.db.prepare(`DELETE FROM project_shares WHERE project_id = ? AND user_id = ?`).run(projectId, userId);
   }
 
+  listProjectShares(projectId: string): { userId: string; role: string }[] {
+    const rows = this.db
+      .prepare(`SELECT user_id, role FROM project_shares WHERE project_id = ?`)
+      .all(projectId) as { user_id: string; role: string }[];
+    return rows.map((row) => ({ userId: row.user_id, role: row.role }));
+  }
+
   appendAuthzAudit(entry: { userId: string; timestamp: number; actionType: string; targetResource: string }): void {
     this.db
       .prepare(

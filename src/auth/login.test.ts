@@ -3,6 +3,7 @@ import {
   authenticate,
   AuthMethodDisabledError,
   listSelectableAuthMethods,
+  MfaRequiredError,
   UnsupportedAuthMethodError,
   type AuthProvider,
 } from './login.js';
@@ -63,5 +64,55 @@ describe('authenticate', () => {
     expect(() => authenticate(config, providers, 'ldap', 'dave', accounts)).toThrow(
       UnsupportedAuthMethodError,
     );
+  });
+});
+
+/** @id TEST-AIRA2-AUTH-009
+ * @verifies REQ-MULTIUSER-035
+ */
+describe('MFA required at login', () => {
+  it('TEST-AIRA2-AUTH-009 requires a valid TOTP code before issuing a session for an account with an active factor', () => {
+    const config = { enabledMethods: ['password'] as const };
+    const accounts = new Map<string, Account>();
+    let factorActive = false;
+    const mfaCheck = {
+      isRequired: (_accountId: string) => factorActive,
+      verify: (_accountId: string, code: string) => (code === 'good-code' ? ('valid' as const) : ('invalid' as const)),
+    };
+    const sessionIssuer = {
+      getCredentialVersion: (_accountId: string) => 0,
+      issueSessionIfEligible: (accountId: string, _versionAtVerification: number, mfaSatisfied: boolean) => {
+        if (!mfaSatisfied) return { status: 'mfa-required' as const };
+        return { id: 'sess-1', accountId, credentialVersion: 0, issuedAt: 0, expiresAt: 1 };
+      },
+    };
+
+    // No active factor yet: password alone is enough.
+    const first = authenticate(config, providers, 'password', { email: 'mfa@example.com' }, accounts, {
+      mfaCheck,
+      sessionIssuer,
+    });
+    expect(first.accountId).toBe('password:mfa@example.com');
+
+    // Factor becomes active: password alone must now be rejected...
+    factorActive = true;
+    expect(() =>
+      authenticate(config, providers, 'password', { email: 'mfa@example.com' }, accounts, { mfaCheck, sessionIssuer }),
+    ).toThrow(MfaRequiredError);
+    expect(() =>
+      authenticate(config, providers, 'password', { email: 'mfa@example.com' }, accounts, {
+        mfaCheck,
+        sessionIssuer,
+        totpCode: 'wrong-code',
+      }),
+    ).toThrow(MfaRequiredError);
+
+    // ...until a valid TOTP code is also supplied.
+    const withMfa = authenticate(config, providers, 'password', { email: 'mfa@example.com' }, accounts, {
+      mfaCheck,
+      sessionIssuer,
+      totpCode: 'good-code',
+    });
+    expect(withMfa.accountId).toBe('password:mfa@example.com');
   });
 });

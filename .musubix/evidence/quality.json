@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-12T03:18:21.794Z",
+  "generatedAt": "2026-09-12T06:37:26.089Z",
   "status": "fail",
   "checks": [
     {
@@ -49,7 +49,7 @@
       "name": "formal",
       "required": false,
       "status": "pass",
-      "summary": "8/69 requirements modeled; consistency consistent; solver not-requested.",
+      "summary": "8/107 requirements modeled; consistency consistent; solver not-requested.",
       "diagnostics": [
         {
           "code": "FORMAL_UNSUPPORTED",
@@ -95,6 +95,196 @@
           "code": "FORMAL_UNSUPPORTED",
           "severity": "warning",
           "message": "REQ-MULTIUSER-011 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-013 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-014 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-039 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-040 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-045 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-041 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-049 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-042 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-025 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-015 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-029 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-016 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-030 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-017 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-031 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-026 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-018 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-019 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-027 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-020 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-036 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-028 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-032 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-038 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-037 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-043 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-046 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-050 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-047 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-048 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-021 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-034 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-035 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-033 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-044 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-022 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-023 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
+        },
+        {
+          "code": "FORMAL_UNSUPPORTED",
+          "severity": "warning",
+          "message": "REQ-MULTIUSER-024 is outside the unconditional English/Japanese Boolean abstraction; it was not checked for consistency."
         },
         {
           "code": "FORMAL_UNSUPPORTED",
@@ -363,7 +553,7 @@
       "name": "workflow",
       "required": true,
       "status": "fail",
-      "summary": "17 workflow declaration(s) are not fully reconciled with Copilot invocation events.",
+      "summary": "23 workflow declaration(s) are not fully reconciled with Copilot invocation events.",
       "diagnostics": [
         {
           "code": "WORKFLOW_INVOCATION_UNVERIFIED",
@@ -376,14 +566,14 @@
       "name": "tdd",
       "required": true,
       "status": "pass",
-      "summary": "108 Red-Green TDD cycle(s) recorded.",
+      "summary": "183 Red-Green TDD cycle(s) recorded.",
       "diagnostics": []
     },
     {
       "name": "change-history",
       "required": true,
       "status": "fail",
-      "summary": "3 staged change(s) checked for ordered artifact and TDD evidence.",
+      "summary": "4 staged change(s) checked for ordered artifact and TDD evidence.",
       "diagnostics": [
         {
           "code": "CHANGE_REQUIREMENTS_UNCHANGED",
@@ -1406,6 +1596,11 @@
           "message": "CHANGE-0003 has no valid Green evidence for REQ-RUNTIME-002 before its Green phase."
         },
         {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0003:REQ-RUNTIME-003 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
           "code": "CHANGE_RED_UNPROVEN",
           "severity": "error",
           "message": "CHANGE-0003 has no valid Red evidence for REQ-RUNTIME-003 before its Red phase."
@@ -1449,6 +1644,11 @@
           "code": "CHANGE_GREEN_UNPROVEN",
           "severity": "error",
           "message": "CHANGE-0003 has no valid Green evidence for REQ-RUNTIME-006 before its Green phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0003:REQ-RUNTIME-007 references TDD evidence without monotonic order; regenerate the cycle."
         },
         {
           "code": "CHANGE_RED_UNPROVEN",
@@ -1509,6 +1709,626 @@
           "code": "CHANGE_GREEN_UNPROVEN",
           "severity": "error",
           "message": "CHANGE-0003 has no valid Green evidence for REQ-RUNTIME-011 before its Green phase."
+        },
+        {
+          "code": "CHANGE_REQUIREMENTS_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change requirements after impact analysis."
+        },
+        {
+          "code": "CHANGE_DESIGN_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change design after requirements."
+        },
+        {
+          "code": "CHANGE_TESTS_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not add or change tests before Red."
+        },
+        {
+          "code": "CHANGE_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-013 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-014 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-015 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-016 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-017 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-018 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-019 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-020 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-021 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-022 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-023 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-024 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-025 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-026 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-027 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-028 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-029 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-030 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-031 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-032 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-033 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-034 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-035 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-036 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-037 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-038 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-039 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-040 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-041 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-042 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-043 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-044 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-045 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-046 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-047 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-048 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-049 after Red."
+        },
+        {
+          "code": "CHANGE_RELEVANT_IMPLEMENTATION_UNCHANGED",
+          "severity": "error",
+          "message": "CHANGE-0004 did not change implementation related to REQ-MULTIUSER-050 after Red."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-013 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-013 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-014 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-014 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-015 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-015 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-016 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-016 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-017 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-017 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-018 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-018 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-019 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-019 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-020 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-020 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-021 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-021 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-022 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-022 before its Green phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-023 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-023 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-023 before its Green phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-024 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-024 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-024 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-025 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-025 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-026 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-026 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-027 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-027 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-028 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-028 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-029 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-029 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-030 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-030 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-031 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-031 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-032 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-032 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-033 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-033 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-034 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-034 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-035 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-035 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-036 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-036 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-037 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-037 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-038 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-038 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-039 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-039 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-040 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-040 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-041 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-041 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-042 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-042 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-043 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-043 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-044 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-044 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-045 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-045 before its Green phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-046 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-046 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-046 before its Green phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-047 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-047 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-047 before its Green phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-048 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-048 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-048 before its Green phase."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-049 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-049 before its Green phase."
+        },
+        {
+          "code": "CHANGE_ORDER_MIGRATION_REQUIRED",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-050 references TDD evidence without monotonic order; regenerate the cycle."
+        },
+        {
+          "code": "CHANGE_RED_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Red evidence for REQ-MULTIUSER-050 before its Red phase."
+        },
+        {
+          "code": "CHANGE_GREEN_UNPROVEN",
+          "severity": "error",
+          "message": "CHANGE-0004 has no valid Green evidence for REQ-MULTIUSER-050 before its Green phase."
         }
       ]
     },
@@ -1516,7 +2336,7 @@
       "name": "change-completeness",
       "required": true,
       "status": "fail",
-      "summary": "0/3 staged change(s) have semantically complete evidence.",
+      "summary": "0/4 staged change(s) have semantically complete evidence.",
       "diagnostics": [
         {
           "code": "CHANGE_COMPLETENESS_TDD",
@@ -1928,6 +2748,207 @@
           "code": "CHANGE_COMPLETENESS_TDD",
           "severity": "error",
           "message": "CHANGE-0003:REQ-RUNTIME-011 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_REQUIREMENTS_MISMATCH",
+          "severity": "error",
+          "message": "CHANGE-0004 must explicitly enumerate exactly REQ-MULTIUSER-013, REQ-MULTIUSER-014, REQ-MULTIUSER-015, REQ-MULTIUSER-016, REQ-MULTIUSER-017, REQ-MULTIUSER-018, REQ-MULTIUSER-019, REQ-MULTIUSER-020, REQ-MULTIUSER-021, REQ-MULTIUSER-022, REQ-MULTIUSER-023, REQ-MULTIUSER-024, REQ-MULTIUSER-025, REQ-MULTIUSER-026, REQ-MULTIUSER-027, REQ-MULTIUSER-028, REQ-MULTIUSER-029, REQ-MULTIUSER-030, REQ-MULTIUSER-031, REQ-MULTIUSER-032, REQ-MULTIUSER-033, REQ-MULTIUSER-034, REQ-MULTIUSER-035, REQ-MULTIUSER-036, REQ-MULTIUSER-037, REQ-MULTIUSER-038, REQ-MULTIUSER-039, REQ-MULTIUSER-040, REQ-MULTIUSER-041, REQ-MULTIUSER-042, REQ-MULTIUSER-043, REQ-MULTIUSER-044, REQ-MULTIUSER-045, REQ-MULTIUSER-046, REQ-MULTIUSER-047, REQ-MULTIUSER-048, REQ-MULTIUSER-049, REQ-MULTIUSER-050 in its Requirements field.",
+          "path": ".musubix/changes/CHANGE-0004.md"
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-013 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-014 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-015 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-016 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-017 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-018 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-019 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-020 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-021 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TEST",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-022 lacks authoritative annotated test declaration evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-022 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-023 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-024 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-025 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-026 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-027 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-028 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-029 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-030 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-031 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-032 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-033 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-034 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-035 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-036 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-037 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-038 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-039 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-040 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-041 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-042 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-043 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-044 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-045 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-046 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-047 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-048 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-049 lacks bounded Red-Green TDD evidence."
+        },
+        {
+          "code": "CHANGE_COMPLETENESS_TDD",
+          "severity": "error",
+          "message": "CHANGE-0004:REQ-MULTIUSER-050 lacks bounded Red-Green TDD evidence."
         }
       ]
     },
@@ -1936,7 +2957,7 @@
       "required": true,
       "status": "pass",
       "summary": "npm: completed, exit 0.",
-      "durationMs": 2430,
+      "durationMs": 3513,
       "exitCode": 0,
       "stdout": "\n> aira2@0.1.0 typecheck\n> tsc -p tsconfig.json --noEmit\n\n",
       "stderr": ""
@@ -1946,7 +2967,7 @@
       "required": true,
       "status": "pass",
       "summary": "npm: completed, exit 0.",
-      "durationMs": 2860,
+      "durationMs": 3948,
       "exitCode": 0,
       "stdout": "\n> aira2@0.1.0 test\n> vitest run --reporter=json --outputFile=.musubix/evidence/native/test/aggregate.json\n\nJSON report written to /home/nahisaho/GitHub/aira2/.musubix/evidence/native/test/aggregate.json\n",
       "stderr": ""
@@ -1955,7 +2976,7 @@
       "name": "test-identities",
       "required": false,
       "status": "pass",
-      "summary": "78/78 annotated test IDs passed in structured command reports.",
+      "summary": "123/123 annotated test IDs passed in structured command reports.",
       "diagnostics": []
     },
     {
@@ -2032,20 +3053,20 @@
     "trace.errors": 0,
     "graph.violations": 0,
     "formal.errors": 0,
-    "formal.modeledFraction": 0.11594202898550725,
+    "formal.modeledFraction": 0.07476635514018691,
     "commands.failures": 0,
     "commands.skipped": 0,
-    "tests.annotatedIds": 78,
-    "tests.executedIds": 78,
-    "tdd.cycles": 108,
+    "tests.annotatedIds": 123,
+    "tests.executedIds": 123,
+    "tdd.cycles": 183,
     "tdd.errors": 0,
-    "changes.count": 3,
-    "changes.errors": 225,
+    "changes.count": 4,
+    "changes.errors": 351,
     "changes.complete": 0,
-    "changes.completenessErrors": 82,
+    "changes.completenessErrors": 122,
     "performance.budgets": 0,
     "performance.errors": 0,
-    "mutation.requirements": 61,
+    "mutation.requirements": 98,
     "mutation.coveredRequirements": 0,
     "mutation.mutants": 0,
     "mutation.errors": 0,
@@ -2058,44 +3079,285 @@
     "coverage.implementation": 1,
     "coverage.tests": 1
   },
-  "mode": "changed",
+  "mode": "full",
   "feature": null,
   "changed": [
+    ".musubix/changes/CHANGE-0004.md",
+    ".musubix/decisions/ADR-0007.md",
+    ".musubix/evidence/approvals/design.json",
+    ".musubix/evidence/approvals/requirements.json",
     ".musubix/evidence/changes.json",
     ".musubix/evidence/formal.json",
     ".musubix/evidence/model-correspondence.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-AUTH-009.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GATEWAY-001.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GATEWAY-002.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GATEWAY-003.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GUI-010.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-GUI-011.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-MFA-001.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-MFA-002.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-MFA-003.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-MFA-004.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-001.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-002.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-003.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-004.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-005.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-006.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-007.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-008.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-009.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-001.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-002.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-003.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-004.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-005.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-SESSION-001.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-SESSION-002.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-SESSION-003.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-SESSION-004.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-SESSION-005.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-SESSION-006.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-SESSION-007.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-001.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-002.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-003.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-004.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-005.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-006.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-007.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-008.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-009.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-010.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-011.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-012.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-013.json",
+    ".musubix/evidence/native/test/TEST-AIRA2-TEAM-014.json",
     ".musubix/evidence/native/test/aggregate.json",
     ".musubix/evidence/order.json",
     ".musubix/evidence/performance.json",
     ".musubix/evidence/quality.json",
+    ".musubix/evidence/tdd.json",
     ".musubix/evidence/workflow.json",
+    ".musubix/features/aira2-platform/design.md",
+    ".musubix/features/aira2-platform/requirements.md",
     ".musubix/features/aira2-platform/trace.json",
-    ".musubix/features/example/trace.json"
+    ".musubix/features/example/trace.json",
+    "src/auth/account-self-service.test.ts",
+    "src/auth/account-self-service.ts",
+    "src/auth/login.test.ts",
+    "src/auth/login.ts",
+    "src/auth/session-registry.test.ts",
+    "src/auth/session-registry.ts",
+    "src/authz/project-authz.ts",
+    "src/authz/self-scope.ts",
+    "src/authz/team-service.test.ts",
+    "src/authz/team-service.ts",
+    "src/main-multiuser.test.ts",
+    "src/main.tsx",
+    "src/server/app-multiuser-routes.test.ts",
+    "src/server/app.ts",
+    "src/server/store.ts"
   ],
-  "impacted": [],
+  "impacted": [
+    "src/agent-config/agent-skills-mcp-manager.test.ts",
+    "src/agent-config/agent-skills-mcp-manager.ts",
+    "src/auth/account-self-service.test.ts",
+    "src/auth/account-self-service.ts",
+    "src/auth/login.test.ts",
+    "src/auth/login.ts",
+    "src/auth/password-provider.ts",
+    "src/auth/session-registry.test.ts",
+    "src/auth/session-registry.ts",
+    "src/authz/audit.ts",
+    "src/authz/project-authz.test.ts",
+    "src/authz/project-authz.ts",
+    "src/authz/self-scope.ts",
+    "src/authz/team-service.test.ts",
+    "src/authz/team-service.ts",
+    "src/eln-audit/integrity-subsystem.test.ts",
+    "src/eln-audit/integrity-subsystem.ts",
+    "src/eln-audit/ledger.test.ts",
+    "src/eln-audit/ledger.ts",
+    "src/eln/approval-signature-service.test.ts",
+    "src/eln/approval-signature-service.ts",
+    "src/eln/eln-core-service.test.ts",
+    "src/eln/eln-core-service.ts",
+    "src/eln/protocol-store.test.ts",
+    "src/eln/protocol-store.ts",
+    "src/graphrag/graphrag-service.test.ts",
+    "src/graphrag/graphrag-service.ts",
+    "src/llm/gateway.test.ts",
+    "src/llm/gateway.ts",
+    "src/main-multiuser.test.ts",
+    "src/main.test.ts",
+    "src/main.tsx",
+    "src/server/app-multiuser-routes.test.ts",
+    "src/server/app.test.ts",
+    "src/server/app.ts",
+    "src/server/bootstrap-admin.test.ts",
+    "src/server/server.test.ts",
+    "src/server/server.ts",
+    "src/server/store.test.ts",
+    "src/server/store.ts",
+    "src/vault/credential-vault.test.ts",
+    "src/vault/credential-vault.ts",
+    "src/web/auth-ui.test.ts",
+    "src/web/auth-ui.ts",
+    "src/web/design-system.test.ts",
+    "src/web/eln-ui.test.ts",
+    "src/web/eln-ui.ts",
+    "src/web/graphrag-ui.test.ts",
+    "src/web/graphrag-ui.ts",
+    "src/web/llm-settings-ui.test.ts",
+    "src/web/llm-settings-ui.ts",
+    "src/web/projects-ui.ts"
+  ],
   "lastChangeAnalysis": {
     "baseline": "HEAD",
-    "head": "2bfc49cd080b9b71c0580529f30be0fca9a3d72c",
+    "head": "9caf9ce6a529480998b66c261b8f8c465b2f6674",
     "changed": [
+      ".musubix/changes/CHANGE-0004.md",
+      ".musubix/decisions/ADR-0007.md",
+      ".musubix/evidence/approvals/design.json",
+      ".musubix/evidence/approvals/requirements.json",
       ".musubix/evidence/changes.json",
       ".musubix/evidence/formal.json",
       ".musubix/evidence/model-correspondence.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-AUTH-009.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GATEWAY-001.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GATEWAY-002.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GATEWAY-003.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GUI-010.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-GUI-011.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-MFA-001.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-MFA-002.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-MFA-003.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-MFA-004.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-001.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-002.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-003.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-004.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-005.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-006.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-007.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-008.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PASSWORD-009.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-001.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-002.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-003.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-004.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-PROFILE-005.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-SESSION-001.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-SESSION-002.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-SESSION-003.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-SESSION-004.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-SESSION-005.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-SESSION-006.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-SESSION-007.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-001.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-002.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-003.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-004.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-005.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-006.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-007.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-008.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-009.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-010.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-011.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-012.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-013.json",
+      ".musubix/evidence/native/test/TEST-AIRA2-TEAM-014.json",
       ".musubix/evidence/native/test/aggregate.json",
       ".musubix/evidence/order.json",
       ".musubix/evidence/performance.json",
       ".musubix/evidence/quality.json",
+      ".musubix/evidence/tdd.json",
       ".musubix/evidence/workflow.json",
+      ".musubix/features/aira2-platform/design.md",
+      ".musubix/features/aira2-platform/requirements.md",
       ".musubix/features/aira2-platform/trace.json",
-      ".musubix/features/example/trace.json"
+      ".musubix/features/example/trace.json",
+      "src/auth/account-self-service.test.ts",
+      "src/auth/account-self-service.ts",
+      "src/auth/login.test.ts",
+      "src/auth/login.ts",
+      "src/auth/session-registry.test.ts",
+      "src/auth/session-registry.ts",
+      "src/authz/project-authz.ts",
+      "src/authz/self-scope.ts",
+      "src/authz/team-service.test.ts",
+      "src/authz/team-service.ts",
+      "src/main-multiuser.test.ts",
+      "src/main.tsx",
+      "src/server/app-multiuser-routes.test.ts",
+      "src/server/app.ts",
+      "src/server/store.ts"
     ],
-    "impacted": [],
-    "generatedAt": "2026-09-12T03:18:21.794Z"
+    "impacted": [
+      "src/agent-config/agent-skills-mcp-manager.test.ts",
+      "src/agent-config/agent-skills-mcp-manager.ts",
+      "src/auth/account-self-service.test.ts",
+      "src/auth/account-self-service.ts",
+      "src/auth/login.test.ts",
+      "src/auth/login.ts",
+      "src/auth/password-provider.ts",
+      "src/auth/session-registry.test.ts",
+      "src/auth/session-registry.ts",
+      "src/authz/audit.ts",
+      "src/authz/project-authz.test.ts",
+      "src/authz/project-authz.ts",
+      "src/authz/self-scope.ts",
+      "src/authz/team-service.test.ts",
+      "src/authz/team-service.ts",
+      "src/eln-audit/integrity-subsystem.test.ts",
+      "src/eln-audit/integrity-subsystem.ts",
+      "src/eln-audit/ledger.test.ts",
+      "src/eln-audit/ledger.ts",
+      "src/eln/approval-signature-service.test.ts",
+      "src/eln/approval-signature-service.ts",
+      "src/eln/eln-core-service.test.ts",
+      "src/eln/eln-core-service.ts",
+      "src/eln/protocol-store.test.ts",
+      "src/eln/protocol-store.ts",
+      "src/graphrag/graphrag-service.test.ts",
+      "src/graphrag/graphrag-service.ts",
+      "src/llm/gateway.test.ts",
+      "src/llm/gateway.ts",
+      "src/main-multiuser.test.ts",
+      "src/main.test.ts",
+      "src/main.tsx",
+      "src/server/app-multiuser-routes.test.ts",
+      "src/server/app.test.ts",
+      "src/server/app.ts",
+      "src/server/bootstrap-admin.test.ts",
+      "src/server/server.test.ts",
+      "src/server/server.ts",
+      "src/server/store.test.ts",
+      "src/server/store.ts",
+      "src/vault/credential-vault.test.ts",
+      "src/vault/credential-vault.ts",
+      "src/web/auth-ui.test.ts",
+      "src/web/auth-ui.ts",
+      "src/web/design-system.test.ts",
+      "src/web/eln-ui.test.ts",
+      "src/web/eln-ui.ts",
+      "src/web/graphrag-ui.test.ts",
+      "src/web/graphrag-ui.ts",
+      "src/web/llm-settings-ui.test.ts",
+      "src/web/llm-settings-ui.ts",
+      "src/web/projects-ui.ts"
+    ],
+    "generatedAt": "2026-09-12T06:36:34.521Z"
   },
   "fingerprints": {
     ".gitignore": "9f4e82ed3536c896adb7111277b609e314c307d6c84b7f5a588a1bf93c4ffe3f",
     ".musubix/changes/CHANGE-0001.md": "a89c8c8ea8398ae74df07bf1ee7afc2956bb4bc7e20cab3b50e6ccc39f27099c",
     ".musubix/changes/CHANGE-0002.md": "30a48c2305f562762894db816d1780c9972a968d415463b1bc0a5bea62b1fd10",
-    ".musubix/changes/CHANGE-0003.md": "b62898f4095640c81a6b41add21f605827bd771f20aaebd4aeb540f924e026d5",
+    ".musubix/changes/CHANGE-0003.md": "accc47d1b92fb84da0e9edfe844f8ed2b41212243820818c4ae3f44d1f881e7d",
+    ".musubix/changes/CHANGE-0004.md": "4ab59708ae278e1262916b3cae3ea9bb95d089d4280c34d25a0556a66c7fc61e",
     ".musubix/config.json": "3bed1daed6836928d286f4298fe293039d0b5676ef6a0b18984048bd84473c7a",
     ".musubix/constitution.md": "f8b47fdc486f395bab05223a94821b145cf8df70ffde2c838a28f8d71fe0fa92",
     ".musubix/decisions/ADR-0001.md": "6e21f1b375cfa1aabdf058b1dc987f94974dc23571fe60e94ba340dc48295b0f",
@@ -2104,28 +3366,35 @@
     ".musubix/decisions/ADR-0004.md": "8cac98bc3f51a7d38447f6f7f1c537f53d33b32ba573f12ddf7fd1b148db7fa1",
     ".musubix/decisions/ADR-0005.md": "b4295c4972f9e223c479c15e59d63429b472367470c2cff5dcc488568c1d956c",
     ".musubix/decisions/ADR-0006.md": "b128d676d9ef3cac82966840793d9570b8edac8256f2a9a2979b4184dea6d30c",
-    ".musubix/features/aira2-platform/design.md": "c353ba53b335f5e47d5da97e4619bcfed618023109a4d652ad50039a48d32e7d",
-    ".musubix/features/aira2-platform/requirements.md": "82be30abd62d4224b4fa63d18a93c481a2e8b123db8b9c303727d84c876368dc",
+    ".musubix/decisions/ADR-0007.md": "abdfe613b4418894f3897f7a0fea4adb52b525bfa33a38a3681ed7d574ec794a",
+    ".musubix/features/aira2-platform/design.md": "bf2a3b254f7ad2376daa6dcda2654fb3ca06a76becf8a6ff43a998fea3027504",
+    ".musubix/features/aira2-platform/requirements.md": "b4a73bc3a08613e51fdb0b8324662e5c14e389f0e8a9bf8f62f478521704bd92",
     ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed",
     ".musubix/policy-baseline.json": "ee0893b12f316ed75feb791bb987de9cec0af2f86c4d80a30384bced352a4e8c",
     "index.html": "24086f52f58971c34a9ccb51a3c5b72bbd75210f09f6c442385c62413e1201ea",
     "package-lock.json": "5c5ff0b35a9f0e6ad6b1848d734d765a755fca9cf69ba8e9830ac6f0a8af0549",
     "package.json": "c12846525e8be7d108ba7e73776721c9918bb62ffa00f78e8e733312150a78dc",
-    "reports/vitest-report.json": "1eaff9fb6a11d13807c98c064d00f276bd261174dc1b3469a5257c0f83eccffa",
+    "reports/vitest-report.json": "adf9a6571568373e2915431c3b208a60c502be71b5ff3711a705518ff2619651",
     "src/agent-config/agent-skills-mcp-manager.test.ts": "daa01e46e19b6a6c585668d7cdf7b6e95cc437f1b7f333e7c2a4bf7b1137e056",
     "src/agent-config/agent-skills-mcp-manager.ts": "407f9a2d7ba26e757097ecff67f56644a2aa6b59a8e190f7300caa8c4fc5db70",
+    "src/auth/account-self-service.test.ts": "8110a9c90ef7ebb935931fca974b3ac22989f161197c161d3fddfa5c16c2241b",
+    "src/auth/account-self-service.ts": "223e5c2f2dfd602743a8df0b794917bcae0ceca4ad174a86e5cf79ea9e21cc42",
     "src/auth/account.test.ts": "0db268e9e1d9079e246e9e2a8d8f05cc117d6279882f69ca231450b322b56401",
     "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
-    "src/auth/login.test.ts": "278383c58fe25b321e4dd4f2880b54b8ced0e264c8e42869dc3490dda6dc6937",
-    "src/auth/login.ts": "6571d17d00ff09124773d664ae2402b2dd09981d0c1cf97ad93ada3fedd40736",
+    "src/auth/login.test.ts": "27dda6174defcf5a98978a531fe57b3ea65b889128a2ea35d50a1dd0015a0372",
+    "src/auth/login.ts": "91690d2c290d838dbf3403a4f867e9d7e12f4e29c34bdda545276e6b6e257788",
     "src/auth/password-provider.ts": "a66c2f3cff649d3df88d80524efbaa8e95bad8b30a3cf088f9e46555e9313111",
+    "src/auth/session-registry.test.ts": "9fdd67ac7c2d0b9495f28fb80efa92d1039211c5d2730811a0881970cebbd9b5",
+    "src/auth/session-registry.ts": "ff0fdccb03cfe9d0d93bc0a450d37b987275c88eff7ba68aefc3859681216dd6",
     "src/auth/session.ts": "6d2d51135f6a34ee8d2ecf77b37e7b60508c47c870c363545f2bb03d8fa0889b",
     "src/authz/audit.ts": "5abdda968eb0f68794defb3f387925fc4ba8eb60f083ba7442862f020dba5513",
     "src/authz/matrix.ts": "ff03dc897ce1705fb4f48ead251cd671a8a2fcc6d759d0797c3c4d666bf433d1",
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
-    "src/authz/project-authz.ts": "993ac9e3706ea11eea925f3ab3a9838536ac850507908cbbcaa31e4febf3900e",
-    "src/authz/self-scope.ts": "01e095c16e49bb826f41318daf0a95f44f476cbfe655d5f67e82fb989ee9280d",
+    "src/authz/project-authz.ts": "251275f1381714d0510abc2adb4fd761d4683d02b8d874d8abb2cd9b66c7b5c3",
+    "src/authz/self-scope.ts": "dc970c8a9cc2a455787c3954d0edab15597d4cf18c09c4f8ef53a8fda6f3e1cf",
+    "src/authz/team-service.test.ts": "0d748d46c4fff10da6f8d187ea3e49400982fa772b1dbfa73e8c4e695baa08af",
+    "src/authz/team-service.ts": "0115938978346098cca17eb2454b00b45f4b7ac05a1639c1f1d207a186277447",
     "src/eln/approval-signature-service.test.ts": "3e9a81d95edbac42524b50159788f586728df029fecaa8a5fc49ce32ec8a6e21",
     "src/eln/approval-signature-service.ts": "61fa3216157e8879632cb89d92e878e70267a1cbaaa7be160a8c571c1d52957c",
     "src/eln/eln-core-service.test.ts": "2a46e7d30047b471490bcc67cb3581293e26a6c152232a98beb21d7fcdaccdb5",
@@ -2145,17 +3414,19 @@
     "src/llm/adapters.ts": "c50b1e3c3616ae663bfb1ac2de79bca81658c871bb1e13ce58881668042eb39a",
     "src/llm/gateway.test.ts": "6a8a058afda608727a8def1776d3069e7bf57502d60ad7f60fae6b0f7bf6494c",
     "src/llm/gateway.ts": "11ac49fff84a949ae02392ac22db2a8dde612cd6989b735483d34d23809d77b8",
+    "src/main-multiuser.test.ts": "c67dd4d783c722387cdc3494a1444a51201503242e8e76d031fea8f7f8419ea9",
     "src/main.test.ts": "f115485d92c46e037f22ea7c6f06d988d0ac9d61001786f0f4fb365cc42e8d08",
-    "src/main.tsx": "ccfa49e972e45c5d2289448dcd92a61b8d41f892a4247066944e841fa4f90b50",
+    "src/main.tsx": "e5c5f2c74775af98b74ff5a47a8d61a87e9cb51dea33cf0435a57fa226a5eb7a",
     "src/readiness/readiness.test.ts": "eb5dc040b2d5e5689aab6682e365e4d3ac34522fe6c5633d74f6ae4dd2d3020d",
     "src/readiness/readiness.ts": "abe2e72545b6e80333d7ba7fd2a128f2ed24d133f4850048e7b109e2a6aa3103",
+    "src/server/app-multiuser-routes.test.ts": "1859bc50cebf9cf70b660dabc89621ebc5d350cdcb85255db12c6a94fec81ecf",
     "src/server/app.test.ts": "45a447e4fb9c0aa13d1fde1775a6f8d8607a0917a392eea253f3de8dedbc001b",
-    "src/server/app.ts": "81c1d95c1a82399edd48004bad174280d93cd7826c3f0836b104aa83a114ca61",
+    "src/server/app.ts": "dd288799f59f1880c837e53da65e70db8ab52ed0b915860b76696ef8f9fabc83",
     "src/server/bootstrap-admin.test.ts": "cf06176988b0f134568080c07c2a2ad2ea6a892c1e04ef1661176b28bf2ec76a",
     "src/server/server.test.ts": "4d6e4ded09e361e8df9d7ccc0b61b263b6ea3ae215bd7f93f48d5c5c4c32add4",
     "src/server/server.ts": "d388dc813b1f83e4e9d0591c4ae681573703a75801afed81bbb7f9ee87e1b448",
     "src/server/store.test.ts": "ca9151bd0b80b9b3ea89858b9ae3af33cae72a19ab48155a236aad8580b00055",
-    "src/server/store.ts": "b836fd1bb60b95f7c0a6ecb65992d6c1336b75a34c8867df27b1147860004cce",
+    "src/server/store.ts": "f4ea8a7e7d0a8c0958d232f39bf504db092ce5b32a65a0e23eab08d75f767314",
     "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
     "src/vault/credential-vault.ts": "6fd9ff29021976c12977b5a15b475d452a90d9650b017eabd12254598a67d59c",
     "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",

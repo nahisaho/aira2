@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
-type Screen = 'auth' | 'settings' | 'eln' | 'graphrag' | 'projects' | 'chat';
+type Screen = 'auth' | 'settings' | 'eln' | 'graphrag' | 'projects' | 'chat' | 'profile' | 'teams';
 type AuthMethod = 'github-oauth' | 'password' | 'oidc';
 
 interface Session {
@@ -92,7 +92,12 @@ export function AuthScreen({
   const [methods, setMethods] = useState<JsonState<AuthMethod[]>>({ loading: true, data: null, error: null });
   const [username, setUsername] = useState('owner-1');
   const [password, setPassword] = useState('password');
+  const [totpCode, setTotpCode] = useState('');
   const [message, setMessage] = useState<string | null>(null);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetToken, setResetToken] = useState('');
+  const [resetPassword, setResetPassword] = useState('');
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
 
   useEffect(() => {
     readJson<AuthMethod[]>('/auth/methods')
@@ -107,7 +112,7 @@ export function AuthScreen({
     try {
       const nextSession = await readJson<Session>('/auth/login/password', {
         method: 'POST',
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, ...(totpCode ? { totpCode } : {}) }),
       });
       const activeSession = await readJson<Session>('/auth/session', {
         headers: authHeaders(nextSession.id),
@@ -116,6 +121,29 @@ export function AuthScreen({
       setMessage(`Logged in as ${activeSession.accountId}`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : String(error));
+    }
+  }
+
+  async function requestPasswordReset(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      await readJson('/password-reset/request', { method: 'POST', body: JSON.stringify({ email: resetEmail }) });
+      setResetMessage('If that email is registered, a reset link has been sent.');
+    } catch (error) {
+      setResetMessage(error instanceof Error ? error.message : String(error));
+    }
+  }
+
+  async function completePasswordReset(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const result = await readJson<{ status: string }>(`/password-reset/${resetToken}/complete`, {
+        method: 'POST',
+        body: JSON.stringify({ newPassword: resetPassword }),
+      });
+      setResetMessage(`Password reset: ${result.status}`);
+    } catch (error) {
+      setResetMessage(error instanceof Error ? error.message : String(error));
     }
   }
 
@@ -142,10 +170,40 @@ export function AuthScreen({
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
+        <label style={sharedFieldStyle}>
+          TOTP code (if enrolled)
+          <input aria-label="TOTP code" value={totpCode} onChange={(event) => setTotpCode(event.target.value)} />
+        </label>
         <button type="submit">Login</button>
       </form>
       {message && <p>{message}</p>}
       {session && <JsonPreview label="Current session" value={session} />}
+      <hr />
+      <h3>Forgot password?</h3>
+      <form onSubmit={requestPasswordReset}>
+        <label style={sharedFieldStyle}>
+          Account email
+          <input aria-label="Reset email" value={resetEmail} onChange={(event) => setResetEmail(event.target.value)} />
+        </label>
+        <button type="submit">Request password reset</button>
+      </form>
+      <form onSubmit={completePasswordReset}>
+        <label style={sharedFieldStyle}>
+          Reset token
+          <input aria-label="Reset token" value={resetToken} onChange={(event) => setResetToken(event.target.value)} />
+        </label>
+        <label style={sharedFieldStyle}>
+          New password
+          <input
+            aria-label="Reset new password"
+            type="password"
+            value={resetPassword}
+            onChange={(event) => setResetPassword(event.target.value)}
+          />
+        </label>
+        <button type="submit">Complete password reset</button>
+      </form>
+      {resetMessage && <p>{resetMessage}</p>}
     </Panel>
   );
 }
@@ -401,6 +459,413 @@ export function ChatScreen({ sessionId, projectId }: { sessionId: string | null;
   );
 }
 
+/** @id CODE-AIRA2-GUI-008
+ * @implements REQ-MULTIUSER-018 REQ-MULTIUSER-019 REQ-MULTIUSER-020 REQ-MULTIUSER-021 REQ-MULTIUSER-023 REQ-MULTIUSER-024
+ * @design DES-AIRA2-010
+ */
+export function ProfileScreen({ sessionId }: { sessionId: string | null }) {
+  const headers = useMemo(() => authHeaders(sessionId), [sessionId]);
+  const [profile, setProfile] = useState<{ accountId: string; displayName: string; verifiedEmail: string | null } | null>(
+    null,
+  );
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailConfirmToken, setEmailConfirmToken] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [totpEnrollment, setTotpEnrollment] = useState<{ secret: string; otpauthUri: string } | null>(null);
+  const [totpConfirmCode, setTotpConfirmCode] = useState('');
+  const [sessions, setSessions] = useState<{ displayId: string; issuedAt: number; expiresAt: number }[] | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const loadProfile = useCallback(() => {
+    if (!sessionId) return;
+    readJson<{ accountId: string; displayName: string; verifiedEmail: string | null }>('/users/me/profile', { headers })
+      .then((data) => {
+        setProfile(data);
+        setDisplayName(data.displayName);
+        setEmail(data.verifiedEmail ?? '');
+      })
+      .catch(() => setProfile(null));
+  }, [headers, sessionId]);
+
+  const loadSessions = useCallback(() => {
+    if (!sessionId) return;
+    readJson<{ displayId: string; issuedAt: number; expiresAt: number }[]>('/users/me/sessions', { headers })
+      .then((data) => setSessions(data))
+      .catch(() => setSessions(null));
+  }, [headers, sessionId]);
+
+  useEffect(() => {
+    loadProfile();
+    loadSessions();
+  }, [loadProfile, loadSessions]);
+
+  async function saveProfile() {
+    if (!sessionId) return;
+    await readJson('/users/me/profile', {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ displayName, email }),
+    });
+    loadProfile();
+    setMessage('Profile updated');
+  }
+
+  async function confirmEmail() {
+    await readJson(`/users/me/email/confirm/${emailConfirmToken}`, { method: 'POST' });
+    loadProfile();
+    setMessage('Email confirmed');
+  }
+
+  async function changePassword() {
+    if (!sessionId) return;
+    const result = await readJson<{ status: string }>('/users/me/password', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ currentPassword, newPassword }),
+    });
+    setMessage(`Password change: ${result.status}`);
+  }
+
+  async function enrollTotp() {
+    if (!sessionId) return;
+    const enrollment = await readJson<{ secret: string; otpauthUri: string }>('/users/me/mfa/totp/enroll', {
+      method: 'POST',
+      headers,
+    });
+    setTotpEnrollment(enrollment);
+  }
+
+  async function confirmTotp() {
+    if (!sessionId) return;
+    const result = await readJson<{ status: string }>('/users/me/mfa/totp/confirm', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ code: totpConfirmCode }),
+    });
+    setMessage(`MFA enrollment: ${result.status}`);
+  }
+
+  async function revokeSession(displayId: string) {
+    if (!sessionId) return;
+    await readJson(`/users/me/sessions/${displayId}`, { method: 'DELETE', headers });
+    loadSessions();
+  }
+
+  return (
+    <Panel title="Profile & Security">
+      {!sessionId && <p>Log in to manage your profile, password, MFA, and sessions.</p>}
+      {profile && <JsonPreview label="Current profile" value={profile} />}
+      <label style={sharedFieldStyle}>
+        Display name
+        <input aria-label="Display name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} />
+      </label>
+      <label style={sharedFieldStyle}>
+        Email
+        <input aria-label="Email" value={email} onChange={(event) => setEmail(event.target.value)} />
+      </label>
+      <button type="button" onClick={() => void saveProfile()}>
+        Save profile
+      </button>
+
+      <h3>Email confirmation</h3>
+      <label style={sharedFieldStyle}>
+        Confirmation token
+        <input
+          aria-label="Email confirmation token"
+          value={emailConfirmToken}
+          onChange={(event) => setEmailConfirmToken(event.target.value)}
+        />
+      </label>
+      <button type="button" onClick={() => void confirmEmail()}>
+        Confirm email
+      </button>
+
+      <h3>Change password</h3>
+      <label style={sharedFieldStyle}>
+        Current password
+        <input
+          aria-label="Current password"
+          type="password"
+          value={currentPassword}
+          onChange={(event) => setCurrentPassword(event.target.value)}
+        />
+      </label>
+      <label style={sharedFieldStyle}>
+        New password
+        <input
+          aria-label="New password"
+          type="password"
+          value={newPassword}
+          onChange={(event) => setNewPassword(event.target.value)}
+        />
+      </label>
+      <button type="button" onClick={() => void changePassword()}>
+        Change password
+      </button>
+
+      <h3>Multi-factor authentication</h3>
+      <button type="button" onClick={() => void enrollTotp()}>
+        Enroll TOTP
+      </button>
+      {totpEnrollment && <JsonPreview label="TOTP enrollment" value={totpEnrollment} />}
+      <label style={sharedFieldStyle}>
+        TOTP confirmation code
+        <input
+          aria-label="TOTP confirmation code"
+          value={totpConfirmCode}
+          onChange={(event) => setTotpConfirmCode(event.target.value)}
+        />
+      </label>
+      <button type="button" onClick={() => void confirmTotp()}>
+        Confirm TOTP enrollment
+      </button>
+
+      <h3>Active sessions</h3>
+      <ul aria-label="Active sessions">
+        {sessions?.map((entry) => (
+          <li key={entry.displayId}>
+            {entry.displayId} (expires {new Date(entry.expiresAt).toISOString()})
+            <button type="button" onClick={() => void revokeSession(entry.displayId)} style={{ marginLeft: '8px' }}>
+              Revoke
+            </button>
+          </li>
+        ))}
+      </ul>
+      {message && <p>{message}</p>}
+    </Panel>
+  );
+}
+
+/** @id CODE-AIRA2-GUI-009
+ * @implements REQ-MULTIUSER-015 REQ-MULTIUSER-016 REQ-MULTIUSER-017 REQ-MULTIUSER-029 REQ-MULTIUSER-030
+ * @design DES-AIRA2-010
+ */
+export function TeamsScreen({ sessionId, projectId }: { sessionId: string | null; projectId: string }) {
+  const headers = useMemo(() => authHeaders(sessionId), [sessionId]);
+  const [members, setMembers] = useState<{ userId: string; role: string }[]>([]);
+  const [pendingInvitations, setPendingInvitations] = useState<{ id: string; email: string; role: string }[]>([]);
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteRole, setInviteRole] = useState<'viewer' | 'editor'>('viewer');
+  const [roleChangeUserId, setRoleChangeUserId] = useState('');
+  const [roleChangeRole, setRoleChangeRole] = useState<'viewer' | 'editor'>('viewer');
+  const [teamName, setTeamName] = useState('');
+  const [teamId, setTeamId] = useState('');
+  const [teamMemberUserId, setTeamMemberUserId] = useState('');
+  const [teamShareRole, setTeamShareRole] = useState<'viewer' | 'editor'>('viewer');
+  const [message, setMessage] = useState<string | null>(null);
+
+  const loadMembers = useCallback(() => {
+    if (!sessionId) return;
+    readJson<{ members: { userId: string; role: string }[]; pendingInvitations: { id: string; email: string; role: string }[] }>(
+      `/projects/${projectId}/members`,
+      { headers },
+    )
+      .then((data) => {
+        setMembers(data.members);
+        setPendingInvitations(data.pendingInvitations);
+      })
+      .catch(() => {
+        setMembers([]);
+        setPendingInvitations([]);
+      });
+  }, [headers, projectId, sessionId]);
+
+  useEffect(() => {
+    loadMembers();
+  }, [loadMembers]);
+
+  async function invite() {
+    if (!sessionId) return;
+    await readJson(`/projects/${projectId}/invitations`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ email: inviteEmail, role: inviteRole }),
+    });
+    loadMembers();
+    setMessage('Invitation sent');
+  }
+
+  async function cancelInvitation(invitationId: string) {
+    if (!sessionId) return;
+    await readJson(`/projects/${projectId}/invitations/${invitationId}`, { method: 'DELETE', headers });
+    loadMembers();
+  }
+
+  async function changeRole() {
+    if (!sessionId) return;
+    await readJson(`/projects/${projectId}/members/${roleChangeUserId}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ role: roleChangeRole }),
+    });
+    loadMembers();
+    setMessage('Member role changed');
+  }
+
+  async function removeMember(userId: string) {
+    if (!sessionId) return;
+    await readJson(`/projects/${projectId}/members/${userId}`, { method: 'DELETE', headers });
+    loadMembers();
+  }
+
+  async function createTeam() {
+    if (!sessionId) return;
+    const team = await readJson<{ id: string; name: string }>('/teams', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ name: teamName }),
+    });
+    setTeamId(team.id);
+    setMessage(`Team created: ${team.id}`);
+  }
+
+  async function addTeamMember() {
+    if (!sessionId || !teamId) return;
+    await readJson(`/teams/${teamId}/members`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ userId: teamMemberUserId }),
+    });
+    setMessage('Team member added');
+  }
+
+  async function removeTeamMember() {
+    if (!sessionId || !teamId) return;
+    await readJson(`/teams/${teamId}/members/${teamMemberUserId}`, { method: 'DELETE', headers });
+    setMessage('Team member removed');
+  }
+
+  async function grantTeamShare() {
+    if (!sessionId || !teamId) return;
+    await readJson(`/projects/${projectId}/team-shares`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ teamId, role: teamShareRole }),
+    });
+    setMessage('Team project access granted');
+  }
+
+  async function revokeTeamShare() {
+    if (!sessionId || !teamId) return;
+    await readJson(`/projects/${projectId}/team-shares/${teamId}`, { method: 'DELETE', headers });
+    setMessage('Team project access revoked');
+  }
+
+  return (
+    <Panel title="Members & Teams">
+      {!sessionId && <p>Log in to manage project members and teams.</p>}
+      <h3>Project members</h3>
+      <ul aria-label="Project members">
+        {members.map((member) => (
+          <li key={member.userId}>
+            {member.userId} — {member.role}
+            <button type="button" onClick={() => void removeMember(member.userId)} style={{ marginLeft: '8px' }}>
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
+      <h3>Pending invitations</h3>
+      <ul aria-label="Pending invitations">
+        {pendingInvitations.map((invitation) => (
+          <li key={invitation.id}>
+            {invitation.email} — {invitation.role}
+            <button type="button" onClick={() => void cancelInvitation(invitation.id)} style={{ marginLeft: '8px' }}>
+              Cancel
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Invite by email</h3>
+      <label style={sharedFieldStyle}>
+        Email
+        <input aria-label="Invite email" value={inviteEmail} onChange={(event) => setInviteEmail(event.target.value)} />
+      </label>
+      <label style={sharedFieldStyle}>
+        Role
+        <input
+          aria-label="Invite role"
+          value={inviteRole}
+          onChange={(event) => setInviteRole(event.target.value as 'viewer' | 'editor')}
+        />
+      </label>
+      <button type="button" onClick={() => void invite()}>
+        Send invitation
+      </button>
+
+      <h3>Change member role</h3>
+      <label style={sharedFieldStyle}>
+        User ID
+        <input
+          aria-label="Role change user id"
+          value={roleChangeUserId}
+          onChange={(event) => setRoleChangeUserId(event.target.value)}
+        />
+      </label>
+      <label style={sharedFieldStyle}>
+        New role
+        <input
+          aria-label="Role change role"
+          value={roleChangeRole}
+          onChange={(event) => setRoleChangeRole(event.target.value as 'viewer' | 'editor')}
+        />
+      </label>
+      <button type="button" onClick={() => void changeRole()}>
+        Change role
+      </button>
+
+      <h3>Teams</h3>
+      <label style={sharedFieldStyle}>
+        Team name
+        <input aria-label="Team name" value={teamName} onChange={(event) => setTeamName(event.target.value)} />
+      </label>
+      <button type="button" onClick={() => void createTeam()}>
+        Create team
+      </button>
+      <label style={sharedFieldStyle}>
+        Team ID
+        <input aria-label="Team id" value={teamId} onChange={(event) => setTeamId(event.target.value)} />
+      </label>
+      <label style={sharedFieldStyle}>
+        Team member user ID
+        <input
+          aria-label="Team member user id"
+          value={teamMemberUserId}
+          onChange={(event) => setTeamMemberUserId(event.target.value)}
+        />
+      </label>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <button type="button" onClick={() => void addTeamMember()}>
+          Add team member
+        </button>
+        <button type="button" onClick={() => void removeTeamMember()}>
+          Remove team member
+        </button>
+      </div>
+      <label style={sharedFieldStyle}>
+        Team share role
+        <input
+          aria-label="Team share role"
+          value={teamShareRole}
+          onChange={(event) => setTeamShareRole(event.target.value as 'viewer' | 'editor')}
+        />
+      </label>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <button type="button" onClick={() => void grantTeamShare()}>
+          Grant team project access
+        </button>
+        <button type="button" onClick={() => void revokeTeamShare()}>
+          Revoke team project access
+        </button>
+      </div>
+      {message && <p>{message}</p>}
+    </Panel>
+  );
+}
+
 export function Aira2App() {
   const [screen, setScreen] = useState<Screen>('auth');
   const [session, setSession] = useState<Session | null>(null);
@@ -411,7 +876,7 @@ export function Aira2App() {
       <h1>AIRA2</h1>
       <p>Active project: {projectId}</p>
       <nav style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
-        {(['auth', 'settings', 'eln', 'graphrag', 'projects', 'chat'] as Screen[]).map((entry) => (
+        {(['auth', 'settings', 'eln', 'graphrag', 'projects', 'chat', 'profile', 'teams'] as Screen[]).map((entry) => (
           <button key={entry} onClick={() => setScreen(entry)}>
             {entry}
           </button>
@@ -423,6 +888,8 @@ export function Aira2App() {
       {screen === 'graphrag' && <GraphRagScreen sessionId={session?.id ?? null} projectId={projectId} />}
       {screen === 'projects' && <ProjectsScreen sessionId={session?.id ?? null} projectId={projectId} />}
       {screen === 'chat' && <ChatScreen sessionId={session?.id ?? null} projectId={projectId} />}
+      {screen === 'profile' && <ProfileScreen sessionId={session?.id ?? null} />}
+      {screen === 'teams' && <TeamsScreen sessionId={session?.id ?? null} projectId={projectId} />}
     </main>
   );
 }

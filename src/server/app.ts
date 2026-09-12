@@ -8,16 +8,21 @@ import {
   InvalidCredentialsError,
   KNOWN_AUTH_METHODS,
   listSelectableAuthMethods,
+  MfaRequiredError,
+  StaleCredentialVersionLoginError,
   type AccountDirectory,
   type AuthMethod,
   type AuthProvider,
 } from '../auth/login.js';
 import { createAccount, type Account, type Role } from '../auth/account.js';
-import { createSession, type Session } from '../auth/session.js';
+import type { Session } from '../auth/session-registry.js';
+import { SessionRegistry } from '../auth/session-registry.js';
+import { AccountSelfService } from '../auth/account-self-service.js';
 import { PasswordAuthProvider, hashPassword } from '../auth/password-provider.js';
 import { AuditLog } from '../authz/audit.js';
 import { PROJECT_ACTION_MATRIX } from '../authz/matrix.js';
 import { ProjectAuthorizationService, type ActorContext } from '../authz/project-authz.js';
+import { TeamService } from '../authz/team-service.js';
 import { CredentialVault } from '../vault/credential-vault.js';
 import { LlmBackendGateway, type BackendSelection } from '../llm/gateway.js';
 import type { LlmBackendAdapter, ProviderId, ChatRequest } from '../llm/adapters.js';
@@ -61,6 +66,9 @@ export interface AppContext {
   integrity: ElnAuditIntegritySubsystem;
   agentConfig: AgentSkillsMcpConfigManager;
   graphRag: GraphRagService;
+  sessions: SessionRegistry;
+  accountSelfService: AccountSelfService;
+  teamService: TeamService;
   systemActor: {
     accountId: string;
     isGlobalAdmin: boolean;
@@ -105,6 +113,8 @@ function toHttpStatus(error: unknown): number {
   const message = error instanceof Error ? error.message : String(error);
   if (error instanceof UnauthenticatedError) return 401;
   if (error instanceof InvalidCredentialsError) return 401;
+  if (error instanceof MfaRequiredError) return 401;
+  if (error instanceof StaleCredentialVersionLoginError) return 409;
   if (error instanceof AuthMethodNotImplementedError) return 501;
   if (/authorization denied/i.test(message)) return 403;
   if (/unsupported authentication method/i.test(message) || /disabled/i.test(message)) return 400;
@@ -173,6 +183,16 @@ function buildContext(options: BuildAppOptions): AppContext {
   );
   const agentConfig = new AgentSkillsMcpConfigManager(authz, store);
   const graphRag = new GraphRagService(authz, new GraphDbSupervisor(join(dirname(options.dbPath), 'aira-graphdb')), gateway);
+  const sessions = new SessionRegistry();
+  const accountSelfService = new AccountSelfService(sessions, options.vaultKey ?? loadVaultKey());
+  const teamService = new TeamService(
+    authz,
+    { getVerifiedEmail: (accountId) => accountSelfService.getProfile(accountId)?.verifiedEmail ?? null },
+    audit,
+  );
+  authz.setTeamShareResolver({
+    resolveTeamOnlyRole: (userId, projectId) => teamService.resolveTeamOnlyRole(userId, projectId),
+  });
   const actorForAccount = (accountId: string) => {
     const account = ensureAccount(store, accountId);
     return {
@@ -187,7 +207,24 @@ function buildContext(options: BuildAppOptions): AppContext {
     isGlobalAdmin: true,
     authorizeProject: () => false,
   };
-  return { store, authz, vault, gateway, ledger, protocolStore, eln, approval, integrity, agentConfig, graphRag, systemActor, actorForAccount };
+  return {
+    store,
+    authz,
+    vault,
+    gateway,
+    ledger,
+    protocolStore,
+    eln,
+    approval,
+    integrity,
+    agentConfig,
+    graphRag,
+    sessions,
+    accountSelfService,
+    teamService,
+    systemActor,
+    actorForAccount,
+  };
 }
 
 function bootstrapSharedCredentials(context: AppContext, sharedCredentials: Partial<Record<ProviderId, string>>): void {
@@ -218,6 +255,19 @@ function bootstrapPasswordAdmin(context: AppContext, options: BuildAppOptions): 
     assignedPersonId: username,
   });
   context.store.upsertAccount(account.id, account);
+  ensureAccountSelfServiceRegistered(context, username);
+}
+
+/** Idempotently registers an account into DES-AIRA2-014's self-service store the first time it
+ * is seen (bootstrap or first login), so subsequent password reads/writes are authoritative
+ * there rather than duplicated between it and the legacy `store` password-credential table. */
+function ensureAccountSelfServiceRegistered(context: AppContext, accountId: string): void {
+  if (context.accountSelfService.getProfile(accountId)) {
+    return;
+  }
+  const account = ensureAccount(context.store, accountId);
+  const passwordHash = context.store.getPasswordCredential(accountId) ?? '';
+  context.accountSelfService.registerAccount(accountId, account.displayName, null, passwordHash);
 }
 
 function authProviders(context: AppContext): AuthProvider[] {
@@ -227,7 +277,11 @@ function authProviders(context: AppContext): AuthProvider[] {
       throw new AuthMethodNotImplementedError(method);
     },
   });
-  return [new PasswordAuthProvider(context.store), reject('github-oauth'), reject('oidc')];
+  const passwordLookup = {
+    getPasswordCredential: (externalIdentity: string) =>
+      context.accountSelfService.getPasswordHash(externalIdentity) ?? context.store.getPasswordCredential(externalIdentity),
+  };
+  return [new PasswordAuthProvider(passwordLookup), reject('github-oauth'), reject('oidc')];
 }
 
 function shouldServeBuiltFrontend(options: BuildAppOptions): boolean {
@@ -259,8 +313,8 @@ async function requireSession(request: FastifyRequest): Promise<void> {
   const token = getToken(request);
   const appContext = (request.server as FastifyInstance & { aira2: AppContext }).aira2;
   if (!token) throw new UnauthenticatedError('Missing bearer token');
-  const session = appContext.store.getSession<Session>(token);
-  if (!session || session.expiresAt < Date.now()) throw new UnauthenticatedError('Invalid session');
+  const session = appContext.sessions.validateSession(token);
+  if (!session) throw new UnauthenticatedError('Invalid session');
   const account = ensureAccount(appContext.store, session.accountId);
   typed.aira2Session = session;
   typed.aira2Account = account;
@@ -318,24 +372,170 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
 
   app.post('/auth/login/:method', async (request) => {
     const method = (request.params as { method: string }).method;
+    const body = (request.body ?? {}) as Record<string, unknown> & { totpCode?: string };
+    const mfaCheck = {
+      isRequired: (accountId: string) => context.accountSelfService.isMfaRequired(accountId),
+      verify: (accountId: string, code: string, now?: number) => context.accountSelfService.verify(accountId, code, now),
+    };
     const session = authenticate(
       { enabledMethods: KNOWN_AUTH_METHODS },
       authProviders(context),
       method,
-      request.body ?? {},
+      body,
       storeBackedAccounts(context.store),
+      { mfaCheck, sessionIssuer: context.sessions, totpCode: body.totpCode },
     );
-    context.store.upsertSession(session.id, session.accountId, session);
+    ensureAccountSelfServiceRegistered(context, session.accountId);
     return session;
   });
 
   app.post('/auth/logout', { preHandler: requireSession }, async (request) => {
     const typed = request as RequestWithActor;
-    context.store.deleteSession(typed.aira2Session!.id);
+    context.sessions.endSession(typed.aira2Session!.id);
     return { status: 'ok' };
   });
 
   app.get('/auth/session', { preHandler: requireSession }, async (request) => (request as RequestWithActor).aira2Session);
+
+  // ---- DES-AIRA2-014: Account Profile, Password & MFA Self-Service ----
+
+  app.get('/users/me/profile', { preHandler: requireSession }, async (request) => context.accountSelfService.getProfile(actor(request).accountId));
+
+  app.patch('/users/me/profile', { preHandler: requireSession }, async (request) => {
+    const body = request.body as { displayName?: string; email?: string };
+    return context.accountSelfService.updateProfile(actor(request), body);
+  });
+
+  app.post('/users/me/email/confirm/:token', async (request) => {
+    const params = request.params as { token: string };
+    return context.accountSelfService.confirmEmailChange(params.token);
+  });
+
+  app.post('/users/me/password', { preHandler: requireSession }, async (request) => {
+    const body = request.body as { currentPassword: string; newPassword: string };
+    const result = context.accountSelfService.changePassword(actor(request), body.currentPassword, body.newPassword);
+    if (result.status === 'ok') {
+      const newHash = context.accountSelfService.getPasswordHash(actor(request).accountId);
+      if (newHash) context.store.upsertPasswordCredential(actor(request).accountId, newHash);
+    }
+    return result;
+  });
+
+  app.post('/password-reset/request', async (request) => {
+    const body = request.body as { email: string };
+    return context.accountSelfService.requestPasswordReset(body.email);
+  });
+
+  app.post('/password-reset/:token/complete', async (request) => {
+    const params = request.params as { token: string };
+    const body = request.body as { newPassword: string };
+    const result = context.accountSelfService.completePasswordReset(params.token, body.newPassword);
+    if (result.status === 'ok') {
+      const newHash = context.accountSelfService.getPasswordHash(result.accountId);
+      if (newHash) context.store.upsertPasswordCredential(result.accountId, newHash);
+    }
+    return result;
+  });
+
+  app.post('/users/me/mfa/totp/enroll', { preHandler: requireSession }, async (request) => context.accountSelfService.enrollTotp(actor(request)));
+
+  app.post('/users/me/mfa/totp/confirm', { preHandler: requireSession }, async (request) => {
+    const body = request.body as { code: string };
+    const confirmed = context.accountSelfService.confirmTotpEnrollment(actor(request).accountId, body.code);
+    return { status: confirmed ? 'ok' : 'invalid' };
+  });
+
+  // ---- DES-AIRA2-015: Session Registry self-service listing/revocation ----
+
+  app.get('/users/me/sessions', { preHandler: requireSession }, async (request) => context.sessions.listSessions(actor(request).accountId));
+
+  app.delete('/users/me/sessions/:displayId', { preHandler: requireSession }, async (request) => {
+    const typed = request as RequestWithActor;
+    const params = request.params as { displayId: string };
+    const revoked = context.sessions.revokeSession(actor(request).accountId, params.displayId, typed.aira2Session!.id);
+    return { status: revoked ? 'ok' : 'not-found' };
+  });
+
+  // ---- DES-AIRA2-013: Invitation & Team Management Service ----
+
+  app.post('/projects/:projectId/invitations', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { projectId: string };
+    const body = request.body as { email: string; role: 'viewer' | 'editor' };
+    return context.teamService.createInvitation(actor(request), params.projectId, body.email, body.role);
+  });
+
+  app.post('/invitations/:token/accept', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { token: string };
+    return context.teamService.acceptInvitation(params.token, actor(request).accountId);
+  });
+
+  app.delete('/projects/:projectId/invitations/:invitationId', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { projectId: string; invitationId: string };
+    context.teamService.cancelInvitation(actor(request), params.projectId, params.invitationId);
+    return { status: 'ok' };
+  });
+
+  app.get('/projects/:projectId/members', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { projectId: string };
+    return context.teamService.listMembers(actor(request), params.projectId);
+  });
+
+  app.patch('/projects/:projectId/members/:userId', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { projectId: string; userId: string };
+    const body = request.body as { role: 'viewer' | 'editor' };
+    context.teamService.changeMemberRole(actor(request), params.projectId, params.userId, body.role);
+    return { status: 'ok' };
+  });
+
+  app.delete('/projects/:projectId/members/:userId', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { projectId: string; userId: string };
+    context.teamService.removeMember(actor(request), params.projectId, params.userId);
+    return { status: 'ok' };
+  });
+
+  app.post('/teams', { preHandler: requireSession }, async (request) => {
+    const body = request.body as { name: string };
+    return context.teamService.createTeam(actor(request), body.name);
+  });
+
+  app.patch('/teams/:teamId', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { teamId: string };
+    const body = request.body as { admin: string };
+    context.teamService.assignTeamAdmin(actor(request), params.teamId, body.admin);
+    return { status: 'ok' };
+  });
+
+  app.delete('/teams/:teamId', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { teamId: string };
+    context.teamService.deleteTeam(actor(request), params.teamId);
+    return { status: 'ok' };
+  });
+
+  app.post('/teams/:teamId/members', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { teamId: string };
+    const body = request.body as { userId: string };
+    context.teamService.addTeamMember(actor(request), params.teamId, body.userId);
+    return { status: 'ok' };
+  });
+
+  app.delete('/teams/:teamId/members/:userId', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { teamId: string; userId: string };
+    context.teamService.removeTeamMember(actor(request), params.teamId, params.userId);
+    return { status: 'ok' };
+  });
+
+  app.post('/projects/:projectId/team-shares', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { projectId: string };
+    const body = request.body as { teamId: string; role: 'viewer' | 'editor' };
+    context.teamService.grantTeamShare(actor(request), params.projectId, body.teamId, body.role);
+    return { status: 'ok' };
+  });
+
+  app.delete('/projects/:projectId/team-shares/:teamId', { preHandler: requireSession }, async (request) => {
+    const params = request.params as { projectId: string; teamId: string };
+    context.teamService.revokeTeamShare(actor(request), params.projectId, params.teamId);
+    return { status: 'ok' };
+  });
 
   app.post('/projects/:projectId/shares', { preHandler: requireSession }, async (request) => {
     const params = request.params as { projectId: string };
