@@ -3,10 +3,10 @@
   "stage": "requirements",
   "artifacts": {
     ".musubix/constitution.md": "f8b47fdc486f395bab05223a94821b145cf8df70ffde2c838a28f8d71fe0fa92",
-    ".musubix/features/aira2-platform/requirements.md": "cbddf90a839164e0ceb7d7c44b565d0fe623fe75a5211ea562c58e8c4bb0e565",
+    ".musubix/features/aira2-platform/requirements.md": "2869ee93259eb06da954814e2560e6ee47835091beb5c506e0bd85fcdca05495",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
   },
-  "artifactSha256": "61d0481250b903bc21ffaa1636a4a07efdc8118bf27adf89a79d0f0c26c6ff1a",
-  "approver": "Hisaho Nakata",
-  "approvedAt": "2026-09-11T07:10:18.924Z"
+  "artifactSha256": "64837d239d7e6f8849229b20e11a3a2c182e3fe52d73dd587a5b02daa70b6f07",
+  "approver": "nahisaho",
+  "approvedAt": "2026-09-12T00:01:31.943Z"
 }
