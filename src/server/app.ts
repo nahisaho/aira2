@@ -56,6 +56,7 @@ export interface BuildAppOptions extends EnvConfig {
 
 export interface AppContext {
   store: SqliteStore;
+  audit: AuditLog;
   authz: ProjectAuthorizationService;
   vault: CredentialVault;
   gateway: LlmBackendGateway;
@@ -184,7 +185,7 @@ function buildContext(options: BuildAppOptions): AppContext {
   const agentConfig = new AgentSkillsMcpConfigManager(authz, store);
   const graphRag = new GraphRagService(authz, new GraphDbSupervisor(join(dirname(options.dbPath), 'aira-graphdb')), gateway);
   const sessions = new SessionRegistry();
-  const accountSelfService = new AccountSelfService(sessions, options.vaultKey ?? loadVaultKey());
+  const accountSelfService = new AccountSelfService(sessions, options.vaultKey ?? loadVaultKey(), audit);
   const teamService = new TeamService(
     authz,
     { getVerifiedEmail: (accountId) => accountSelfService.getProfile(accountId)?.verifiedEmail ?? null },
@@ -209,6 +210,7 @@ function buildContext(options: BuildAppOptions): AppContext {
   };
   return {
     store,
+    audit,
     authz,
     vault,
     gateway,
@@ -452,7 +454,16 @@ export async function buildApp(options: BuildAppOptions): Promise<FastifyInstanc
   app.delete('/users/me/sessions/:displayId', { preHandler: requireSession }, async (request) => {
     const typed = request as RequestWithActor;
     const params = request.params as { displayId: string };
-    const revoked = context.sessions.revokeSession(actor(request).accountId, params.displayId, typed.aira2Session!.id);
+    const accountId = actor(request).accountId;
+    const revoked = context.sessions.revokeSession(accountId, params.displayId, typed.aira2Session!.id);
+    if (revoked) {
+      context.audit.record({
+        userId: accountId,
+        timestamp: Date.now(),
+        actionType: 'session.revoke',
+        targetResource: `account:${accountId}:session:${params.displayId}`,
+      });
+    }
     return { status: revoked ? 'ok' : 'not-found' };
   });
 

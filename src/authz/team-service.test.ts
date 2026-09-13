@@ -292,3 +292,79 @@ describe('invitation matching restricted to verified email', () => {
     expect(projectAuthz.getRole('project-1', 'user-1')).toBeUndefined();
   });
 });
+
+/** @id TEST-AIRA2-AUDIT-012
+ * @verifies REQ-MULTIUSER-006
+ */
+describe('audit coverage for team CRUD mutations', () => {
+  it('TEST-AIRA2-AUDIT-012 records an audit entry for team create, admin assignment, member add/remove, and delete', () => {
+    const { teams, audit } = makeService();
+    const admin = { accountId: 'team-admin-1', isGlobalAdmin: true };
+    const team = teams.createTeam(admin, 'Lab A');
+    teams.assignTeamAdmin(admin, team.id, 'team-admin-2');
+    teams.addTeamMember({ accountId: 'team-admin-2', isGlobalAdmin: false }, team.id, 'member-1');
+    teams.removeTeamMember({ accountId: 'team-admin-2', isGlobalAdmin: false }, team.id, 'member-1');
+    teams.deleteTeam({ accountId: 'team-admin-2', isGlobalAdmin: false }, team.id);
+
+    expect(audit.list().map((e) => e.actionType)).toEqual([
+      'team.create',
+      'team.admin.assign',
+      'team.member.add',
+      'team.member.remove',
+      'team.delete',
+    ]);
+    for (const entry of audit.list()) {
+      expect(entry.targetResource).toContain(team.id);
+    }
+  });
+});
+
+/** @id TEST-AIRA2-AUDIT-013
+ * @verifies REQ-MULTIUSER-006
+ */
+describe('audit coverage for team-share grant/revoke', () => {
+  it('TEST-AIRA2-AUDIT-013 records an audit entry for team-share grant and revoke', () => {
+    const { teams, projectAuthz, audit } = makeService();
+    projectAuthz.createProject('owner-1', 'project-1');
+    const admin = { accountId: 'team-admin-1', isGlobalAdmin: true };
+    const team = teams.createTeam(admin, 'Lab A');
+    audit.list(); // no-op, keeps prior entries visible for debugging if this fails
+
+    teams.grantTeamShare({ accountId: 'owner-1' }, 'project-1', team.id, 'editor');
+    teams.revokeTeamShare({ accountId: 'owner-1' }, 'project-1', team.id);
+
+    const shareEntries = audit.list().filter((e) => e.actionType.startsWith('team.share.'));
+    expect(shareEntries.map((e) => e.actionType)).toEqual(['team.share.grant', 'team.share.revoke']);
+    for (const entry of shareEntries) {
+      expect(entry.targetResource).toBe(`project:project-1:team:${team.id}`);
+    }
+  });
+});
+
+/** @id TEST-AIRA2-AUDIT-014
+ * @verifies REQ-MULTIUSER-006
+ */
+describe('audit coverage for invitation accept/cancel and member role change/removal', () => {
+  it('TEST-AIRA2-AUDIT-014 records an invitation.cancel entry, an invitation.accept entry, and reuses existing project.share entries for member role change/removal', () => {
+    const { teams, projectAuthz, verifiedEmails, audit } = makeService();
+    projectAuthz.createProject('owner-1', 'project-1');
+    const owner = { accountId: 'owner-1' };
+
+    const cancelled = teams.createInvitation(owner, 'project-1', 'cancel-me@example.com', 'viewer');
+    teams.cancelInvitation(owner, 'project-1', cancelled.id);
+
+    verifiedEmails.set('member-1', 'member-1@example.com');
+    const invitation = teams.createInvitation(owner, 'project-1', 'member-1@example.com', 'viewer');
+    teams.acceptInvitation(invitation.token, 'member-1');
+
+    teams.changeMemberRole(owner, 'project-1', 'member-1', 'editor');
+    teams.removeMember(owner, 'project-1', 'member-1');
+
+    const actionTypes = audit.list().map((e) => e.actionType);
+    expect(actionTypes).toContain('invitation.cancel');
+    expect(actionTypes).toContain('invitation.accept');
+    // changeMemberRole/removeMember delegate to grantShare/revokeShare, which already audit.
+    expect(actionTypes).toContain('project.share.grant');
+    expect(actionTypes).toContain('project.share.revoke');
+  });
+});

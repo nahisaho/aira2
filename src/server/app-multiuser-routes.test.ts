@@ -236,3 +236,56 @@ describe('password reset persistence', () => {
     await app2.close();
   });
 });
+
+/** @id TEST-AIRA2-AUDIT-011
+ * @verifies REQ-MULTIUSER-006
+ */
+describe('audit coverage for self-service session revocation', () => {
+  it('TEST-AIRA2-AUDIT-011 records a session.revoke audit entry only when a session was actually revoked', async () => {
+    ensureDbDir();
+    const app = await buildApp({
+      port: 3000,
+      dbPath,
+      sharedCredentials: {},
+      adapters: {},
+      bootstrapAdminUsername: 'admin-1',
+      bootstrapAdminPassword: 'correct-password',
+    });
+    const context = (app as unknown as { aira2: any }).aira2;
+    context.store.upsertPasswordCredential('revoke-user-1', hashPassword('correct-password'));
+
+    const firstSessionId = await loginAs(app, 'revoke-user-1');
+    const secondSessionId = await loginAs(app, 'revoke-user-1');
+
+    const listing = await app.inject({ method: 'GET', url: '/users/me/sessions', headers: bearer(secondSessionId) });
+    const displayIds = (listing.json() as { displayId: string }[]).map((s) => s.displayId);
+    expect(displayIds).toHaveLength(2);
+
+    const notFound = await app.inject({
+      method: 'DELETE',
+      url: '/users/me/sessions/does-not-exist',
+      headers: bearer(secondSessionId),
+    });
+    expect(notFound.json()).toEqual({ status: 'not-found' });
+
+    // Exactly one of the two listed sessions is not the caller's own current session; revoking it
+    // succeeds, while revoking the current session (or an unknown id) reports 'not-found'.
+    let revokedCount = 0;
+    for (const displayId of displayIds) {
+      const revoke = await app.inject({
+        method: 'DELETE',
+        url: `/users/me/sessions/${displayId}`,
+        headers: bearer(secondSessionId),
+      });
+      if (revoke.json().status === 'ok') revokedCount += 1;
+    }
+    expect(revokedCount).toBe(1);
+
+    const entries = context.audit.list();
+    expect(entries.filter((e: { actionType: string }) => e.actionType === 'session.revoke')).toHaveLength(1);
+    expect(entries.at(-1)).toMatchObject({ userId: 'revoke-user-1', actionType: 'session.revoke' });
+
+    await app.close();
+    void firstSessionId;
+  });
+});

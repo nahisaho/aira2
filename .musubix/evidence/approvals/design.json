@@ -10,12 +10,12 @@
     ".musubix/decisions/ADR-0005.md": "b4295c4972f9e223c479c15e59d63429b472367470c2cff5dcc488568c1d956c",
     ".musubix/decisions/ADR-0006.md": "b128d676d9ef3cac82966840793d9570b8edac8256f2a9a2979b4184dea6d30c",
     ".musubix/decisions/ADR-0007.md": "abdfe613b4418894f3897f7a0fea4adb52b525bfa33a38a3681ed7d574ec794a",
-    ".musubix/features/aira2-platform/design.md": "bf2a3b254f7ad2376daa6dcda2654fb3ca06a76becf8a6ff43a998fea3027504",
+    ".musubix/features/aira2-platform/design.md": "4122080b27888c4185adedd3bf17966439b0903cc9d264a5e03e1c07906354da",
     ".musubix/features/aira2-platform/requirements.md": "b4a73bc3a08613e51fdb0b8324662e5c14e389f0e8a9bf8f62f478521704bd92",
     ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
   },
-  "artifactSha256": "299607bb89aa6817be1d33cc70fa5f1235e530e5607a5df9ec66de188ac052e4",
+  "artifactSha256": "2150a1bb486ebcc2f7dc78c9f45efa22850bab30e5c7d18c3c090d79cb45c09f",
   "approver": "nahisaho",
-  "approvedAt": "2026-09-12T05:00:57.323Z"
+  "approvedAt": "2026-09-13T06:14:19.541Z"
 }

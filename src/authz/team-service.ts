@@ -82,6 +82,12 @@ export class TeamService {
     }
     const team: Team = { id: randomBytes(8).toString('hex'), name, adminUserId: actor.accountId, memberIds: [] };
     this.teams.set(team.id, team);
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'team.create',
+      targetResource: `team:${team.id}`,
+    });
     return team;
   }
 
@@ -93,6 +99,12 @@ export class TeamService {
     const team = this.requireTeam(teamId);
     this.requireTeamAdmin(actor, team, 'team.admin.modify');
     team.adminUserId = newAdminUserId;
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'team.admin.assign',
+      targetResource: `team:${teamId}:user:${newAdminUserId}`,
+    });
   }
 
   deleteTeam(actor: SelfScopeActorContext, teamId: string): void {
@@ -107,6 +119,12 @@ export class TeamService {
         }
       }
     }
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'team.delete',
+      targetResource: `team:${teamId}`,
+    });
   }
 
   addTeamMember(actor: SelfScopeActorContext, teamId: string, userId: string): void {
@@ -115,6 +133,12 @@ export class TeamService {
     if (!team.memberIds.includes(userId)) {
       team.memberIds.push(userId);
     }
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'team.member.add',
+      targetResource: `team:${teamId}:user:${userId}`,
+    });
   }
 
   removeTeamMember(actor: SelfScopeActorContext, teamId: string, userId: string): void {
@@ -126,6 +150,12 @@ export class TeamService {
         this.recomputeAndMaybeTerminate(projectId, userId);
       }
     }
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'team.member.remove',
+      targetResource: `team:${teamId}:user:${userId}`,
+    });
   }
 
   private requireTeam(teamId: string): Team {
@@ -158,6 +188,12 @@ export class TeamService {
       this.teamShares.set(projectId, shares);
     }
     shares.set(teamId, role);
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'team.share.grant',
+      targetResource: `project:${projectId}:team:${teamId}`,
+    });
   }
 
   revokeTeamShare(actor: ActorContext, projectId: string, teamId: string): void {
@@ -172,6 +208,12 @@ export class TeamService {
         this.recomputeAndMaybeTerminate(projectId, memberId);
       }
     }
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'team.share.revoke',
+      targetResource: `project:${projectId}:team:${teamId}`,
+    });
   }
 
   /**
@@ -254,6 +296,12 @@ export class TeamService {
     for (const invitation of this.invitations.values()) {
       if (invitation.projectId === projectId && invitation.id === invitationId && invitation.status === 'pending') {
         invitation.status = 'cancelled';
+        this.audit.record({
+          userId: actor.accountId,
+          timestamp: Date.now(),
+          actionType: 'invitation.cancel',
+          targetResource: `project:${projectId}:invitation:${invitationId}`,
+        });
       }
     }
   }
@@ -270,6 +318,12 @@ export class TeamService {
     }
     invitation.status = 'accepted';
     this.projectAuthz.grantShareViaInvitation(invitation.projectId, accountId, invitation.role);
+    this.audit.record({
+      userId: accountId,
+      timestamp: now,
+      actionType: 'invitation.accept',
+      targetResource: `project:${invitation.projectId}:invitation:${invitation.id}`,
+    });
     return { status: 'ok', projectId: invitation.projectId, role: invitation.role };
   }
 

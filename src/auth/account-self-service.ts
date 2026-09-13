@@ -4,6 +4,7 @@ import type { Session } from './session-registry.js';
 import { SessionRegistry } from './session-registry.js';
 import { authorizeSelf, type SelfScopeActorContext } from '../authz/self-scope.js';
 import { decryptSecret, encryptSecret, type EncryptedPayload } from '../vault/crypto.js';
+import { AuditLog } from '../authz/audit.js';
 
 const EMAIL_CONFIRMATION_TTL_MS = 24 * 60 * 60 * 1000;
 const RESET_TOKEN_TTL_MS = 60 * 60 * 1000;
@@ -80,6 +81,7 @@ export class AccountSelfService {
   constructor(
     private readonly sessions: SessionRegistry,
     private readonly encryptionKey: Buffer,
+    private readonly audit: AuditLog = new AuditLog(),
   ) {}
 
   registerAccount(accountId: string, displayName: string, verifiedEmail: string | null, passwordHash: string): void {
@@ -114,6 +116,12 @@ export class AccountSelfService {
     }
     // role/accountId (or any other field) submitted in patch is silently ignored: only
     // displayName/email are ever applied above.
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: now,
+      actionType: 'profile.update',
+      targetResource: `account:${actor.accountId}`,
+    });
     return { ...profile };
   }
 
@@ -143,6 +151,12 @@ export class AccountSelfService {
     const profile = this.requireProfile(pending.accountId);
     profile.verifiedEmail = pending.newEmail;
     this.pendingEmailChanges.delete(token);
+    this.audit.record({
+      userId: pending.accountId,
+      timestamp: now,
+      actionType: 'profile.email.confirm',
+      targetResource: `account:${pending.accountId}`,
+    });
     return { status: 'ok' };
   }
 
@@ -162,6 +176,12 @@ export class AccountSelfService {
     this.passwordHashes.set(actor.accountId, hashPassword(newPassword));
     this.sessions.incrementCredentialVersion(actor.accountId);
     const session = this.sessions.issueSession(actor.accountId, now);
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: now,
+      actionType: 'auth.password.change',
+      targetResource: `account:${actor.accountId}`,
+    });
     return { status: 'ok', session };
   }
 
@@ -178,6 +198,12 @@ export class AccountSelfService {
       const token = randomBytes(24).toString('hex');
       this.resetTokens.set(token, { token, accountId: account.accountId, expiresAt: now + RESET_TOKEN_TTL_MS, consumed: false });
       this.deliveredLinks.push({ accountId: account.accountId, email, token });
+      this.audit.record({
+        userId: account.accountId,
+        timestamp: now,
+        actionType: 'auth.password.reset-request',
+        targetResource: `account:${account.accountId}`,
+      });
     }
     return { status: 'ok' };
   }
@@ -190,6 +216,12 @@ export class AccountSelfService {
     record.consumed = true;
     this.passwordHashes.set(record.accountId, hashPassword(newPassword));
     this.sessions.incrementCredentialVersion(record.accountId);
+    this.audit.record({
+      userId: record.accountId,
+      timestamp: now,
+      actionType: 'auth.password.reset-complete',
+      targetResource: `account:${record.accountId}`,
+    });
     return { status: 'ok', accountId: record.accountId };
   }
 
@@ -204,6 +236,12 @@ export class AccountSelfService {
       acceptedSteps: new Set(),
       consecutiveFailures: 0,
       lockedUntil: 0,
+    });
+    this.audit.record({
+      userId: actor.accountId,
+      timestamp: Date.now(),
+      actionType: 'mfa.enroll',
+      targetResource: `account:${actor.accountId}`,
     });
     return {
       secret: secret.toString('hex'),
@@ -222,6 +260,12 @@ export class AccountSelfService {
     const result = this.verifyCodeAgainstFactor(factor, code, now);
     if (result === 'valid') {
       factor.active = true;
+      this.audit.record({
+        userId: accountId,
+        timestamp: now,
+        actionType: 'mfa.confirm',
+        targetResource: `account:${accountId}`,
+      });
       return true;
     }
     return false;

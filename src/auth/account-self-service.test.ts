@@ -2,15 +2,17 @@ import { describe, expect, it } from 'vitest';
 import { randomBytes } from 'node:crypto';
 import { AccountSelfService, generateTotpCode } from './account-self-service.js';
 import { SessionRegistry } from './session-registry.js';
+import { AuditLog } from '../authz/audit.js';
 
 const KEY = randomBytes(32);
 const TOTP_STEP_MS = 30_000;
 
 function makeService() {
   const sessions = new SessionRegistry();
-  const service = new AccountSelfService(sessions, KEY);
+  const audit = new AuditLog();
+  const service = new AccountSelfService(sessions, KEY, audit);
   service.registerAccount('user-1', 'Alice', 'alice@example.com', hashOf('correct-horse'));
-  return { sessions, service };
+  return { sessions, service, audit };
 }
 
 // Test-only helper: reuses the service's own hashing indirectly is unnecessary here;
@@ -334,5 +336,85 @@ describe('TOTP code replay rejection', () => {
     const loginCode = generateTotpCode(Buffer.from(secret, 'hex'), Math.floor(laterNow / 30_000));
     expect(service.verify('user-1', loginCode, laterNow)).toBe('valid');
     expect(service.verify('user-1', loginCode, laterNow)).toBe('invalid');
+  });
+});
+
+/** @id TEST-AIRA2-AUDIT-009
+ * @verifies REQ-MULTIUSER-006
+ */
+describe('audit coverage for profile/email/password self-service mutations', () => {
+  it('TEST-AIRA2-AUDIT-009 records an audit entry for profile update, email confirmation, password change, and password reset, without leaking secrets, and skips entries on failure paths and for unregistered emails', () => {
+    const { service, audit } = makeService();
+    const actor = { accountId: 'user-1', isGlobalAdmin: false };
+
+    service.updateProfile(actor, { displayName: 'Alicia', email: 'alice-new@example.com' });
+    const confirmLink = service.getDeliveredLinks()[0]!;
+
+    expect(service.confirmEmailChange('not-a-real-token')).toEqual({ status: 'invalid-token' });
+    expect(audit.list()).toHaveLength(1); // only profile.update so far; the failed confirmation recorded nothing
+
+    service.confirmEmailChange(confirmLink.token);
+
+    expect(service.changePassword(actor, 'wrong-current-password', 'new-password-1')).toEqual({
+      status: 'invalid-current-password',
+    });
+    expect(audit.list()).toHaveLength(2); // still just profile.update + profile.email.confirm
+
+    service.changePassword(actor, 'correct-horse', 'new-password-1');
+    service.requestPasswordReset('nobody@example.com');
+    service.requestPasswordReset('alice-new@example.com');
+    const resetLink = service.getDeliveredLinks().at(-1)!;
+
+    expect(service.completePasswordReset('not-a-real-reset-token', 'new-password-2')).toEqual({
+      status: 'invalid-token',
+    });
+    const beforeReset = audit.list().length;
+
+    service.completePasswordReset(resetLink.token, 'new-password-2');
+
+    expect(audit.list()).toHaveLength(beforeReset + 1); // exactly one new entry for the successful completion
+
+    const entries = audit.list();
+    const actionTypes = entries.map((e) => e.actionType);
+    expect(actionTypes).toEqual([
+      'profile.update',
+      'profile.email.confirm',
+      'auth.password.change',
+      'auth.password.reset-request',
+      'auth.password.reset-complete',
+    ]);
+    for (const entry of entries) {
+      expect(entry.userId).toBe('user-1');
+      expect(entry.targetResource).not.toContain('new-password');
+      expect(entry.targetResource).not.toContain(confirmLink.token);
+      expect(entry.targetResource).not.toContain(resetLink.token);
+    }
+  });
+});
+
+/** @id TEST-AIRA2-AUDIT-010
+ * @verifies REQ-MULTIUSER-006
+ */
+describe('audit coverage for MFA self-service mutations', () => {
+  it('TEST-AIRA2-AUDIT-010 records an audit entry only for successful enrollment and confirmation, not failed confirmation attempts', () => {
+    const { service, audit } = makeService();
+    const actor = { accountId: 'user-1', isGlobalAdmin: false };
+    const { secret } = service.enrollTotp(actor);
+
+    const now = Date.now();
+    const validCode = generateTotpCode(Buffer.from(secret, 'hex'), Math.floor(now / 30_000));
+    const invalidCode = String((Number(validCode) + 1) % 1_000_000).padStart(6, '0');
+
+    expect(service.confirmTotpEnrollment('user-1', invalidCode, now)).toBe(false);
+    expect(audit.list()).toHaveLength(1); // only mfa.enroll so far; the failed confirmation recorded nothing
+
+    expect(service.confirmTotpEnrollment('user-1', validCode, now)).toBe(true);
+
+    const entries = audit.list();
+    expect(entries.map((e) => e.actionType)).toEqual(['mfa.enroll', 'mfa.confirm']);
+    for (const entry of entries) {
+      expect(entry.userId).toBe('user-1');
+      expect(entry.targetResource).not.toContain(secret);
+    }
   });
 });

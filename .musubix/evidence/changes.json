@@ -14815,6 +14815,144 @@
           }
         }
       }
+    },
+    {
+      "changeId": "CHANGE-0005",
+      "requirementIds": [
+        "REQ-MULTIUSER-006"
+      ],
+      "phases": {
+        "impact": {
+          "phase": "impact",
+          "recordedAt": "2026-09-13T05:48:17.843Z",
+          "fingerprints": {
+            "impact": "f20b820a6b4f6d0aa4229c4f7ef2c94aabc6d5f436c82e42fc56c8938a9242fb",
+            "requirements": "4a018f7e36d57e7272fffc501de4b565bdc9d2c8c331910ea769ec5352c33f4b",
+            "design": "14c368977120baaf32823947117204fdcd7fd566972e856037caaa967d729054",
+            "implementation": "d8810f2d5edb8e02fd159f3449754c5dfffb6f583531b46991adea3b185cf40e",
+            "tests": "b6c86a2e5b1a3560c0264407479e22f405dbf729fcb5bb32f33497e515f9ac92",
+            "tdd": "9b0fe909d81717c59ea2140a12a805888fbe293ddf21f22aebedb658422439e9",
+            "requirementImplementations": {
+              "REQ-MULTIUSER-006": {
+                "paths": [
+                  "src/auth/account.ts",
+                  "src/authz/audit.ts",
+                  "src/authz/matrix.ts",
+                  "src/authz/project-authz.ts",
+                  "src/authz/self-scope.ts",
+                  "src/eln-audit/integrity-subsystem.ts",
+                  "src/eln-audit/ledger.ts",
+                  "src/eln/approval-signature-service.ts",
+                  "src/eln/eln-core-service.ts",
+                  "src/eln/protocol-store.ts",
+                  "src/server/store.ts"
+                ],
+                "fingerprints": {
+                  "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
+                  "src/authz/audit.ts": "5abdda968eb0f68794defb3f387925fc4ba8eb60f083ba7442862f020dba5513",
+                  "src/authz/matrix.ts": "ff03dc897ce1705fb4f48ead251cd671a8a2fcc6d759d0797c3c4d666bf433d1",
+                  "src/authz/project-authz.ts": "251275f1381714d0510abc2adb4fd761d4683d02b8d874d8abb2cd9b66c7b5c3",
+                  "src/authz/self-scope.ts": "dc970c8a9cc2a455787c3954d0edab15597d4cf18c09c4f8ef53a8fda6f3e1cf",
+                  "src/eln-audit/integrity-subsystem.ts": "322e2499859715688a73d61087ca11e50c5e62766c4263b89bd92c268ab02dd0",
+                  "src/eln-audit/ledger.ts": "3df31f6fbdc5c347ec74325168a9fd01f937f1ca4e32fc83813b008fceb27c05",
+                  "src/eln/approval-signature-service.ts": "61fa3216157e8879632cb89d92e878e70267a1cbaaa7be160a8c571c1d52957c",
+                  "src/eln/eln-core-service.ts": "335564e4f28219a862ba72e5bb691b08276192e84c0e31bff3f0461f6c4a747f",
+                  "src/eln/protocol-store.ts": "b9761a30cf367e4d311c979709b788a70d97db41cf419edaf4175a526f3c2670",
+                  "src/server/store.ts": "f4ea8a7e7d0a8c0958d232f39bf504db092ce5b32a65a0e23eab08d75f767314"
+                }
+              }
+            }
+          },
+          "order": 364
+        },
+        "requirements": {
+          "phase": "requirements",
+          "recordedAt": "2026-09-13T05:48:20.684Z",
+          "fingerprints": {
+            "impact": "f20b820a6b4f6d0aa4229c4f7ef2c94aabc6d5f436c82e42fc56c8938a9242fb",
+            "requirements": "4a018f7e36d57e7272fffc501de4b565bdc9d2c8c331910ea769ec5352c33f4b",
+            "design": "14c368977120baaf32823947117204fdcd7fd566972e856037caaa967d729054",
+            "implementation": "d8810f2d5edb8e02fd159f3449754c5dfffb6f583531b46991adea3b185cf40e",
+            "tests": "b6c86a2e5b1a3560c0264407479e22f405dbf729fcb5bb32f33497e515f9ac92",
+            "tdd": "9b0fe909d81717c59ea2140a12a805888fbe293ddf21f22aebedb658422439e9",
+            "requirementImplementations": {
+              "REQ-MULTIUSER-006": {
+                "paths": [
+                  "src/auth/account.ts",
+                  "src/authz/audit.ts",
+                  "src/authz/matrix.ts",
+                  "src/authz/project-authz.ts",
+                  "src/authz/self-scope.ts",
+                  "src/eln-audit/integrity-subsystem.ts",
+                  "src/eln-audit/ledger.ts",
+                  "src/eln/approval-signature-service.ts",
+                  "src/eln/eln-core-service.ts",
+                  "src/eln/protocol-store.ts",
+                  "src/server/store.ts"
+                ],
+                "fingerprints": {
+                  "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
+                  "src/authz/audit.ts": "5abdda968eb0f68794defb3f387925fc4ba8eb60f083ba7442862f020dba5513",
+                  "src/authz/matrix.ts": "ff03dc897ce1705fb4f48ead251cd671a8a2fcc6d759d0797c3c4d666bf433d1",
+                  "src/authz/project-authz.ts": "251275f1381714d0510abc2adb4fd761d4683d02b8d874d8abb2cd9b66c7b5c3",
+                  "src/authz/self-scope.ts": "dc970c8a9cc2a455787c3954d0edab15597d4cf18c09c4f8ef53a8fda6f3e1cf",
+                  "src/eln-audit/integrity-subsystem.ts": "322e2499859715688a73d61087ca11e50c5e62766c4263b89bd92c268ab02dd0",
+                  "src/eln-audit/ledger.ts": "3df31f6fbdc5c347ec74325168a9fd01f937f1ca4e32fc83813b008fceb27c05",
+                  "src/eln/approval-signature-service.ts": "61fa3216157e8879632cb89d92e878e70267a1cbaaa7be160a8c571c1d52957c",
+                  "src/eln/eln-core-service.ts": "335564e4f28219a862ba72e5bb691b08276192e84c0e31bff3f0461f6c4a747f",
+                  "src/eln/protocol-store.ts": "b9761a30cf367e4d311c979709b788a70d97db41cf419edaf4175a526f3c2670",
+                  "src/server/store.ts": "f4ea8a7e7d0a8c0958d232f39bf504db092ce5b32a65a0e23eab08d75f767314"
+                }
+              }
+            }
+          },
+          "allowUnchanged": true,
+          "order": 365
+        },
+        "design": {
+          "phase": "design",
+          "recordedAt": "2026-09-13T06:14:23.063Z",
+          "fingerprints": {
+            "impact": "f20b820a6b4f6d0aa4229c4f7ef2c94aabc6d5f436c82e42fc56c8938a9242fb",
+            "requirements": "4a018f7e36d57e7272fffc501de4b565bdc9d2c8c331910ea769ec5352c33f4b",
+            "design": "6448483c55ff0d79af489699dd814e9064dfdc9aa7998a310329de31bc52277e",
+            "implementation": "d8810f2d5edb8e02fd159f3449754c5dfffb6f583531b46991adea3b185cf40e",
+            "tests": "b6c86a2e5b1a3560c0264407479e22f405dbf729fcb5bb32f33497e515f9ac92",
+            "tdd": "9b0fe909d81717c59ea2140a12a805888fbe293ddf21f22aebedb658422439e9",
+            "requirementImplementations": {
+              "REQ-MULTIUSER-006": {
+                "paths": [
+                  "src/auth/account.ts",
+                  "src/authz/audit.ts",
+                  "src/authz/matrix.ts",
+                  "src/authz/project-authz.ts",
+                  "src/authz/self-scope.ts",
+                  "src/eln-audit/integrity-subsystem.ts",
+                  "src/eln-audit/ledger.ts",
+                  "src/eln/approval-signature-service.ts",
+                  "src/eln/eln-core-service.ts",
+                  "src/eln/protocol-store.ts",
+                  "src/server/store.ts"
+                ],
+                "fingerprints": {
+                  "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
+                  "src/authz/audit.ts": "5abdda968eb0f68794defb3f387925fc4ba8eb60f083ba7442862f020dba5513",
+                  "src/authz/matrix.ts": "ff03dc897ce1705fb4f48ead251cd671a8a2fcc6d759d0797c3c4d666bf433d1",
+                  "src/authz/project-authz.ts": "251275f1381714d0510abc2adb4fd761d4683d02b8d874d8abb2cd9b66c7b5c3",
+                  "src/authz/self-scope.ts": "dc970c8a9cc2a455787c3954d0edab15597d4cf18c09c4f8ef53a8fda6f3e1cf",
+                  "src/eln-audit/integrity-subsystem.ts": "322e2499859715688a73d61087ca11e50c5e62766c4263b89bd92c268ab02dd0",
+                  "src/eln-audit/ledger.ts": "3df31f6fbdc5c347ec74325168a9fd01f937f1ca4e32fc83813b008fceb27c05",
+                  "src/eln/approval-signature-service.ts": "61fa3216157e8879632cb89d92e878e70267a1cbaaa7be160a8c571c1d52957c",
+                  "src/eln/eln-core-service.ts": "335564e4f28219a862ba72e5bb691b08276192e84c0e31bff3f0461f6c4a747f",
+                  "src/eln/protocol-store.ts": "b9761a30cf367e4d311c979709b788a70d97db41cf419edaf4175a526f3c2670",
+                  "src/server/store.ts": "f4ea8a7e7d0a8c0958d232f39bf504db092ce5b32a65a0e23eab08d75f767314"
+                }
+              }
+            }
+          },
+          "order": 366
+        }
+      }
     }
   ]
 }
