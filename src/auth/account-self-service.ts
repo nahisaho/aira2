@@ -5,6 +5,7 @@ import { SessionRegistry } from './session-registry.js';
 import { authorizeSelf, type SelfScopeActorContext } from '../authz/self-scope.js';
 import { decryptSecret, encryptSecret, type EncryptedPayload } from '../vault/crypto.js';
 import { AuditLog } from '../authz/audit.js';
+import type { SqliteStore } from '../server/store.js';
 
 const EMAIL_CONFIRMATION_TTL_MS = 24 * 60 * 60 * 1000;
 const RESET_TOKEN_TTL_MS = 60 * 60 * 1000;
@@ -82,11 +83,55 @@ export class AccountSelfService {
     private readonly sessions: SessionRegistry,
     private readonly encryptionKey: Buffer,
     private readonly audit: AuditLog = new AuditLog(),
-  ) {}
+    private readonly store?: SqliteStore,
+  ) {
+    this.hydrate();
+  }
+
+  /** Rebuilds in-memory state from the durable store at construction time (REQ-RUNTIME-002),
+   * so a freshly constructed instance backed by the same store reflects prior process state. */
+  private hydrate(): void {
+    if (!this.store) return;
+    for (const row of this.store.listProfiles()) {
+      this.profiles.set(row.accountId, row);
+      const passwordHash = this.store.getPasswordCredential(row.accountId);
+      if (passwordHash) this.passwordHashes.set(row.accountId, passwordHash);
+    }
+    for (const row of this.store.listPendingEmailChanges()) {
+      this.pendingEmailChanges.set(row.token, row);
+    }
+    for (const row of this.store.listResetTokens()) {
+      this.resetTokens.set(row.token, row);
+    }
+    for (const row of this.store.listAllResetRequests()) {
+      if (row.requestedAt <= Date.now() - RESET_RATE_LIMIT_WINDOW_MS) continue;
+      const bucket = this.resetRequestLog.get(row.email) ?? [];
+      bucket.push(row.requestedAt);
+      this.resetRequestLog.set(row.email, bucket);
+    }
+    const acceptedSteps = new Map<string, Set<number>>();
+    for (const row of this.store.listAllTotpAcceptedSteps()) {
+      const set = acceptedSteps.get(row.accountId) ?? new Set<number>();
+      set.add(row.step);
+      acceptedSteps.set(row.accountId, set);
+    }
+    for (const row of this.store.listTotpFactors()) {
+      const encryptedSecret = JSON.parse(row.encryptedSecretJson) as EncryptedPayload;
+      this.totpFactors.set(row.accountId, {
+        encryptedSecret,
+        active: row.active,
+        acceptedSteps: acceptedSteps.get(row.accountId) ?? new Set(),
+        consecutiveFailures: row.consecutiveFailures,
+        lockedUntil: row.lockedUntil,
+      });
+    }
+  }
 
   registerAccount(accountId: string, displayName: string, verifiedEmail: string | null, passwordHash: string): void {
     this.profiles.set(accountId, { accountId, displayName, verifiedEmail });
     this.passwordHashes.set(accountId, passwordHash);
+    this.store?.upsertProfile({ accountId, displayName, verifiedEmail });
+    this.store?.upsertPasswordCredential(accountId, passwordHash);
   }
 
   /** Composition-root-only accessor letting DES-AIRA2-012 keep a legacy password-credential
@@ -116,6 +161,7 @@ export class AccountSelfService {
     }
     // role/accountId (or any other field) submitted in patch is silently ignored: only
     // displayName/email are ever applied above.
+    this.store?.upsertProfile({ ...profile });
     this.audit.record({
       userId: actor.accountId,
       timestamp: now,
@@ -127,12 +173,14 @@ export class AccountSelfService {
 
   private beginEmailChange(accountId: string, newEmail: string, now: number): void {
     const token = randomBytes(24).toString('hex');
-    this.pendingEmailChanges.set(token, {
+    const pending: PendingEmailChange = {
       token,
       accountId,
       newEmail,
       expiresAt: now + EMAIL_CONFIRMATION_TTL_MS,
-    });
+    };
+    this.pendingEmailChanges.set(token, pending);
+    this.store?.upsertPendingEmailChange(pending);
     this.deliveredLinks.push({ accountId, email: newEmail, token });
   }
 
@@ -146,11 +194,21 @@ export class AccountSelfService {
     );
     if (alreadyVerifiedElsewhere) {
       this.pendingEmailChanges.delete(token);
+      this.store?.deletePendingEmailChange(token);
       return { status: 'email-in-use' };
     }
     const profile = this.requireProfile(pending.accountId);
-    profile.verifiedEmail = pending.newEmail;
-    this.pendingEmailChanges.delete(token);
+    const applyConfirmation = () => {
+      profile.verifiedEmail = pending.newEmail;
+      this.pendingEmailChanges.delete(token);
+      this.store?.upsertProfile({ ...profile });
+      this.store?.deletePendingEmailChange(token);
+    };
+    if (this.store) {
+      this.store.runInTransaction(applyConfirmation);
+    } else {
+      applyConfirmation();
+    }
     this.audit.record({
       userId: pending.accountId,
       timestamp: now,
@@ -173,9 +231,19 @@ export class AccountSelfService {
     if (!storedHash || !verifyPasswordHash(currentPassword, storedHash)) {
       return { status: 'invalid-current-password' };
     }
-    this.passwordHashes.set(actor.accountId, hashPassword(newPassword));
-    this.sessions.incrementCredentialVersion(actor.accountId);
-    const session = this.sessions.issueSession(actor.accountId, now);
+    const newHash = hashPassword(newPassword);
+    let session!: Session;
+    const applyChange = () => {
+      this.passwordHashes.set(actor.accountId, newHash);
+      this.store?.upsertPasswordCredential(actor.accountId, newHash);
+      this.sessions.incrementCredentialVersion(actor.accountId);
+      session = this.sessions.issueSession(actor.accountId, now);
+    };
+    if (this.store) {
+      this.store.runInTransaction(applyChange);
+    } else {
+      applyChange();
+    }
     this.audit.record({
       userId: actor.accountId,
       timestamp: now,
@@ -190,13 +258,17 @@ export class AccountSelfService {
     const withinWindow = bucket.filter((ts) => ts > now - RESET_RATE_LIMIT_WINDOW_MS);
     withinWindow.push(now);
     this.resetRequestLog.set(email, withinWindow);
+    this.store?.recordResetRequest(email, now);
+    this.store?.deleteExpiredResetRequests(now - RESET_RATE_LIMIT_WINDOW_MS);
     if (withinWindow.length > RESET_RATE_LIMIT_MAX_REQUESTS) {
       return { status: 'ok' };
     }
     const account = [...this.profiles.values()].find((candidate) => candidate.verifiedEmail === email);
     if (account) {
       const token = randomBytes(24).toString('hex');
-      this.resetTokens.set(token, { token, accountId: account.accountId, expiresAt: now + RESET_TOKEN_TTL_MS, consumed: false });
+      const resetToken: ResetToken = { token, accountId: account.accountId, expiresAt: now + RESET_TOKEN_TTL_MS, consumed: false };
+      this.resetTokens.set(token, resetToken);
+      this.store?.upsertResetToken(resetToken);
       this.deliveredLinks.push({ accountId: account.accountId, email, token });
       this.audit.record({
         userId: account.accountId,
@@ -213,9 +285,19 @@ export class AccountSelfService {
     if (!record || record.consumed || record.expiresAt <= now) {
       return { status: 'invalid-token' };
     }
-    record.consumed = true;
-    this.passwordHashes.set(record.accountId, hashPassword(newPassword));
-    this.sessions.incrementCredentialVersion(record.accountId);
+    const newHash = hashPassword(newPassword);
+    const applyReset = () => {
+      record.consumed = true;
+      this.store?.upsertResetToken(record);
+      this.passwordHashes.set(record.accountId, newHash);
+      this.store?.upsertPasswordCredential(record.accountId, newHash);
+      this.sessions.incrementCredentialVersion(record.accountId);
+    };
+    if (this.store) {
+      this.store.runInTransaction(applyReset);
+    } else {
+      applyReset();
+    }
     this.audit.record({
       userId: record.accountId,
       timestamp: now,
@@ -230,13 +312,21 @@ export class AccountSelfService {
       throw new AccountAuthorizationDeniedError('mfa.self.enroll');
     }
     const secret = randomBytes(20);
-    this.totpFactors.set(actor.accountId, {
+    const factor: TotpFactor = {
       encryptedSecret: encryptSecret(secret.toString('hex'), this.encryptionKey),
       active: false,
       acceptedSteps: new Set(),
       consecutiveFailures: 0,
       lockedUntil: 0,
-    });
+    };
+    this.totpFactors.set(actor.accountId, factor);
+    if (this.store) {
+      const store = this.store;
+      store.runInTransaction(() => {
+        store.deleteTotpAcceptedSteps(actor.accountId);
+        this.persistTotpFactor(actor.accountId, factor);
+      });
+    }
     this.audit.record({
       userId: actor.accountId,
       timestamp: Date.now(),
@@ -249,6 +339,16 @@ export class AccountSelfService {
     };
   }
 
+  private persistTotpFactor(accountId: string, factor: TotpFactor): void {
+    this.store?.upsertTotpFactor({
+      accountId,
+      encryptedSecretJson: JSON.stringify(factor.encryptedSecret),
+      active: factor.active,
+      consecutiveFailures: factor.consecutiveFailures,
+      lockedUntil: factor.lockedUntil,
+    });
+  }
+
   /** MfaCheck.isRequired extension consumed by DES-AIRA2-001 at login (REQ-MULTIUSER-035). */
   isMfaRequired(accountId: string): boolean {
     return this.totpFactors.get(accountId)?.active === true;
@@ -257,9 +357,10 @@ export class AccountSelfService {
   confirmTotpEnrollment(accountId: string, code: string, now: number = Date.now()): boolean {
     const factor = this.totpFactors.get(accountId);
     if (!factor) return false;
-    const result = this.verifyCodeAgainstFactor(factor, code, now);
-    if (result === 'valid') {
+    const result = this.verifyCodeAgainstFactor(accountId, factor, code, now, () => {
       factor.active = true;
+    });
+    if (result === 'valid') {
       this.audit.record({
         userId: accountId,
         timestamp: now,
@@ -277,26 +378,42 @@ export class AccountSelfService {
     if (!factor || !factor.active) {
       return 'invalid';
     }
-    return this.verifyCodeAgainstFactor(factor, code, now);
+    return this.verifyCodeAgainstFactor(accountId, factor, code, now);
   }
 
-  private verifyCodeAgainstFactor(factor: TotpFactor, code: string, now: number): MfaVerifyResult {
+  private verifyCodeAgainstFactor(
+    accountId: string,
+    factor: TotpFactor,
+    code: string,
+    now: number,
+    onValid?: () => void,
+  ): MfaVerifyResult {
     if (factor.lockedUntil > now) {
       return 'locked';
     }
     const secretHex = decryptSecret(factor.encryptedSecret, this.encryptionKey);
     const step = Math.floor(now / TOTP_STEP_MS);
     const expected = generateTotpCode(Buffer.from(secretHex, 'hex'), step);
-    if (code !== expected || factor.acceptedSteps.has(step)) {
-      factor.consecutiveFailures += 1;
-      if (factor.consecutiveFailures >= MFA_FAILURE_LOCKOUT_THRESHOLD) {
-        factor.lockedUntil = now + MFA_LOCKOUT_COOLDOWN_MS;
+    const applyResult = () => {
+      if (code !== expected || factor.acceptedSteps.has(step)) {
+        factor.consecutiveFailures += 1;
+        if (factor.consecutiveFailures >= MFA_FAILURE_LOCKOUT_THRESHOLD) {
+          factor.lockedUntil = now + MFA_LOCKOUT_COOLDOWN_MS;
+        }
+        this.persistTotpFactor(accountId, factor);
+        return 'invalid' as const;
       }
-      return 'invalid';
+      factor.acceptedSteps.add(step);
+      factor.consecutiveFailures = 0;
+      onValid?.();
+      this.persistTotpFactor(accountId, factor);
+      this.store?.addTotpAcceptedStep(accountId, step);
+      return 'valid' as const;
+    };
+    if (this.store) {
+      return this.store.runInTransaction(applyResult);
     }
-    factor.acceptedSteps.add(step);
-    factor.consecutiveFailures = 0;
-    return 'valid';
+    return applyResult();
   }
 
   private requireProfile(accountId: string): ProfileRecord {

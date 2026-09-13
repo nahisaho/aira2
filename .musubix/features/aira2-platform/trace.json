@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-13T06:26:25.133Z",
+  "generatedAt": "2026-09-13T07:24:31.906Z",
   "nodes": [
     {
       "id": "ADR-0001",
@@ -917,127 +917,133 @@
       "id": "TEST-AIRA2-PROFILE-001",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 26
+      "line": 29
     },
     {
       "id": "TEST-AIRA2-PROFILE-002",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 44
+      "line": 47
     },
     {
       "id": "TEST-AIRA2-PROFILE-003",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 62
+      "line": 65
     },
     {
       "id": "TEST-AIRA2-PROFILE-004",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 77
+      "line": 80
     },
     {
       "id": "TEST-AIRA2-PROFILE-005",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 95
+      "line": 98
     },
     {
       "id": "TEST-AIRA2-PASSWORD-001",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 113
+      "line": 116
     },
     {
       "id": "TEST-AIRA2-PASSWORD-002",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 129
+      "line": 132
     },
     {
       "id": "TEST-AIRA2-PASSWORD-003",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 147
+      "line": 150
     },
     {
       "id": "TEST-AIRA2-PASSWORD-004",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 164
+      "line": 167
     },
     {
       "id": "TEST-AIRA2-PASSWORD-005",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 182
+      "line": 185
     },
     {
       "id": "TEST-AIRA2-PASSWORD-006",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 197
+      "line": 200
     },
     {
       "id": "TEST-AIRA2-PASSWORD-007",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 214
+      "line": 217
     },
     {
       "id": "TEST-AIRA2-PASSWORD-008",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 229
+      "line": 232
     },
     {
       "id": "TEST-AIRA2-PASSWORD-009",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 245
+      "line": 248
     },
     {
       "id": "TEST-AIRA2-MFA-001",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 263
+      "line": 266
     },
     {
       "id": "TEST-AIRA2-MFA-002",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 280
+      "line": 283
     },
     {
       "id": "TEST-AIRA2-MFA-003",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 300
+      "line": 303
     },
     {
       "id": "TEST-AIRA2-MFA-004",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 323
+      "line": 326
     },
     {
       "id": "TEST-AIRA2-AUDIT-009",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 342
+      "line": 345
     },
     {
       "id": "TEST-AIRA2-AUDIT-010",
       "kind": "test",
       "path": "src/auth/account-self-service.test.ts",
-      "line": 395
+      "line": 398
+    },
+    {
+      "id": "TEST-AIRA2-PROFILE-006",
+      "kind": "test",
+      "path": "src/auth/account-self-service.test.ts",
+      "line": 425
     },
     {
       "id": "CODE-AIRA2-ACCOUNT-SELF-001",
       "kind": "code",
       "path": "src/auth/account-self-service.ts",
-      "line": 63
+      "line": 64
     },
     {
       "id": "TEST-AIRA2-AUTH-001",
@@ -1103,49 +1109,55 @@
       "id": "TEST-AIRA2-SESSION-001",
       "kind": "test",
       "path": "src/auth/session-registry.test.ts",
-      "line": 4
+      "line": 7
     },
     {
       "id": "TEST-AIRA2-SESSION-002",
       "kind": "test",
       "path": "src/auth/session-registry.test.ts",
-      "line": 17
+      "line": 20
     },
     {
       "id": "TEST-AIRA2-SESSION-003",
       "kind": "test",
       "path": "src/auth/session-registry.test.ts",
-      "line": 32
+      "line": 35
     },
     {
       "id": "TEST-AIRA2-SESSION-004",
       "kind": "test",
       "path": "src/auth/session-registry.test.ts",
-      "line": 47
+      "line": 50
     },
     {
       "id": "TEST-AIRA2-SESSION-005",
       "kind": "test",
       "path": "src/auth/session-registry.test.ts",
-      "line": 71
+      "line": 74
     },
     {
       "id": "TEST-AIRA2-SESSION-006",
       "kind": "test",
       "path": "src/auth/session-registry.test.ts",
-      "line": 89
+      "line": 92
     },
     {
       "id": "TEST-AIRA2-SESSION-007",
       "kind": "test",
       "path": "src/auth/session-registry.test.ts",
-      "line": 109
+      "line": 112
+    },
+    {
+      "id": "TEST-AIRA2-SESSION-008",
+      "kind": "test",
+      "path": "src/auth/session-registry.test.ts",
+      "line": 126
     },
     {
       "id": "CODE-AIRA2-SESSION-001",
       "kind": "code",
       "path": "src/auth/session-registry.ts",
-      "line": 21
+      "line": 30
     },
     {
       "id": "CODE-AIRA2-AUTHZ-003",
@@ -1223,109 +1235,115 @@
       "id": "TEST-AIRA2-TEAM-001",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 24
+      "line": 27
     },
     {
       "id": "TEST-AIRA2-TEAM-002",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 42
+      "line": 45
     },
     {
       "id": "TEST-AIRA2-TEAM-003",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 64
+      "line": 67
     },
     {
       "id": "TEST-AIRA2-TEAM-014",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 81
+      "line": 84
     },
     {
       "id": "TEST-AIRA2-TEAM-004",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 96
+      "line": 99
     },
     {
       "id": "TEST-AIRA2-TEAM-005",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 115
+      "line": 118
     },
     {
       "id": "TEST-AIRA2-TEAM-006",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 137
+      "line": 140
     },
     {
       "id": "TEST-AIRA2-TEAM-007",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 161
+      "line": 164
     },
     {
       "id": "TEST-AIRA2-TEAM-008",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 183
+      "line": 186
     },
     {
       "id": "TEST-AIRA2-TEAM-009",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 201
+      "line": 204
     },
     {
       "id": "TEST-AIRA2-TEAM-010",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 220
+      "line": 223
     },
     {
       "id": "TEST-AIRA2-TEAM-013",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 239
+      "line": 242
     },
     {
       "id": "TEST-AIRA2-TEAM-011",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 261
+      "line": 264
     },
     {
       "id": "TEST-AIRA2-TEAM-012",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 280
+      "line": 283
     },
     {
       "id": "TEST-AIRA2-AUDIT-012",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 296
+      "line": 299
     },
     {
       "id": "TEST-AIRA2-AUDIT-013",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 322
+      "line": 325
     },
     {
       "id": "TEST-AIRA2-AUDIT-014",
       "kind": "test",
       "path": "src/authz/team-service.test.ts",
-      "line": 344
+      "line": 347
+    },
+    {
+      "id": "TEST-AIRA2-TEAM-015",
+      "kind": "test",
+      "path": "src/authz/team-service.test.ts",
+      "line": 375
     },
     {
       "id": "CODE-AIRA2-TEAM-001",
       "kind": "code",
       "path": "src/authz/team-service.ts",
-      "line": 59
+      "line": 60
     },
     {
       "id": "TEST-AIRA2-APPROVAL-001",
@@ -1838,6 +1856,12 @@
       "line": 376
     },
     {
+      "id": "TEST-AIRA2-RUNTIME-009",
+      "kind": "test",
+      "path": "src/server/app.test.ts",
+      "line": 413
+    },
+    {
       "id": "CODE-AIRA2-RUNTIME-004",
       "kind": "code",
       "path": "src/server/app.ts",
@@ -1847,7 +1871,7 @@
       "id": "CODE-AIRA2-RUNTIME-003",
       "kind": "code",
       "path": "src/server/app.ts",
-      "line": 339
+      "line": 340
     },
     {
       "id": "TEST-AIRA2-AUTH-008",
@@ -3069,6 +3093,11 @@
       "relation": "verifies"
     },
     {
+      "from": "TEST-AIRA2-PROFILE-006",
+      "to": "REQ-RUNTIME-002",
+      "relation": "verifies"
+    },
+    {
       "from": "CODE-AIRA2-ACCOUNT-SELF-001",
       "to": "REQ-MULTIUSER-018",
       "relation": "implements"
@@ -3211,6 +3240,11 @@
     {
       "from": "TEST-AIRA2-SESSION-007",
       "to": "REQ-MULTIUSER-024",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-SESSION-008",
+      "to": "REQ-RUNTIME-002",
       "relation": "verifies"
     },
     {
@@ -3446,6 +3480,11 @@
     {
       "from": "TEST-AIRA2-AUDIT-014",
       "to": "REQ-MULTIUSER-006",
+      "relation": "verifies"
+    },
+    {
+      "from": "TEST-AIRA2-TEAM-015",
+      "to": "REQ-RUNTIME-002",
       "relation": "verifies"
     },
     {
@@ -4339,6 +4378,11 @@
       "relation": "verifies"
     },
     {
+      "from": "TEST-AIRA2-RUNTIME-009",
+      "to": "REQ-RUNTIME-002",
+      "relation": "verifies"
+    },
+    {
       "from": "CODE-AIRA2-RUNTIME-004",
       "to": "REQ-RUNTIME-005",
       "relation": "implements"
@@ -4598,30 +4642,30 @@
     ".musubix/decisions/ADR-0005.md": "b4295c4972f9e223c479c15e59d63429b472367470c2cff5dcc488568c1d956c",
     ".musubix/decisions/ADR-0006.md": "b128d676d9ef3cac82966840793d9570b8edac8256f2a9a2979b4184dea6d30c",
     ".musubix/decisions/ADR-0007.md": "abdfe613b4418894f3897f7a0fea4adb52b525bfa33a38a3681ed7d574ec794a",
-    ".musubix/features/aira2-platform/design.md": "4122080b27888c4185adedd3bf17966439b0903cc9d264a5e03e1c07906354da",
-    ".musubix/features/aira2-platform/requirements.md": "b4a73bc3a08613e51fdb0b8324662e5c14e389f0e8a9bf8f62f478521704bd92",
+    ".musubix/features/aira2-platform/design.md": "6fe227079076507484c0fcd2b6e4c4d7adef7d253d7bef191534fca0b80fafa4",
+    ".musubix/features/aira2-platform/requirements.md": "5b751e8d8bde9265451b6718e4a14ead8603404c7bfdc8cb06bebe0b430685ac",
     ".musubix/features/example/design.md": "abcbee85062b3a7f06d0f1034abe89fe27d911abf8397f98024249f60eb8a9de",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed",
     "frontend-dist/assets/index-DPzYxANL.js": "db21f1a20fb8e9843a7051f888a3adbcca0449e4ded048e2f4b9e94646beab89",
     "src/agent-config/agent-skills-mcp-manager.test.ts": "daa01e46e19b6a6c585668d7cdf7b6e95cc437f1b7f333e7c2a4bf7b1137e056",
     "src/agent-config/agent-skills-mcp-manager.ts": "407f9a2d7ba26e757097ecff67f56644a2aa6b59a8e190f7300caa8c4fc5db70",
-    "src/auth/account-self-service.test.ts": "7a943edbef1872010be9ea0b99233f8733648ea8c4fbc60381740ccf6ace08f6",
-    "src/auth/account-self-service.ts": "f0c251873c5b8a4a39d6536c8c41f9c8d7ebec4ca6e89572ce95185ad6354b4c",
+    "src/auth/account-self-service.test.ts": "72e6580969b0267dba560a56abb3b0ae21dab4738cb99da3b537be660eb25154",
+    "src/auth/account-self-service.ts": "7568f11e8a9aebc6aeb2ec6fb43b390a2a28169a8c9894f15073b78b00475f10",
     "src/auth/account.test.ts": "0db268e9e1d9079e246e9e2a8d8f05cc117d6279882f69ca231450b322b56401",
     "src/auth/account.ts": "9053668190e77f0935db227c52953b1097719f19ab03e889f4f051a82cbdc46d",
     "src/auth/login.test.ts": "27dda6174defcf5a98978a531fe57b3ea65b889128a2ea35d50a1dd0015a0372",
     "src/auth/login.ts": "91690d2c290d838dbf3403a4f867e9d7e12f4e29c34bdda545276e6b6e257788",
     "src/auth/password-provider.ts": "a66c2f3cff649d3df88d80524efbaa8e95bad8b30a3cf088f9e46555e9313111",
-    "src/auth/session-registry.test.ts": "9fdd67ac7c2d0b9495f28fb80efa92d1039211c5d2730811a0881970cebbd9b5",
-    "src/auth/session-registry.ts": "ff0fdccb03cfe9d0d93bc0a450d37b987275c88eff7ba68aefc3859681216dd6",
+    "src/auth/session-registry.test.ts": "49ed2c97d4d0d5a3ffa87e181d7b559d1766afc6339479cbf738d8644fc8f717",
+    "src/auth/session-registry.ts": "b3b443b165f48b5bff426694ed7e67adc13a64487b39f8783bf3ccf591df99ec",
     "src/auth/session.ts": "6d2d51135f6a34ee8d2ecf77b37e7b60508c47c870c363545f2bb03d8fa0889b",
     "src/authz/audit.ts": "5abdda968eb0f68794defb3f387925fc4ba8eb60f083ba7442862f020dba5513",
     "src/authz/matrix.ts": "ff03dc897ce1705fb4f48ead251cd671a8a2fcc6d759d0797c3c4d666bf433d1",
     "src/authz/project-authz.test.ts": "e1f11103753b87305167f7d5cb6485f17988a420be148f089cf66db7f6545987",
     "src/authz/project-authz.ts": "251275f1381714d0510abc2adb4fd761d4683d02b8d874d8abb2cd9b66c7b5c3",
     "src/authz/self-scope.ts": "dc970c8a9cc2a455787c3954d0edab15597d4cf18c09c4f8ef53a8fda6f3e1cf",
-    "src/authz/team-service.test.ts": "786fa9eb10cb322a5928ff6cee0765da88221c406db783d00c4fe973a623af90",
-    "src/authz/team-service.ts": "893929ba3d76a7c2c3c5c8a3f4a75e262abd0908023abcf1ad2f3e8650d2051c",
+    "src/authz/team-service.test.ts": "9c187661979effd26ba857ef56f85a888d910172f7d502ff5a5662c28a137063",
+    "src/authz/team-service.ts": "015f83744f0dc94fc6f379af521ecc8b425028e4441c83a893968f83a6cba235",
     "src/eln/approval-signature-service.test.ts": "3e9a81d95edbac42524b50159788f586728df029fecaa8a5fc49ce32ec8a6e21",
     "src/eln/approval-signature-service.ts": "61fa3216157e8879632cb89d92e878e70267a1cbaaa7be160a8c571c1d52957c",
     "src/eln/eln-core-service.test.ts": "2a46e7d30047b471490bcc67cb3581293e26a6c152232a98beb21d7fcdaccdb5",
@@ -4647,13 +4691,13 @@
     "src/readiness/readiness.test.ts": "eb5dc040b2d5e5689aab6682e365e4d3ac34522fe6c5633d74f6ae4dd2d3020d",
     "src/readiness/readiness.ts": "abe2e72545b6e80333d7ba7fd2a128f2ed24d133f4850048e7b109e2a6aa3103",
     "src/server/app-multiuser-routes.test.ts": "d9cf142fd432e423013a495eb160723aeec9b20db7df4f49ecaf050d5686e272",
-    "src/server/app.test.ts": "45a447e4fb9c0aa13d1fde1775a6f8d8607a0917a392eea253f3de8dedbc001b",
-    "src/server/app.ts": "cc191f64d69901a428e05dae0f81d98166442ec68888a747719664d989116f7e",
+    "src/server/app.test.ts": "42d68f79b17ba83687b7820c193aa0e7dc9b58971f61969b7cf3378c58542291",
+    "src/server/app.ts": "4b3c783e67e52c5ecd5108810451a3efe3eec767814019eb7ded976796366bc4",
     "src/server/bootstrap-admin.test.ts": "cf06176988b0f134568080c07c2a2ad2ea6a892c1e04ef1661176b28bf2ec76a",
     "src/server/server.test.ts": "4d6e4ded09e361e8df9d7ccc0b61b263b6ea3ae215bd7f93f48d5c5c4c32add4",
     "src/server/server.ts": "d388dc813b1f83e4e9d0591c4ae681573703a75801afed81bbb7f9ee87e1b448",
     "src/server/store.test.ts": "ca9151bd0b80b9b3ea89858b9ae3af33cae72a19ab48155a236aad8580b00055",
-    "src/server/store.ts": "f4ea8a7e7d0a8c0958d232f39bf504db092ce5b32a65a0e23eab08d75f767314",
+    "src/server/store.ts": "3f0a10a3002605cd726e25554c55dac77da3855cbe9fb3567f95f9d8e8775cc9",
     "src/vault/credential-vault.test.ts": "ff7a7dd67222e110ad7f60944c0997db30d69346d479e40f063c0467ba3245a5",
     "src/vault/credential-vault.ts": "6fd9ff29021976c12977b5a15b475d452a90d9650b017eabd12254598a67d59c",
     "src/vault/crypto.ts": "084dd9644c1c8e38c7e992d28519384206a8a60aa094d1f5b4891e61267a327b",

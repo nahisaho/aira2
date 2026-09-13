@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { randomBytes } from 'node:crypto';
+import { mkdirSync, rmSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { AccountSelfService, generateTotpCode } from './account-self-service.js';
 import { SessionRegistry } from './session-registry.js';
 import { AuditLog } from '../authz/audit.js';
+import { SqliteStore } from '../server/store.js';
 
 const KEY = randomBytes(32);
 const TOTP_STEP_MS = 30_000;
@@ -415,6 +418,69 @@ describe('audit coverage for MFA self-service mutations', () => {
     for (const entry of entries) {
       expect(entry.userId).toBe('user-1');
       expect(entry.targetResource).not.toContain(secret);
+    }
+  });
+});
+
+/** @id TEST-AIRA2-PROFILE-006
+ * @verifies REQ-RUNTIME-002
+ */
+describe('account self-service state survives a fresh instance against the same store', () => {
+  it('TEST-AIRA2-PROFILE-006 restores profile/verified-email, password hash, reset-rate-limit exhaustion, and TOTP replay/lockout state after reconstruction', () => {
+    const dbPath = resolve('data/test-artifacts/account-self-service-restart.sqlite');
+    mkdirSync(dirname(dbPath), { recursive: true });
+    rmSync(dbPath, { force: true });
+    try {
+      const store = new SqliteStore({ dbPath });
+      const sessions = new SessionRegistry(store);
+      const audit = new AuditLog(store);
+      const service = new AccountSelfService(sessions, KEY, audit, store);
+      service.registerAccount('user-1', 'Alice', null, hashOf('correct-horse'));
+      const actor = { accountId: 'user-1', isGlobalAdmin: false };
+
+      // Verified-email persistence (via profile update + confirmation link).
+      service.updateProfile(actor, { email: 'alice@example.com' });
+      const { token: emailToken } = service.getDeliveredLinks().at(-1)!;
+      service.confirmEmailChange(emailToken);
+
+      // Password change persistence.
+      service.changePassword(actor, 'correct-horse', 'new-battery-staple');
+
+      // Exhaust the reset-request rate limit (3 allowed within the window; the 4th is throttled).
+      for (let i = 0; i < 4; i += 1) {
+        service.requestPasswordReset('alice@example.com');
+      }
+
+      // MFA enroll/confirm, then replay the same accepted code and drive the factor into lockout.
+      const { secret } = service.enrollTotp(actor);
+      const now = Date.now();
+      const confirmCode = generateTotpCode(Buffer.from(secret, 'hex'), Math.floor(now / TOTP_STEP_MS));
+      service.confirmTotpEnrollment('user-1', confirmCode, now);
+      for (let i = 0; i < 5; i += 1) {
+        service.verify('user-1', '000000', now);
+      }
+      expect(service.verify('user-1', '000000', now)).toBe('locked');
+
+      const sessions2 = new SessionRegistry(store);
+      const service2 = new AccountSelfService(sessions2, KEY, audit, store);
+
+      expect(service2.getProfile('user-1')?.verifiedEmail).toBe('alice@example.com');
+      expect(service2.getPasswordHash('user-1')).not.toBe(hashOf('correct-horse'));
+      // Reset-reset-limit exhaustion persists: a 5th request from a fresh instance is still throttled
+      // (no new reset token/delivered link is produced for it).
+      const linksBefore = service2.getDeliveredLinks().length;
+      service2.requestPasswordReset('alice@example.com');
+      expect(service2.getDeliveredLinks().length).toBe(linksBefore);
+      // MFA lockout persists.
+      expect(service2.verify('user-1', confirmCode, now)).toBe('locked');
+      // Replay rejection persists past reconstruction, after the lockout cooldown elapses.
+      const laterNow = now + 6 * 60_000;
+      expect(service2.verify('user-1', confirmCode, laterNow)).toBe('invalid');
+      store.close();
+    } finally {
+      rmSync(dbPath, { force: true });
+      rmSync(`${dbPath}-wal`, { force: true });
+      rmSync(`${dbPath}-shm`, { force: true });
     }
   });
 });

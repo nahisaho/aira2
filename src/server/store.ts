@@ -165,6 +165,68 @@ export class SqliteStore {
         access_credential_ref TEXT NOT NULL,
         available_skill_ids_json TEXT NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS teams (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        admin_user_id TEXT NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS team_members (
+        team_id TEXT NOT NULL,
+        user_id TEXT NOT NULL,
+        PRIMARY KEY (team_id, user_id)
+      );
+      CREATE TABLE IF NOT EXISTS team_shares (
+        project_id TEXT NOT NULL,
+        team_id TEXT NOT NULL,
+        role TEXT NOT NULL,
+        PRIMARY KEY (project_id, team_id)
+      );
+      CREATE TABLE IF NOT EXISTS invitations (
+        id TEXT PRIMARY KEY,
+        token TEXT NOT NULL UNIQUE,
+        project_id TEXT NOT NULL,
+        email TEXT NOT NULL,
+        role TEXT NOT NULL,
+        status TEXT NOT NULL,
+        expires_at INTEGER NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS profiles (
+        account_id TEXT PRIMARY KEY,
+        display_name TEXT NOT NULL,
+        verified_email TEXT
+      );
+      CREATE TABLE IF NOT EXISTS pending_email_changes (
+        token TEXT PRIMARY KEY,
+        account_id TEXT NOT NULL,
+        new_email TEXT NOT NULL,
+        expires_at INTEGER NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS reset_tokens (
+        token TEXT PRIMARY KEY,
+        account_id TEXT NOT NULL,
+        expires_at INTEGER NOT NULL,
+        consumed INTEGER NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS reset_request_log (
+        email TEXT NOT NULL,
+        requested_at INTEGER NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS totp_factors (
+        account_id TEXT PRIMARY KEY,
+        encrypted_secret_json TEXT NOT NULL,
+        active INTEGER NOT NULL,
+        consecutive_failures INTEGER NOT NULL,
+        locked_until INTEGER NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS totp_accepted_steps (
+        account_id TEXT NOT NULL,
+        step INTEGER NOT NULL,
+        PRIMARY KEY (account_id, step)
+      );
+      CREATE TABLE IF NOT EXISTS credential_versions (
+        account_id TEXT PRIMARY KEY,
+        version INTEGER NOT NULL
+      );
     `);
   }
 
@@ -811,5 +873,307 @@ export class SqliteStore {
 
   deleteAgentSkillSource(sourceId: string): void {
     this.db.prepare(`DELETE FROM agent_skill_sources WHERE source_id = ?`).run(sourceId);
+  }
+
+  // ---- Teams / invitations (DES-AIRA2-013, CHANGE-0006) ----
+
+  upsertTeam(team: { id: string; name: string; adminUserId: string }): void {
+    this.db
+      .prepare(
+        `INSERT INTO teams (id, name, admin_user_id) VALUES (?, ?, ?)
+         ON CONFLICT(id) DO UPDATE SET name = excluded.name, admin_user_id = excluded.admin_user_id`,
+      )
+      .run(team.id, team.name, team.adminUserId);
+  }
+
+  deleteTeamRow(teamId: string): void {
+    this.db.prepare(`DELETE FROM teams WHERE id = ?`).run(teamId);
+    this.db.prepare(`DELETE FROM team_members WHERE team_id = ?`).run(teamId);
+    this.db.prepare(`DELETE FROM team_shares WHERE team_id = ?`).run(teamId);
+  }
+
+  listTeams(): Array<{ id: string; name: string; adminUserId: string }> {
+    const rows = this.db.prepare(`SELECT id, name, admin_user_id FROM teams`).all() as Array<{
+      id: string;
+      name: string;
+      admin_user_id: string;
+    }>;
+    return rows.map((row) => ({ id: row.id, name: row.name, adminUserId: row.admin_user_id }));
+  }
+
+  listTeamMembers(): Array<{ teamId: string; userId: string }> {
+    const rows = this.db.prepare(`SELECT team_id, user_id FROM team_members`).all() as Array<{
+      team_id: string;
+      user_id: string;
+    }>;
+    return rows.map((row) => ({ teamId: row.team_id, userId: row.user_id }));
+  }
+
+  addTeamMemberRow(teamId: string, userId: string): void {
+    this.db
+      .prepare(`INSERT OR IGNORE INTO team_members (team_id, user_id) VALUES (?, ?)`)
+      .run(teamId, userId);
+  }
+
+  removeTeamMemberRow(teamId: string, userId: string): void {
+    this.db.prepare(`DELETE FROM team_members WHERE team_id = ? AND user_id = ?`).run(teamId, userId);
+  }
+
+  listTeamShares(): Array<{ projectId: string; teamId: string; role: string }> {
+    const rows = this.db.prepare(`SELECT project_id, team_id, role FROM team_shares`).all() as Array<{
+      project_id: string;
+      team_id: string;
+      role: string;
+    }>;
+    return rows.map((row) => ({ projectId: row.project_id, teamId: row.team_id, role: row.role }));
+  }
+
+  setTeamShareRow(projectId: string, teamId: string, role: string): void {
+    this.db
+      .prepare(
+        `INSERT INTO team_shares (project_id, team_id, role) VALUES (?, ?, ?)
+         ON CONFLICT(project_id, team_id) DO UPDATE SET role = excluded.role`,
+      )
+      .run(projectId, teamId, role);
+  }
+
+  deleteTeamShareRow(projectId: string, teamId: string): void {
+    this.db.prepare(`DELETE FROM team_shares WHERE project_id = ? AND team_id = ?`).run(projectId, teamId);
+  }
+
+  upsertInvitation(invitation: {
+    id: string;
+    token: string;
+    projectId: string;
+    email: string;
+    role: string;
+    status: string;
+    expiresAt: number;
+  }): void {
+    this.db
+      .prepare(
+        `INSERT INTO invitations (id, token, project_id, email, role, status, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?)
+         ON CONFLICT(id) DO UPDATE SET token = excluded.token, project_id = excluded.project_id,
+           email = excluded.email, role = excluded.role, status = excluded.status, expires_at = excluded.expires_at`,
+      )
+      .run(invitation.id, invitation.token, invitation.projectId, invitation.email, invitation.role, invitation.status, invitation.expiresAt);
+  }
+
+  listInvitationRows(): Array<{
+    id: string;
+    token: string;
+    projectId: string;
+    email: string;
+    role: string;
+    status: string;
+    expiresAt: number;
+  }> {
+    const rows = this.db
+      .prepare(`SELECT id, token, project_id, email, role, status, expires_at FROM invitations`)
+      .all() as Array<{
+      id: string;
+      token: string;
+      project_id: string;
+      email: string;
+      role: string;
+      status: string;
+      expires_at: number;
+    }>;
+    return rows.map((row) => ({
+      id: row.id,
+      token: row.token,
+      projectId: row.project_id,
+      email: row.email,
+      role: row.role,
+      status: row.status,
+      expiresAt: row.expires_at,
+    }));
+  }
+
+  // ---- Account self-service (DES-AIRA2-014, CHANGE-0006) ----
+
+  upsertProfile(profile: { accountId: string; displayName: string; verifiedEmail: string | null }): void {
+    this.db
+      .prepare(
+        `INSERT INTO profiles (account_id, display_name, verified_email) VALUES (?, ?, ?)
+         ON CONFLICT(account_id) DO UPDATE SET display_name = excluded.display_name, verified_email = excluded.verified_email`,
+      )
+      .run(profile.accountId, profile.displayName, profile.verifiedEmail);
+  }
+
+  listProfiles(): Array<{ accountId: string; displayName: string; verifiedEmail: string | null }> {
+    const rows = this.db.prepare(`SELECT account_id, display_name, verified_email FROM profiles`).all() as Array<{
+      account_id: string;
+      display_name: string;
+      verified_email: string | null;
+    }>;
+    return rows.map((row) => ({ accountId: row.account_id, displayName: row.display_name, verifiedEmail: row.verified_email }));
+  }
+
+  upsertPendingEmailChange(change: { token: string; accountId: string; newEmail: string; expiresAt: number }): void {
+    this.db
+      .prepare(
+        `INSERT INTO pending_email_changes (token, account_id, new_email, expires_at) VALUES (?, ?, ?, ?)
+         ON CONFLICT(token) DO UPDATE SET account_id = excluded.account_id, new_email = excluded.new_email, expires_at = excluded.expires_at`,
+      )
+      .run(change.token, change.accountId, change.newEmail, change.expiresAt);
+  }
+
+  deletePendingEmailChange(token: string): void {
+    this.db.prepare(`DELETE FROM pending_email_changes WHERE token = ?`).run(token);
+  }
+
+  listPendingEmailChanges(): Array<{ token: string; accountId: string; newEmail: string; expiresAt: number }> {
+    const rows = this.db
+      .prepare(`SELECT token, account_id, new_email, expires_at FROM pending_email_changes`)
+      .all() as Array<{ token: string; account_id: string; new_email: string; expires_at: number }>;
+    return rows.map((row) => ({ token: row.token, accountId: row.account_id, newEmail: row.new_email, expiresAt: row.expires_at }));
+  }
+
+  upsertResetToken(token: { token: string; accountId: string; expiresAt: number; consumed: boolean }): void {
+    this.db
+      .prepare(
+        `INSERT INTO reset_tokens (token, account_id, expires_at, consumed) VALUES (?, ?, ?, ?)
+         ON CONFLICT(token) DO UPDATE SET account_id = excluded.account_id, expires_at = excluded.expires_at, consumed = excluded.consumed`,
+      )
+      .run(token.token, token.accountId, token.expiresAt, token.consumed ? 1 : 0);
+  }
+
+  listResetTokens(): Array<{ token: string; accountId: string; expiresAt: number; consumed: boolean }> {
+    const rows = this.db.prepare(`SELECT token, account_id, expires_at, consumed FROM reset_tokens`).all() as Array<{
+      token: string;
+      account_id: string;
+      expires_at: number;
+      consumed: number;
+    }>;
+    return rows.map((row) => ({ token: row.token, accountId: row.account_id, expiresAt: row.expires_at, consumed: row.consumed === 1 }));
+  }
+
+  recordResetRequest(email: string, requestedAt: number): void {
+    this.db.prepare(`INSERT INTO reset_request_log (email, requested_at) VALUES (?, ?)`).run(email, requestedAt);
+  }
+
+  /** Bounds unbounded growth of reset_request_log: rows older than the rate-limit window can no longer affect throttling. */
+  deleteExpiredResetRequests(olderThan: number): void {
+    this.db.prepare(`DELETE FROM reset_request_log WHERE requested_at <= ?`).run(olderThan);
+  }
+
+  listResetRequests(email: string): number[] {
+    const rows = this.db
+      .prepare(`SELECT requested_at FROM reset_request_log WHERE email = ?`)
+      .all(email) as Array<{ requested_at: number }>;
+    return rows.map((row) => row.requested_at);
+  }
+
+  listAllResetRequests(): Array<{ email: string; requestedAt: number }> {
+    const rows = this.db.prepare(`SELECT email, requested_at FROM reset_request_log`).all() as Array<{
+      email: string;
+      requested_at: number;
+    }>;
+    return rows.map((row) => ({ email: row.email, requestedAt: row.requested_at }));
+  }
+
+  upsertTotpFactor(factor: {
+    accountId: string;
+    encryptedSecretJson: string;
+    active: boolean;
+    consecutiveFailures: number;
+    lockedUntil: number;
+  }): void {
+    this.db
+      .prepare(
+        `INSERT INTO totp_factors (account_id, encrypted_secret_json, active, consecutive_failures, locked_until) VALUES (?, ?, ?, ?, ?)
+         ON CONFLICT(account_id) DO UPDATE SET encrypted_secret_json = excluded.encrypted_secret_json,
+           active = excluded.active, consecutive_failures = excluded.consecutive_failures, locked_until = excluded.locked_until`,
+      )
+      .run(factor.accountId, factor.encryptedSecretJson, factor.active ? 1 : 0, factor.consecutiveFailures, factor.lockedUntil);
+  }
+
+  listTotpFactors(): Array<{
+    accountId: string;
+    encryptedSecretJson: string;
+    active: boolean;
+    consecutiveFailures: number;
+    lockedUntil: number;
+  }> {
+    const rows = this.db
+      .prepare(`SELECT account_id, encrypted_secret_json, active, consecutive_failures, locked_until FROM totp_factors`)
+      .all() as Array<{
+      account_id: string;
+      encrypted_secret_json: string;
+      active: number;
+      consecutive_failures: number;
+      locked_until: number;
+    }>;
+    return rows.map((row) => ({
+      accountId: row.account_id,
+      encryptedSecretJson: row.encrypted_secret_json,
+      active: row.active === 1,
+      consecutiveFailures: row.consecutive_failures,
+      lockedUntil: row.locked_until,
+    }));
+  }
+
+  addTotpAcceptedStep(accountId: string, step: number): void {
+    this.db
+      .prepare(`INSERT OR IGNORE INTO totp_accepted_steps (account_id, step) VALUES (?, ?)`)
+      .run(accountId, step);
+  }
+
+  hasTotpAcceptedStep(accountId: string, step: number): boolean {
+    const row = this.db
+      .prepare(`SELECT 1 FROM totp_accepted_steps WHERE account_id = ? AND step = ?`)
+      .get(accountId, step);
+    return row !== undefined;
+  }
+
+  listAllTotpAcceptedSteps(): Array<{ accountId: string; step: number }> {
+    const rows = this.db.prepare(`SELECT account_id, step FROM totp_accepted_steps`).all() as Array<{
+      account_id: string;
+      step: number;
+    }>;
+    return rows.map((row) => ({ accountId: row.account_id, step: row.step }));
+  }
+
+  deleteTotpAcceptedSteps(accountId: string): void {
+    this.db.prepare(`DELETE FROM totp_accepted_steps WHERE account_id = ?`).run(accountId);
+  }
+
+  // ---- Sessions / credential versions (DES-AIRA2-015, CHANGE-0006) ----
+
+  listSessionsByAccount<T>(accountId: string): Array<{ id: string; payload: T }> {
+    const rows = this.db
+      .prepare(`SELECT id, payload_json FROM sessions WHERE account_id = ?`)
+      .all(accountId) as Array<{ id: string; payload_json: string }>;
+    return rows.map((row) => ({ id: row.id, payload: JSON.parse(row.payload_json) as T }));
+  }
+
+  listAllSessions<T>(): Array<{ id: string; payload: T }> {
+    const rows = this.db.prepare(`SELECT id, payload_json FROM sessions`).all() as Array<{
+      id: string;
+      payload_json: string;
+    }>;
+    return rows.map((row) => ({ id: row.id, payload: JSON.parse(row.payload_json) as T }));
+  }
+
+  listCredentialVersionAccountIds(): string[] {
+    const rows = this.db.prepare(`SELECT account_id FROM credential_versions`).all() as Array<{ account_id: string }>;
+    return rows.map((row) => row.account_id);
+  }
+
+  setCredentialVersion(accountId: string, version: number): void {
+    this.db
+      .prepare(
+        `INSERT INTO credential_versions (account_id, version) VALUES (?, ?)
+         ON CONFLICT(account_id) DO UPDATE SET version = excluded.version`,
+      )
+      .run(accountId, version);
+  }
+
+  getCredentialVersion(accountId: string): number | null {
+    const row = this.db.prepare(`SELECT version FROM credential_versions WHERE account_id = ?`).get(accountId) as
+      | { version: number }
+      | undefined;
+    return row?.version ?? null;
   }
 }

@@ -1,4 +1,5 @@
 import { randomBytes } from 'node:crypto';
+import type { SqliteStore } from '../server/store.js';
 
 const DEFAULT_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 
@@ -18,6 +19,14 @@ export interface SessionListing {
 
 export type IssueOutcome = Session | { status: 'stale-version' } | { status: 'mfa-required' };
 
+interface SessionPayload {
+  accountId: string;
+  credentialVersion: number;
+  issuedAt: number;
+  expiresAt: number;
+  displayId: string;
+}
+
 /**
  * @id CODE-AIRA2-SESSION-001
  * @implements REQ-MULTIUSER-046 REQ-MULTIUSER-047 REQ-MULTIUSER-048 REQ-MULTIUSER-050 REQ-MULTIUSER-023 REQ-MULTIUSER-024
@@ -28,6 +37,42 @@ export class SessionRegistry {
   private readonly sessions = new Map<string, Session>();
   private readonly displayIds = new Map<string, string>();
 
+  constructor(private readonly store?: SqliteStore) {
+    this.hydrate();
+  }
+
+  /** Rebuilds in-memory state from the durable store at construction time (REQ-RUNTIME-002),
+   * so a freshly constructed instance backed by the same store reflects prior process state. */
+  private hydrate(): void {
+    if (!this.store) return;
+    for (const accountId of this.store.listCredentialVersionAccountIds()) {
+      const version = this.store.getCredentialVersion(accountId);
+      if (version !== null) this.credentialVersions.set(accountId, version);
+    }
+    for (const row of this.store.listAllSessions<SessionPayload>()) {
+      const payload = row.payload;
+      this.sessions.set(row.id, {
+        id: row.id,
+        accountId: payload.accountId,
+        credentialVersion: payload.credentialVersion,
+        issuedAt: payload.issuedAt,
+        expiresAt: payload.expiresAt,
+      });
+      this.displayIds.set(row.id, payload.displayId);
+    }
+  }
+
+  private persistSession(session: Session, displayId: string): void {
+    const payload: SessionPayload = {
+      accountId: session.accountId,
+      credentialVersion: session.credentialVersion,
+      issuedAt: session.issuedAt,
+      expiresAt: session.expiresAt,
+      displayId,
+    };
+    this.store?.upsertSession(session.id, session.accountId, payload);
+  }
+
   getCredentialVersion(accountId: string): number {
     return this.credentialVersions.get(accountId) ?? 0;
   }
@@ -35,6 +80,7 @@ export class SessionRegistry {
   incrementCredentialVersion(accountId: string): number {
     const next = this.getCredentialVersion(accountId) + 1;
     this.credentialVersions.set(accountId, next);
+    this.store?.setCredentialVersion(accountId, next);
     return next;
   }
 
@@ -102,6 +148,7 @@ export class SessionRegistry {
       }
       this.sessions.delete(session.id);
       this.displayIds.delete(session.id);
+      this.store?.deleteSession(session.id);
       return true;
     }
     return false;
@@ -116,6 +163,7 @@ export class SessionRegistry {
   endSession(sessionId: string): void {
     this.sessions.delete(sessionId);
     this.displayIds.delete(sessionId);
+    this.store?.deleteSession(sessionId);
   }
 
   private recordSession(accountId: string, credentialVersion: number, now: number, ttlMs: number): Session {
@@ -126,8 +174,10 @@ export class SessionRegistry {
       issuedAt: now,
       expiresAt: now + ttlMs,
     };
+    const displayId = randomBytes(8).toString('hex');
     this.sessions.set(session.id, session);
-    this.displayIds.set(session.id, randomBytes(8).toString('hex'));
+    this.displayIds.set(session.id, displayId);
+    this.persistSession(session, displayId);
     return session;
   }
 }

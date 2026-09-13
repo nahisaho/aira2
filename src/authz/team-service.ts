@@ -2,6 +2,7 @@ import { randomBytes } from 'node:crypto';
 import { authorizeSelf, type SelfScopeActorContext } from './self-scope.js';
 import { AuditLog } from './audit.js';
 import { AuthorizationDeniedError, ProjectAuthorizationService, type ActorContext } from './project-authz.js';
+import type { SqliteStore } from '../server/store.js';
 
 export type TeamShareRole = 'viewer' | 'editor';
 export type EffectiveRole = 'owner' | 'editor' | 'viewer' | 'none';
@@ -72,7 +73,36 @@ export class TeamService {
     private readonly projectAuthz: ProjectAuthorizationService,
     private readonly emails: VerifiedEmailLookup,
     private readonly audit: AuditLog = new AuditLog(),
-  ) {}
+    private readonly store?: SqliteStore,
+  ) {
+    this.hydrate();
+  }
+
+  /** Rebuilds in-memory state from the durable store at construction time (REQ-RUNTIME-002),
+   * so a freshly constructed instance backed by the same store reflects prior process state. */
+  private hydrate(): void {
+    if (!this.store) return;
+    const memberIds = new Map<string, string[]>();
+    for (const { teamId, userId } of this.store.listTeamMembers()) {
+      const list = memberIds.get(teamId) ?? [];
+      list.push(userId);
+      memberIds.set(teamId, list);
+    }
+    for (const row of this.store.listTeams()) {
+      this.teams.set(row.id, { ...row, memberIds: memberIds.get(row.id) ?? [] });
+    }
+    for (const row of this.store.listTeamShares()) {
+      let shares = this.teamShares.get(row.projectId);
+      if (!shares) {
+        shares = new Map();
+        this.teamShares.set(row.projectId, shares);
+      }
+      shares.set(row.teamId, row.role as TeamShareRole);
+    }
+    for (const row of this.store.listInvitationRows()) {
+      this.invitations.set(row.token, { ...row, status: row.status as InvitationStatus, role: row.role as TeamShareRole });
+    }
+  }
 
   // ---- Teams (REQ-016, REQ-030) ----
 
@@ -82,6 +112,7 @@ export class TeamService {
     }
     const team: Team = { id: randomBytes(8).toString('hex'), name, adminUserId: actor.accountId, memberIds: [] };
     this.teams.set(team.id, team);
+    this.store?.upsertTeam({ id: team.id, name: team.name, adminUserId: team.adminUserId });
     this.audit.record({
       userId: actor.accountId,
       timestamp: Date.now(),
@@ -99,6 +130,7 @@ export class TeamService {
     const team = this.requireTeam(teamId);
     this.requireTeamAdmin(actor, team, 'team.admin.modify');
     team.adminUserId = newAdminUserId;
+    this.store?.upsertTeam({ id: team.id, name: team.name, adminUserId: team.adminUserId });
     this.audit.record({
       userId: actor.accountId,
       timestamp: Date.now(),
@@ -111,13 +143,21 @@ export class TeamService {
     const team = this.requireTeam(teamId);
     this.requireTeamAdmin(actor, team, 'team.delete');
     const affectedMembers = [...team.memberIds];
-    this.teams.delete(teamId);
-    for (const [projectId, shares] of this.teamShares.entries()) {
-      if (shares.delete(teamId)) {
-        for (const memberId of affectedMembers) {
-          this.recomputeAndMaybeTerminate(projectId, memberId);
+    const runDelete = () => {
+      this.teams.delete(teamId);
+      this.store?.deleteTeamRow(teamId);
+      for (const [projectId, shares] of this.teamShares.entries()) {
+        if (shares.delete(teamId)) {
+          for (const memberId of affectedMembers) {
+            this.recomputeAndMaybeTerminate(projectId, memberId);
+          }
         }
       }
+    };
+    if (this.store) {
+      this.store.runInTransaction(runDelete);
+    } else {
+      runDelete();
     }
     this.audit.record({
       userId: actor.accountId,
@@ -133,6 +173,7 @@ export class TeamService {
     if (!team.memberIds.includes(userId)) {
       team.memberIds.push(userId);
     }
+    this.store?.addTeamMemberRow(teamId, userId);
     this.audit.record({
       userId: actor.accountId,
       timestamp: Date.now(),
@@ -145,6 +186,7 @@ export class TeamService {
     const team = this.requireTeam(teamId);
     this.requireTeamAdmin(actor, team, 'team.membership.modify');
     team.memberIds = team.memberIds.filter((id) => id !== userId);
+    this.store?.removeTeamMemberRow(teamId, userId);
     for (const [projectId, shares] of this.teamShares.entries()) {
       if (shares.has(teamId)) {
         this.recomputeAndMaybeTerminate(projectId, userId);
@@ -188,6 +230,7 @@ export class TeamService {
       this.teamShares.set(projectId, shares);
     }
     shares.set(teamId, role);
+    this.store?.setTeamShareRow(projectId, teamId, role);
     this.audit.record({
       userId: actor.accountId,
       timestamp: Date.now(),
@@ -203,6 +246,7 @@ export class TeamService {
     const shares = this.teamShares.get(projectId);
     const team = this.teams.get(teamId);
     shares?.delete(teamId);
+    this.store?.deleteTeamShareRow(projectId, teamId);
     if (team) {
       for (const memberId of team.memberIds) {
         this.recomputeAndMaybeTerminate(projectId, memberId);
@@ -280,6 +324,7 @@ export class TeamService {
       expiresAt: Date.now() + INVITATION_TTL_MS,
     };
     this.invitations.set(invitation.token, invitation);
+    this.store?.upsertInvitation(invitation);
     this.audit.record({
       userId: actor.accountId,
       timestamp: Date.now(),
@@ -296,6 +341,7 @@ export class TeamService {
     for (const invitation of this.invitations.values()) {
       if (invitation.projectId === projectId && invitation.id === invitationId && invitation.status === 'pending') {
         invitation.status = 'cancelled';
+        this.store?.upsertInvitation(invitation);
         this.audit.record({
           userId: actor.accountId,
           timestamp: Date.now(),
@@ -316,8 +362,16 @@ export class TeamService {
     if (!verifiedEmail || verifiedEmail !== invitation.email) {
       return { status: 'rejected' };
     }
-    invitation.status = 'accepted';
-    this.projectAuthz.grantShareViaInvitation(invitation.projectId, accountId, invitation.role);
+    const applyAcceptance = () => {
+      invitation.status = 'accepted';
+      this.store?.upsertInvitation(invitation);
+      this.projectAuthz.grantShareViaInvitation(invitation.projectId, accountId, invitation.role);
+    };
+    if (this.store) {
+      this.store.runInTransaction(applyAcceptance);
+    } else {
+      applyAcceptance();
+    }
     this.audit.record({
       userId: accountId,
       timestamp: now,

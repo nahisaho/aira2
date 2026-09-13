@@ -184,12 +184,13 @@ function buildContext(options: BuildAppOptions): AppContext {
   );
   const agentConfig = new AgentSkillsMcpConfigManager(authz, store);
   const graphRag = new GraphRagService(authz, new GraphDbSupervisor(join(dirname(options.dbPath), 'aira-graphdb')), gateway);
-  const sessions = new SessionRegistry();
-  const accountSelfService = new AccountSelfService(sessions, options.vaultKey ?? loadVaultKey(), audit);
+  const sessions = new SessionRegistry(store);
+  const accountSelfService = new AccountSelfService(sessions, options.vaultKey ?? loadVaultKey(), audit, store);
   const teamService = new TeamService(
     authz,
     { getVerifiedEmail: (accountId) => accountSelfService.getProfile(accountId)?.verifiedEmail ?? null },
     audit,
+    store,
   );
   authz.setTeamShareResolver({
     resolveTeamOnlyRole: (userId, projectId) => teamService.resolveTeamOnlyRole(userId, projectId),

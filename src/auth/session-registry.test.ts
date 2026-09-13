@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { mkdirSync, rmSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { SessionRegistry } from './session-registry.js';
+import { SqliteStore } from '../server/store.js';
 
 /** @id TEST-AIRA2-SESSION-001
  * @verifies REQ-MULTIUSER-047
@@ -117,5 +120,40 @@ describe('composition-root logout', () => {
     registry.endSession(current.id);
 
     expect(registry.validateSession(current.id)).toBeNull();
+  });
+});
+
+/** @id TEST-AIRA2-SESSION-008
+ * @verifies REQ-RUNTIME-002
+ */
+describe('session/credential-version state survives a fresh instance against the same store', () => {
+  it('TEST-AIRA2-SESSION-008 restores active sessions, display IDs, and the credential version after reconstruction', () => {
+    const dbPath = resolve('data/test-artifacts/session-registry-restart.sqlite');
+    mkdirSync(dirname(dbPath), { recursive: true });
+    rmSync(dbPath, { force: true });
+    try {
+      const store = new SqliteStore({ dbPath });
+      const registry = new SessionRegistry(store);
+      const session = registry.issueSession('user-1');
+      const displayId = registry.getDisplayId(session.id);
+      registry.incrementCredentialVersion('user-1');
+      // Re-issue under the now-current version so the session remains valid after restart.
+      const current = registry.issueSession('user-1');
+
+      const registry2 = new SessionRegistry(store);
+
+      expect(registry2.getCredentialVersion('user-1')).toBe(1);
+      expect(registry2.validateSession(session.id)).toBeNull(); // stale version, as before restart
+      expect(registry2.validateSession(current.id)).not.toBeNull();
+      expect(registry2.getDisplayId(session.id)).toBe(displayId);
+      expect(registry2.listSessions('user-1').map((s) => s.displayId)).toContain(
+        registry2.getDisplayId(current.id),
+      );
+      store.close();
+    } finally {
+      rmSync(dbPath, { force: true });
+      rmSync(`${dbPath}-wal`, { force: true });
+      rmSync(`${dbPath}-shm`, { force: true });
+    }
   });
 });

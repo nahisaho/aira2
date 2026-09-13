@@ -409,3 +409,81 @@ describe('SPA root document', () => {
     await app.close();
   });
 });
+
+/** @id TEST-AIRA2-RUNTIME-009
+ * @verifies REQ-RUNTIME-002
+ */
+describe('full server-process restart durability for teams, self-service, and sessions', () => {
+  it('TEST-AIRA2-RUNTIME-009 restores team/invitation state, verified-email/password/MFA state, and active sessions after stopping and restarting the server against the same store', async () => {
+    mkdirSync(dirname(dbPath), { recursive: true });
+    const app = await buildApp({ port: 3000, dbPath, sharedCredentials: {}, adapters: {} });
+    const context = (app as unknown as { aira2: any }).aira2;
+
+    context.authz.createProject('owner-1', 'project-1');
+    context.store.upsertPasswordCredential('owner-1', hashPassword('owner-secret'));
+    const ownerActor = { accountId: 'owner-1', isGlobalAdmin: true };
+
+    // Teams/invitations: one cancelled, one accepted (granting project access), one still pending.
+    const team = context.teamService.createTeam(ownerActor, 'lab-team');
+    context.teamService.addTeamMember(ownerActor, team.id, 'member-1');
+    context.teamService.grantTeamShare(ownerActor, 'project-1', team.id, 'viewer');
+    const cancelled = context.teamService.createInvitation(ownerActor, 'project-1', 'cancel-me@example.com', 'viewer');
+    context.teamService.cancelInvitation(ownerActor, 'project-1', cancelled.id);
+    context.accountSelfService.registerAccount('member-1', 'Member One', null, hashPassword('irrelevant'));
+    context.accountSelfService.updateProfile({ accountId: 'member-1', isGlobalAdmin: false }, { email: 'member-1@example.com' });
+    const [{ token: emailToken }] = context.accountSelfService.getDeliveredLinks();
+    context.accountSelfService.confirmEmailChange(emailToken);
+    const accepted = context.teamService.createInvitation(ownerActor, 'project-1', 'member-1@example.com', 'editor');
+    context.teamService.acceptInvitation(accepted.token, 'member-1');
+    const pending = context.teamService.createInvitation(ownerActor, 'project-1', 'still-pending@example.com', 'viewer');
+
+    // Self-service: password change + reset rate-limit exhaustion.
+    const memberActor = { accountId: 'member-1', isGlobalAdmin: false };
+    context.store.upsertPasswordCredential('member-1', hashPassword('old-password'));
+    context.accountSelfService.registerAccount('member-1', 'Member One', 'member-1@example.com', hashPassword('old-password'));
+    context.accountSelfService.changePassword(memberActor, 'old-password', 'new-password');
+    for (let i = 0; i < 4; i += 1) {
+      context.accountSelfService.requestPasswordReset('member-1@example.com');
+    }
+
+    // Active session via real HTTP login, surviving restart.
+    const login = await app.inject({
+      method: 'POST',
+      url: '/auth/login/password',
+      payload: { externalIdentity: 'owner-1', username: 'owner-1', password: 'owner-secret' },
+    });
+    expect(login.statusCode).toBe(200);
+    const sessionId = login.json().id as string;
+
+    await app.close();
+
+    const restarted = await buildApp({ port: 3000, dbPath, sharedCredentials: {}, adapters: {} });
+    const restartedContext = (restarted as unknown as { aira2: any }).aira2;
+
+    // Team/invitation state.
+    const restoredTeam = restartedContext.teamService.getTeam(team.id);
+    expect(restoredTeam?.memberIds).toContain('member-1');
+    const invitations = restartedContext.teamService.listInvitations('project-1');
+    expect(invitations.find((i: { id: string }) => i.id === cancelled.id)?.status).toBe('cancelled');
+    expect(invitations.find((i: { id: string }) => i.id === accepted.id)?.status).toBe('accepted');
+    expect(invitations.find((i: { id: string }) => i.id === pending.id)?.status).toBe('pending');
+    expect(restartedContext.authz.getRole('project-1', 'member-1')).toBe('editor');
+
+    // Verified email + password persistence.
+    expect(restartedContext.accountSelfService.getProfile('member-1')?.verifiedEmail).toBe('member-1@example.com');
+    const linksBefore = restartedContext.accountSelfService.getDeliveredLinks().length;
+    restartedContext.accountSelfService.requestPasswordReset('member-1@example.com');
+    expect(restartedContext.accountSelfService.getDeliveredLinks().length).toBe(linksBefore); // still rate-limited
+
+    // Session persistence: the original login session remains valid via the real HTTP route.
+    const sessionCheck = await restarted.inject({
+      method: 'GET',
+      url: '/auth/session',
+      headers: bearer(sessionId),
+    });
+    expect(sessionCheck.statusCode).toBe(200);
+    expect(sessionCheck.json().accountId).toBe('owner-1');
+
+    await restarted.close();
+  });
+});

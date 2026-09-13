@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-13T06:26:28.623Z",
+  "generatedAt": "2026-09-13T07:24:35.914Z",
   "totalRequirements": 107,
   "modeledRequirements": 8,
   "modeledFraction": 0.07476635514018691,
@@ -668,7 +668,7 @@
     }
   },
   "fingerprints": {
-    ".musubix/features/aira2-platform/requirements.md": "b4a73bc3a08613e51fdb0b8324662e5c14e389f0e8a9bf8f62f478521704bd92",
+    ".musubix/features/aira2-platform/requirements.md": "5b751e8d8bde9265451b6718e4a14ead8603404c7bfdc8cb06bebe0b430685ac",
     ".musubix/features/example/requirements.md": "f6ce0617c425a351ac1995a50b37a8b7f6c5b3e8ea2d6087d0898d4fde40f5ed"
   }
 }

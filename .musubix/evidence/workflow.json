@@ -193,6 +193,23 @@
       "phase": "complete",
       "status": "completed",
       "recordedAt": "2026-09-12T06:37:43.603Z"
+    },
+    {
+      "skill": "sdd-quality",
+      "version": "0.1.8",
+      "provenance": "self-reported",
+      "phase": "complete",
+      "status": "completed",
+      "recordedAt": "2026-09-13T06:27:00.263Z"
+    },
+    {
+      "skill": "sdd-change",
+      "version": "0.1.8",
+      "provenance": "self-reported",
+      "phase": "complete",
+      "status": "completed",
+      "reason": "CHANGE-0006 persistence implementation: gate green except permanently-blocked workflow/change-history/change-completeness/approval checks (documented precedent from CHANGE-0001/0004/0005); user approved release artifact sha256 406116ff1f2b56ec47f840e9d4b3bdd0f768997082b808976b3fd24e3dd6b9f2",
+      "recordedAt": "2026-09-13T07:25:15.539Z"
     }
   ]
 }

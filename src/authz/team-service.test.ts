@@ -1,7 +1,10 @@
+import { mkdirSync, rmSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { AuditLog } from './audit.js';
 import { AuthorizationDeniedError, ProjectAuthorizationService, type RevocationNotifier } from './project-authz.js';
 import { LastOwnerProtectionError, TeamAuthorizationDeniedError, TeamService, InvalidRoleGrantError, type VerifiedEmailLookup } from './team-service.js';
+import { SqliteStore } from '../server/store.js';
 
 function makeService() {
   const audit = new AuditLog();
@@ -366,5 +369,56 @@ describe('audit coverage for invitation accept/cancel and member role change/rem
     // changeMemberRole/removeMember delegate to grantShare/revokeShare, which already audit.
     expect(actionTypes).toContain('project.share.grant');
     expect(actionTypes).toContain('project.share.revoke');
+  });
+});
+
+/** @id TEST-AIRA2-TEAM-015
+ * @verifies REQ-RUNTIME-002
+ */
+describe('team/invitation state survives a fresh instance against the same store', () => {
+  it('TEST-AIRA2-TEAM-015 restores teams, members, team shares, and pending/cancelled/accepted invitations after reconstruction', () => {
+    const dbPath = resolve('data/test-artifacts/team-service-restart.sqlite');
+    mkdirSync(dirname(dbPath), { recursive: true });
+    rmSync(dbPath, { force: true });
+    try {
+      const store = new SqliteStore({ dbPath });
+      const audit = new AuditLog(store);
+      const notifier: RevocationNotifier = { terminateSessionsAndConnections: vi.fn() };
+      const projectAuthz = new ProjectAuthorizationService(audit, notifier, store);
+      const verifiedEmails = new Map<string, string>([['member-1', 'member-1@example.com']]);
+      const emails: VerifiedEmailLookup = { getVerifiedEmail: (accountId) => verifiedEmails.get(accountId) ?? null };
+      const owner = { accountId: 'owner-1', isGlobalAdmin: true };
+      projectAuthz.createProject('owner-1', 'project-1');
+
+      const teams = new TeamService(projectAuthz, emails, audit, store);
+      const team = teams.createTeam(owner, 'squad-a');
+      teams.addTeamMember(owner, team.id, 'member-1');
+      teams.grantTeamShare(owner, 'project-1', team.id, 'viewer');
+
+      const cancelled = teams.createInvitation(owner, 'project-1', 'cancel-me@example.com', 'viewer');
+      teams.cancelInvitation(owner, 'project-1', cancelled.id);
+      const accepted = teams.createInvitation(owner, 'project-1', 'member-1@example.com', 'editor');
+      teams.acceptInvitation(accepted.token, 'member-1');
+      const pending = teams.createInvitation(owner, 'project-1', 'still-pending@example.com', 'viewer');
+
+      const projectAuthz2 = new ProjectAuthorizationService(audit, notifier, store);
+      const teams2 = new TeamService(projectAuthz2, emails, audit, store);
+
+      const restoredTeam = teams2.getTeam(team.id);
+      expect(restoredTeam?.name).toBe('squad-a');
+      expect(restoredTeam?.memberIds).toContain('member-1');
+      expect(teams2.resolveTeamOnlyRole('member-1', 'project-1')).toBe('viewer');
+
+      const invitations = teams2.listInvitations('project-1');
+      expect(invitations.find((i) => i.id === cancelled.id)?.status).toBe('cancelled');
+      expect(invitations.find((i) => i.id === accepted.id)?.status).toBe('accepted');
+      expect(invitations.find((i) => i.id === pending.id)?.status).toBe('pending');
+      expect(projectAuthz2.getRole('project-1', 'member-1')).toBe('editor');
+      store.close();
+    } finally {
+      rmSync(dbPath, { force: true });
+      rmSync(`${dbPath}-wal`, { force: true });
+      rmSync(`${dbPath}-shm`, { force: true });
+    }
   });
 });
